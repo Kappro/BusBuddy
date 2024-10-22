@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Account</title>
+</head>
+<body>
+  <form method="POST">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" maxlength="100"><br><br>
+    <label for="password">Password:</label>
+    <input type="text" id="password" name="password"><br><br>
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email" maxlength="100"><br><br>
+    Type:<br>
+    <input type="radio" id="manager" name="type" value="MANAGER">
+    <label for="manager">Manager</label><br>
+    <input type="radio" id="driver" name="type" value="DRIVER">
+    <label for="driver">Driver</label><br><br>
+    <button type="submit">Add!</button>
+  </form>
+  <a href="{{ url_for('index') }}">Back to Home</a>
+</body>
+</html>

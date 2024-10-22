@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <form method="POST">
+    <label for="bus">Bus:</label><br>
+    <select name="bus" id="bus">
+      {% for bus in available_buses %}
+      <option value="{{bus.license_plate}}">Bus {{bus.license_plate}} Serving Service {{bus.service_number}}</option>
+      {% endfor %}
+    </select><br>
+    <label for="driver">Driver:</label><br>
+    <select name="driver" id="driver">
+      {% for driver in available_drivers %}
+      <option value="{{driver.uid}}">Driver {{driver.name}}</option>
+      {% endfor %}
+    </select><br>
+    <button type="submit">Search for Deployment</button>
+  </form>
+  <a href="{{ url_for('index') }}">Back to Home</a>
+</body>
+</html>
