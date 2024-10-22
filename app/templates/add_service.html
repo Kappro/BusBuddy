@@ -2,18 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add Account</title>
+    <title>Add Service</title>
 </head>
 <body>
   <form method="POST">
-    <label for="code">Bus Stop Code:</label>
-    <input type="text" id="code" name="code"><br><br>
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" maxlength="100"><br><br>
-    <label for="latitude">Latitude:</label>
-    <input type="text" id="latitude" name="latitude" maxlength="100"><br><br>
-    <label for="longitude">Longitude:</label>
-    <input type="text" id="longitude" name="longitude" maxlength="100"><br><br>
+    <label for="service_number">Service Number:</label>
+    <input type="text" id="service_number" name="service_number"><br><br>
     <button type="submit">Add!</button>
   </form>
   <a href="{{ url_for('index') }}">Back to Home</a>

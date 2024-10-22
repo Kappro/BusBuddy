@@ -1,3 +1,5 @@
+from ..models.accounts.account import Account
+
 class BusManager(Account):
     def __init__(self, name, username, password, UID):
         super().__init__(name, username, password, UID)  # Calls the parent class constructor

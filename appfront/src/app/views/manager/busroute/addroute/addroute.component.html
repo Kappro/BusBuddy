@@ -1,0 +1,62 @@
+<div class="d-flex fkex-row align-items-center mb-3">
+  <c-container>
+    <c-row class="justify-content-center">
+      <c-col>
+        <c-card class="mx-4">
+          <c-card-body class="p-4">
+            <form cForm>
+              <h3>Add Route</h3>
+              <p class="text-body-secondary">Create a new route</p>
+              <div class="mb-3">
+                <label cLabel for="inputBusService">Bus Service</label>
+                <input cFormControl
+                       id="inputBusService"
+                       placeholder="Example: 179"
+                />
+              </div>
+              <div class="mb-3">
+                <label clabel for="inputBusStops" class="mb-1">Bus Stops</label>
+                <textarea cFormControl rows="3" placeholder="10000, 10001, 10002..." #inputBusStops></textarea>
+              </div>
+              <div class="d-grid mb-3">
+                <button cButton variant="outline" color="secondary" (click)="inputStopsMap(inputBusStops.value)">View On Map</button>
+              </div>
+              <div class="mb-3">
+                <div id="map"></div>
+              </div>
+              <div class="d-grid mb-3">
+                <c-row>
+                  <c-col class="d-grid mb-3" [xs]>
+                    <button cButton color="danger" variant="outline" [cModalToggle]="staticBackdropModal2.id">Cancel</button>
+                  </c-col>
+                  <c-col class="d-grid mb-3" [xs]>
+                    <button cButton color="primary" [cModalToggle]="staticBackdropModal.id">Confirm</button>
+                  </c-col>
+                </c-row>
+              </div>
+            </form>
+          </c-card-body>
+        </c-card>
+      </c-col>
+    </c-row>
+  </c-container>
+</div>
+
+<c-modal #staticBackdropModal backdrop="static" id="staticBackdropModal">
+  <c-modal-header>
+    <h5 cModalTitle>Add Route</h5>
+  </c-modal-header>
+  <c-modal-body>Add Route creation successful.</c-modal-body>
+  <c-modal-footer>
+    <button [cModalToggle]="staticBackdropModal.id" cButton color="success" variant="outline" [routerLink]="['../']">Close</button>
+  </c-modal-footer>
+</c-modal>
+<c-modal #staticBackdropModal2 backdrop="static" id="staticBackdropModal2">
+  <c-modal-header>
+    <h5 cModalTitle>Add Route</h5>
+  </c-modal-header>
+  <c-modal-body>Add Route creation cancelled.</c-modal-body>
+  <c-modal-footer>
+    <button [cModalToggle]="staticBackdropModal.id" cButton color="danger" variant="outline" [routerLink]="['../']">Close</button>
+  </c-modal-footer>
+</c-modal>

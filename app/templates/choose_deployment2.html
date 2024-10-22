@@ -2,24 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Change Deployment</title>
 </head>
 <body>
+  {% if found_deployments|length == 0 %}
+    There are no available deployments to choose from!<br>
+  {% else %}
   <form method="POST">
-    <label for="bus">Bus to Deploy:</label><br>
-    <select name="bus" id="bus">
-      {% for bus in available_buses %}
-      <option value="{{bus.license_plate}}">Bus {{bus.license_plate}} Serving Service {{bus.service_number}}</option>
+    Bus selected: Bus {{ bus }}<br>
+    Driver selected: Driver {{ driver_name }}<br>
+    <label for="deployment_id">Deployment to Choose:</label><br>
+    <select name="deployment_id" id="deployment_id">
+      {% for deployment in found_deployments %}
+      <option value="{{deployment.uid}}">Started {{ deployment.datetime_start }}, currently {{ deployment.current_status }}.</option>
       {% endfor %}
     </select><br>
-    <label for="driver">Driver to Drive Bus:</label><br>
-    <select name="driver" id="driver">
-      {% for driver in available_drivers %}
-      <option value="{{driver.uid}}">Driver {{driver.name}}</option>
-      {% endfor %}
-    </select><br>
-    <button type="submit">Add!</button>
+    <button type="submit">Select!</button>
   </form>
+  {% endif %}
+  <a href="{{ url_for('choose_deployment') }}">Back to Choosing Deployment</a><br>
   <a href="{{ url_for('index') }}">Back to Home</a>
 </body>
 </html>

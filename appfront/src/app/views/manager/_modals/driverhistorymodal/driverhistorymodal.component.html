@@ -1,0 +1,46 @@
+<c-modal size="xl" id="driverHistoryModal" [visible]="visible" (visibleChange)="handleVisibilityChange($event)">
+  <c-modal-content>
+    <c-modal-header>
+      <h5 cModalTitle>Driver {{driver_name}}'s Deployment History</h5>
+      <button cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>
+      <table
+        [hover]="true"
+        [responsive]="true"
+        [striped]="true"
+        align="middle"
+        cTable
+        class="mb-0 border">
+        <thead class="text-nowrap text-truncate">
+        <tr>
+          <th class="bg-body-tertiary">Deployed Bus</th>
+          <th class="bg-body-tertiary">Status</th>
+          <th class="bg-body-tertiary">Datetime Started</th>
+          <th class="bg-body-tertiary">Datetime Ended</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (dep of history; track dep.uid; let i = $index) {
+            <tr>
+              <td>
+                <div>{{ dep.bus_license_plate }}</div>
+              </td>
+              <td>
+                <div>{{ dep.current_status }}</div>
+              </td>
+              <td>
+                <div>{{ dep.datetime_start }}</div>
+              </td>
+              <td>
+                <div>{{ dep.datetime_end }}</div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </c-modal-body>
+    <c-modal-footer>
+    </c-modal-footer>
+  </c-modal-content>
+</c-modal>

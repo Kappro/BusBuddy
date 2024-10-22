@@ -1,0 +1,54 @@
+<c-card class="mb-3">
+    <c-card-header ngPreserveWhitespaces>
+      <strong>Deployment Requests</strong> <small>| Automated Bus Deployment System</small>
+    </c-card-header>
+    <c-card-body>
+      <c-tabs [activeItemKey]="0" (activeItemKeyChange)="handleActiveItemChange($event)">
+        <c-tabs-list variant="underline-border">
+          <button cTab [itemKey]="0">
+            <svg cIcon class="me-2" name="cilSync"></svg>
+            Pending
+          </button>
+        </c-tabs-list>
+        <c-tabs-content>
+          <p style="color:red; text-align: center" *ngIf="requests?.length==0">There are no new deployments!</p>
+          @for (request of requests; track request.deployment_uid; let i = $index;) {
+            <c-tab-panel [itemKey]="0" class="p-3">
+                <c-card [cBorder]="{top: {color: 'secondary', width: 5}}">
+                    <c-card-body>
+                        <c-row>
+                        <c-col>
+                          <h5 cCardTitle>Request {{ request.deployment_uid }} <c-badge color="secondary">{{request.current_status}}</c-badge></h5>
+                            <h6 cCardSubtitle class="mb-2 text-medium-emphasis">
+                                Bus Service: {{request.service_number}}
+                            </h6>
+                            <p cCardText>
+                                Assigned Driver: {{ request.driver_name }} <br>
+                                Deployment will start at: {{ request.datetime_start }}
+                            </p>
+                        </c-col>
+                        <c-col class="align-self-end">
+                          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button cButton color="success"
+                                    variant="outline"
+                                    *ngIf='request.current_status=="Predeployment"'
+                                    (click)="earlyApproveDeployment(request.deployment_uid)">Approve</button>
+                            <button cButton color="primary"
+                                    variant="outline"
+                                    (click)="openChangeDriver(request.deployment_uid)">Change Driver</button>
+                            <button cButton color="danger"
+                                    variant="outline"
+                                    (click)="cancelDeployment(request.deployment_uid)">Reject</button>
+                          </div>
+                        </c-col>
+                        </c-row>
+                    </c-card-body>
+                </c-card>
+            </c-tab-panel>
+          }
+        </c-tabs-content>
+      </c-tabs>
+    </c-card-body>
+</c-card>
+
+<app-changedrivermodal (visibilityChange)="handleChangeDriverModalVisibility($event)"></app-changedrivermodal>

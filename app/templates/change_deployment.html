@@ -2,24 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Change Deployment</title>
 </head>
 <body>
   <form method="POST">
-    <label for="bus">Bus:</label><br>
-    <select name="bus" id="bus">
-      {% for bus in available_buses %}
-      <option value="{{bus.license_plate}}">Bus {{bus.license_plate}} Serving Service {{bus.service_number}}</option>
+    Deployment<br>
+    Bus {{ bus }} by<br>
+    Driver {{ driver_name }} starting<br>
+    {{ deployment.datetime_start }}<br>
+    <label for="action">Available actions for this deployment:</label><br>
+    <select name="action" id="action">
+      {% for index in range(deployment.available_actions|length) %}
+      <option value="{{index}}">{{ deployment.available_actions[index] }}</option>
       {% endfor %}
     </select><br>
-    <label for="driver">Driver:</label><br>
-    <select name="driver" id="driver">
-      {% for driver in available_drivers %}
-      <option value="{{driver.uid}}">Driver {{driver.name}}</option>
-      {% endfor %}
-    </select><br>
-    <button type="submit">Search for Deployment</button>
+    <button type="submit">Update Deployment!</button>
   </form>
+  <a href="{{ url_for('choose_deployment') }}">Back to Choosing Deployment</a><br>
   <a href="{{ url_for('index') }}">Back to Home</a>
 </body>
 </html>

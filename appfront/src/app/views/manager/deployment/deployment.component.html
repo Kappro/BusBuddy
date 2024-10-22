@@ -1,0 +1,199 @@
+<c-card class="mb-3">
+    <c-card-header ngPreserveWhitespaces>
+      <strong>Deployments</strong> <small>| all deployments</small>
+    </c-card-header>
+    <c-card-body>
+      <c-tabs [activeItemKey]="0" (activeItemKeyChange)="handleActiveItemChange($event)">
+        <c-tabs-list variant="underline-border">
+          <button cTab [itemKey]="0">
+            <svg cIcon class="me-2" name="cilBusAlt"></svg>
+            All Deployments
+          </button>
+          <button cTab [itemKey]="1">
+            <svg cIcon class="me-2" name="cilCheckAlt"></svg>
+            Approved
+          </button>
+          <button cTab [itemKey]="2">
+            <svg cIcon class="me-2" name="cilX"></svg>
+            Rejected
+          </button>
+        </c-tabs-list>
+        <c-tabs-content>
+            @for (request of requests; track request.requestId; let i = $index;) {
+                @if (request.currentStatus == 'PreDeployment' || request.currentStatus == 'BufferTime') {
+                    <c-tab-panel [itemKey]="0" class="p-3">
+                        <c-card [cBorder]="{top: {color: 'secondary', width: 5}}">
+                            <c-card-body>
+                                <c-row>
+                                    <c-col>
+                                        <h5 cCardTitile>Request {{ request.requestId }} <c-badge color="secondary">{{ request.currentStatus }}</c-badge></h5>
+                                        <h6 cCardSubtitle class="mb-2 text-medium-emphasis">
+                                            Bus Service: {{ request.serviceNo }}
+                                        </h6>
+                                        <p cCardText>
+                                            Assigned Driver: {{ request.driverName }} <br>
+                                            Deployment will start at: {{ request.dateTimeStart }}
+                                        </p>
+                                    </c-col>
+                                    <c-col class="align-self-end">
+                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                            <button cButton color="info" variant="outline">Deploy Additional Bus</button> 
+                                            <button cButton color="primary" variant="outline">Change Driver</button> 
+                                        </div>
+                                    </c-col>
+                                </c-row>
+                            </c-card-body>
+                        </c-card>
+                    </c-tab-panel>
+                }
+                @if (request.currentStatus == 'Ongoing' || request.currentStatus == 'Completed') {
+                    <c-tab-panel [itemKey]="0" class="p-3">
+                        @if (request.currentStatus == 'Ongoing') {
+                            <c-card [cBorder]="{top: {color: 'warning', width: 5}}">
+                                <c-card-body>
+                                    <c-row>
+                                        <c-col>
+                                            <h5 cCardTitile>Request {{ request.requestId }} <c-badge color="warning">{{ request.currentStatus }}</c-badge></h5>
+                                            <h6 cCardSubtitle class="mb-2 text-medium-emphasis">
+                                                Bus Service: {{ request.serviceNo }}
+                                            </h6>
+                                            <p cCardText>
+                                                Assigned Driver: {{ request.driverName }} <br>
+                                                Deployment started at: {{ request.dateTimeStart }}
+                                            </p>
+                                        </c-col>
+                                        <c-col class="align-self-end">
+                                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                <button cButton color="info" variant="outline">Deploy Additional Bus</button> 
+                                            </div>
+                                        </c-col>
+                                    </c-row>
+                                </c-card-body>
+                            </c-card>
+                        } 
+                        @else {
+                            <c-card [cBorder]="{top: {color: 'success', width: 5}}">
+                                <c-card-body>
+                                    <c-row>
+                                        <c-col>
+                                            <h5 cCardTitile>Request {{ request.requestId }} <c-badge color="success">{{ request.currentStatus }}</c-badge></h5>
+                                            <h6 cCardSubtitle class="mb-2 text-medium-emphasis">
+                                                Bus Service: {{ request.serviceNo }}
+                                            </h6>
+                                            <p cCardText>
+                                                Assigned Driver: {{ request.driverName }} <br>
+                                                Deployment started at: {{ request.dateTimeStart }} <br>
+                                                Deployment completed at: {{ request.dateTimeEnd }}
+                                            </p>
+                                        </c-col>
+                                        <c-col class="align-self-end">
+                                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                <button cButton color="info" variant="outline">Deploy Additional Bus</button> 
+                                            </div>
+                                        </c-col>
+                                    </c-row>
+                                </c-card-body>
+                            </c-card>
+                        }
+                    </c-tab-panel>
+                    <c-tab-panel [itemKey]="1" class="p-3">
+                        @if (request.currentStatus == 'Ongoing') {
+                            <c-card [cBorder]="{top: {color: 'warning', width: 5}}">
+                                <c-card-body>
+                                    <c-row>
+                                        <c-col>
+                                            <h5 cCardTitile>Request {{ request.requestId }} <c-badge color="warning">{{ request.currentStatus }}</c-badge></h5>
+                                            <h6 cCardSubtitle class="mb-2 text-medium-emphasis">
+                                                Bus Service: {{ request.serviceNo }}
+                                            </h6>
+                                            <p cCardText>
+                                                Assigned Driver: {{ request.driverName }} <br>
+                                                Deployment started at: {{ request.dateTimeStart }}
+                                            </p>
+                                        </c-col>
+                                        <c-col class="align-self-end">
+                                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                <button cButton color="info" variant="outline">Deploy Additional Bus</button> 
+                                            </div>
+                                        </c-col>
+                                    </c-row>
+                                </c-card-body>
+                            </c-card>
+                        } 
+                        @else {
+                            <c-card [cBorder]="{top: {color: 'success', width: 5}}">
+                                <c-card-body>
+                                    <c-row>
+                                        <c-col>
+                                            <h5 cCardTitile>Request {{ request.requestId }} <c-badge color="success">{{ request.currentStatus }}</c-badge></h5>
+                                            <h6 cCardSubtitle class="mb-2 text-medium-emphasis">
+                                                Bus Service: {{ request.serviceNo }}
+                                            </h6>
+                                            <p cCardText>
+                                                Assigned Driver: {{ request.driverName }} <br>
+                                                Deployment started at: {{ request.dateTimeStart }} <br>
+                                                Deployment completed at: {{ request.dateTimeEnd }}
+                                            </p>
+                                        </c-col>
+                                        <c-col class="align-self-end">
+                                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                <button cButton color="info" variant="outline">Deploy Additional Bus</button> 
+                                            </div>
+                                        </c-col>
+                                    </c-row>
+                                </c-card-body>
+                            </c-card>
+                        }
+                    </c-tab-panel>
+                }
+                @if (request.currentStatus == 'Cancelled') {
+                    <c-tab-panel [itemKey]="0" class="p-3">
+                        <c-card [cBorder]="{top: {color: 'danger', width: 5}}">
+                            <c-card-body>
+                                <c-row>
+                                    <c-col>
+                                        <h5 cCardTitile>Request {{ request.requestId }} <c-badge color="danger">{{ request.currentStatus }}</c-badge></h5>
+                                        <h6 cCardSubtitle class="mb-2 text-medium-emphasis">
+                                            Bus Service: {{ request.serviceNo}}
+                                        </h6>
+                                        <p cCardText>
+                                            Assigned Driver: {{ request.driverName }} <br>
+                                        </p>
+                                    </c-col>
+                                    <c-col class="align-self-end">
+                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                            <button cButton color="info" variant="outline">Deploy Additional Bus</button> 
+                                        </div>
+                                    </c-col>
+                                </c-row>
+                            </c-card-body>
+                        </c-card>
+                    </c-tab-panel>
+                    <c-tab-panel [itemKey]="2" class="p-3">
+                        <c-card [cBorder]="{top: {color: 'danger', width: 5}}">
+                            <c-card-body>
+                                <c-row>
+                                    <c-col>
+                                        <h5 cCardTitile>Request {{ request.requestId }} <c-badge color="danger">{{ request.currentStatus }}</c-badge></h5>
+                                        <h6 cCardSubtitle class="mb-2 text-medium-emphasis">
+                                            Bus Service: {{ request.serviceNo}}
+                                        </h6>
+                                        <p cCardText>
+                                            Assigned Driver: {{ request.driverName }} <br>
+                                        </p>
+                                    </c-col>
+                                    <c-col class="align-self-end">
+                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                            <button cButton color="info" variant="outline">Deploy Additional Bus</button> 
+                                        </div>
+                                    </c-col>
+                                </c-row>
+                            </c-card-body>
+                        </c-card>
+                    </c-tab-panel>
+                }
+            }
+        </c-tabs-content>
+      </c-tabs>
+    </c-card-body>
+</c-card>

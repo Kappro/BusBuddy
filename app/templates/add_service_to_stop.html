@@ -2,21 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add Account</title>
+    <title>Add Service Stop Connection</title>
 </head>
 <body>
   <form method="POST">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" maxlength="100"><br><br>
-    <label for="password">Password:</label>
-    <input type="text" id="password" name="password"><br><br>
-    <label for="email">Email:</label>
-    <input type="text" id="email" name="email" maxlength="100"><br><br>
-    Type:<br>
-    <input type="radio" id="manager" name="type" value="MANAGER">
-    <label for="manager">Manager</label><br>
-    <input type="radio" id="driver" name="type" value="DRIVER">
-    <label for="driver">Driver</label><br><br>
+    <label for="stop_code">Choose a Stop:</label><br>
+    <select name="stop_code" id="stop_code">
+      {% for stop in available_stops %}
+      <option value="{{stop.stop_code}}">Stop {{stop.stop_name}}</option>
+      {% endfor %}
+    </select><br>
+    <label for="service_number">Choose a Service to Add:</label><br>
+    <select name="service_number" id="service_number">
+      {% for service in available_services %}
+      <option value="{{service.service_number}}">Service {{service.service_number}}</option>
+      {% endfor %}
+    </select><br>
     <button type="submit">Add!</button>
   </form>
   <a href="{{ url_for('index') }}">Back to Home</a>

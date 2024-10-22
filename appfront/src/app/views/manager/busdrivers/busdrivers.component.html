@@ -1,0 +1,68 @@
+<div class="d-flex flex-row align-items-center mb-3">
+  <c-container>
+    <c-row class="justify-content-center">
+      <c-col>
+        <c-card class="mx-4">
+          <c-card-body class="p-4">
+            <h4 cCardTitle>Drivers List</h4>
+            <hr class="mt-0" />
+            <div class="">
+              <table
+                [hover]="true"
+                [responsive]="true"
+                [striped]="true"
+                align="middle"
+                cTable
+                class="mb-0 border">
+                <thead class="text-nowrap text-truncate">
+                <tr>
+                  <th class="bg-body-tertiary">Driver Name</th>
+                  <th class="bg-body-tertiary">Date Registered</th>
+                  <th class="bg-body-tertiary">Email</th>
+                  <th class="bg-body-tertiary">Contact Number</th>
+                  <th class="bg-body-tertiary">Last Duty</th>
+                  <th class="bg-body-tertiary">Drive History</th>
+                </tr>
+                </thead>
+                <tbody>
+                  @for (user of users; track user.uid; let i = $index) {
+                    <tr>
+                      <td>
+                        <div>{{ user.name }}</div>
+                        <div class="small text-body-secondary text-nowrap">
+                        <span>
+                          {{ user.current_state }}
+                        </span>
+                        </div>
+                      </td>
+                      <td>
+                        <div>{{ user.date_registered }}</div>
+                      </td>
+                      <td>
+                        <div>{{ user.email }}</div>
+                      </td>
+                      <td>
+                        <div>{{ user.contact }}</div>
+                      </td>
+                      <td>
+                        <div class="fw-semibold text-nowrap" *ngIf="user.last_duty!=null">{{ user.last_duty }}</div>
+                        <div class="fw-semibold text-nowrap" *ngIf="user.last_duty==null">No Duties Done</div>
+                      </td>
+                      <td>
+                        <button cButton color="primary"
+                                variant="outline"
+                                (click)="openViewHistory(user.uid, user.name)">View History</button>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </c-card-body>
+        </c-card>
+      </c-col>
+    </c-row>
+  </c-container>
+</div>
+
+<app-driverhistorymodal (visibilityChange)="handleDriverHistoryModalVisibility($event)"></app-driverhistorymodal>

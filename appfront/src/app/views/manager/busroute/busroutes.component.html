@@ -1,0 +1,69 @@
+<c-card class="mx-4 mb-3">
+    <c-card-header ngPreserveWhitespaces>
+      <strong>Manage Bus Route</strong>
+    </c-card-header>
+    <c-card-body class="p-4">
+      <c-tabs [activeItemKey]="0" (activeItemKeyChange)="handleActiveItemChange($event)">
+        <c-tabs-list variant="underline-border">
+          <button cTab [itemKey]="0">
+            <svg cIcon class="me-2" name="cilBusAlt"></svg>
+            Bus Routes
+          </button>
+          <button cTab [itemKey]="1">
+            <svg cIcon class="me-2" name="cilBusAlt"></svg>
+            Bus Stops
+          </button>
+        </c-tabs-list>
+        <c-tabs-content>
+          <c-tab-panel [itemKey]="0" class="p-3">
+            <c-col></c-col>
+            <div class="mb-2"></div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a cButton [routerLink]="['./addroute']" color="primary">Add Route</a>
+            </div>
+            <div class="mb-3"></div>
+            @for (service of services; track service.service_number; let i = $index;) {
+              <c-card [cBorder]="{top: {color: 'secondary', width: 3}}">
+                <c-card-header>
+                  <h5 cCardTitle>Bus Service {{ service.service_number }}</h5>
+                </c-card-header>
+                  <c-card-body>
+                      <c-row>
+                          <c-col>
+                              <h6 cCardSubtitle class="mb-2 text-medium-emphasis">
+                                  Some Text
+                              </h6>
+                              <p cCardText>
+                                  Some Text
+                              </p>
+                          </c-col>
+                          <c-col class="align-self-end">
+                              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                  <a cButton color="info" variant="outline">Edit</a>
+                                  <a cButton color="danger" variant="outline">Delete</a>
+                              </div>
+                          </c-col>
+                      </c-row>
+                  </c-card-body>
+              </c-card><div class="mb-2"></div>
+            }
+          </c-tab-panel>
+          <c-tab-panel [itemKey]="1" class="p-3">
+            @for (stop of stops; track stop.stop_code; let i = $index;) {
+              <c-card [cBorder]="{top: {color: 'secondary', width: 3}}">
+                <c-card-header>
+                  <h5 cCardTitle>Stop {{ stop.stop_code }} - {{stop.stop_name}}</h5>
+                </c-card-header>
+                  <c-card-body>
+                      <c-col>
+                        <p cCardText>Latitude: {{ stop.latitude }}</p>
+                        <p cCardText>Longitude: {{ stop.longitude }} </p>
+                      </c-col>
+                  </c-card-body>
+              </c-card><div class="mb-2"></div>
+            }
+          </c-tab-panel>
+        </c-tabs-content>
+      </c-tabs>
+    </c-card-body>
+</c-card>

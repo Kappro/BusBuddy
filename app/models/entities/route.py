@@ -1,19 +1,24 @@
 from ..shared import db
-from .Load import Load
+from .load import Load
 
 service_stop_connection = db.Table('service_bus_stops', db.Model.metadata,
-                                    db.Column('service_number', db.String(10), db.ForeignKey('service.service_number')),
-                                    db.Column('bus_stop_code', db.Integer, db.ForeignKey('bus_stop.stop_code'))
+                                    db.Column('service_number', db.String(10), db.ForeignKey('services.service_number')),
+                                    db.Column('bus_stop_code', db.Integer, db.ForeignKey('bus_stop.stop_code')),
+                                    db.Column('sequence_number', db.Integer, nullable=False),
+                                    __table_args__ = (db.PrimaryKeyConstraint(
+                                        'service_number', 'bus_stop_code', 'sequence_number'
+                                    ), {})
                                    )
 
 class Service(db.Model):
     __tablename__ = 'service'
 
     service_number = db.Column(db.String(10), primary_key=True)
-    service_stops = db.relationship('Stop', secondary=service_stop_connection)
 
     def __init__(self, service_number):
         self.service_number = service_number
+        db.session.add(self)
+        db.session.commit()
 
     def __repr__(self):
         return f'<Service {self.service_number}>'
@@ -25,7 +30,7 @@ class Service(db.Model):
 
     def json(self):
         return {
-            'serviceNumber': self.service_number,
+            'service_number': self.service_number,
         }
 
 class Stop(db.Model):
@@ -36,11 +41,11 @@ class Stop(db.Model):
     latitude = db.Column(db.Float, nullable=False)
     longitude = db.Column(db.Float, nullable=False)
     _current_load = db.Column('current_load',db.Enum(Load), nullable=False)
-    stop_services = db.relationship('Service', secondary=service_stop_connection)
+
 
     def __init__(self, code, name, latitude, longitude, current_load=Load.LOW):
         self.stop_code = code
-        self.name = name
+        self.stop_name = name
         self.latitude = latitude
         self.longitude = longitude
         self._current_load = current_load
@@ -60,16 +65,18 @@ class Stop(db.Model):
         self._current_load = new_load
         db.session.commit()
 
-    def add_service(self, service_number):
+    def add_service(self, service_number, sequence_number):
         db.session.execute(db.insert(service_stop_connection)
                            .values(service_number=service_number,
-                                   bus_stop_code=self.stop_code))
+                                   bus_stop_code=self.stop_code,
+                                   sequence_number=sequence_number))
         db.session.commit()
 
     def json(self):
         return {
-            'id': self.id,
-            'name': self.name,
-            'currentLoad': self.currentLoad.value,  # Convert Enum to string for JSON
-            'ID': self.ID
+            'stop_code': self.stop_code,
+            'stop_name': self.stop_name,
+            'latitude': self.latitude,
+            'longitude': self.longitude,
+            'current_load': self.current_load.value
         }
