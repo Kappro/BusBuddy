@@ -7,26 +7,40 @@ import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular
 import {AuthService} from "../../../services/auth.service";
 import {Access} from "../../../_models/account";
 import {firstValueFrom} from "rxjs";
+import {NgIf} from "@angular/common";
 
 @Component({
     selector: 'app-register',
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.scss'],
     standalone: true,
-  imports: [ContainerComponent, RowComponent, ColComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent, InputGroupTextDirective, IconDirective, FormControlDirective, ButtonDirective, FormsModule, ReactiveFormsModule]
+  imports: [ContainerComponent, RowComponent, ColComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent, InputGroupTextDirective, IconDirective, FormControlDirective, ButtonDirective, FormsModule, ReactiveFormsModule, NgIf]
 })
 export class RegisterComponent {
-  repeat_password = false;
-  success = false;
-  register: FormGroup;
+  public repeat_password = false;
+  public validities = {
+    'username': false,
+    'email': false,
+    'contact': false,
+    'repeat_password': false
+  }
+  public valid = false;
+  public success = false;
+  public register: FormGroup;
 
   constructor(private auth: AuthService, private api: ApiService, private formbuilder: FormBuilder) {
-    this.repeat_password = false;
+    this.validities = {
+      'username': false,
+      'email': false,
+      'contact': false,
+      'repeat_password': false
+    }
+    this.valid = false;
     this.success = false;
     this.register = this.formbuilder.group({
       username: '',
       email: '',
-      contact: 0,
+      contact: '',
       password: '',
       confirm_password: ''
     })
@@ -45,10 +59,49 @@ export class RegisterComponent {
         password: this.register.value.password,
         type: Access.DRIVER
       }
-      await firstValueFrom(this.auth.register(user_details))
+      await firstValueFrom(this.auth.register(user_details));
       this.repeat_password = false;
       this.success = true;
+      this.valid = false;
       this.register.reset()
+      this.validities = {
+        'username': false,
+        'email': false,
+        'contact': false,
+        'repeat_password': false
+      }
     }
+  }
+
+  checkValidity() {
+    let temp = true;
+    Object.entries(this.validities).forEach(
+      // @ts-ignore
+      ([key, value]) => {
+        if(!value) {temp = false;}
+      }
+    )
+    return temp;
+  }
+
+  validateUsername(event: any) {
+    this.validities['username'] = (this.register.get('username')?.value.length > 0);
+  }
+
+  validateContact(event: any) {
+    this.validities['contact'] = !isNaN(+this.register.get('contact')?.value);
+    this.valid = this.checkValidity();
+  }
+
+  validateEmail(event: any) {
+    let input = this.register.get('email')?.value;
+    this.validities['email'] = input.includes("@") && (input.includes(".com") || input.includes(".net"));
+    this.valid = this.checkValidity();
+    console.log(this.valid)
+  }
+
+  validateRepeatPassword(event: any) {
+    this.validities['repeat_password'] = (this.register.get('password')?.value == this.register.get('confirm_password')?.value);
+    this.valid = this.checkValidity();
   }
 }

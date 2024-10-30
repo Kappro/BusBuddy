@@ -100,8 +100,7 @@ export class ChangeDriverModalComponent implements OnInit {
   }
 
   search(event: any) {
-    // @ts-ignore
-    const keyword = this.searchDriver.get('searchInput').value.toLowerCase();
+    const keyword = this.searchDriver.get('searchInput')?.value.toLowerCase();
     console.log(keyword)
     this.filteredDrivers = this.users.filter(item => item.name.toLowerCase().includes(keyword));
   }

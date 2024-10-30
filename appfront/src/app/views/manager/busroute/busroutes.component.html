@@ -19,7 +19,7 @@
             <c-col></c-col>
             <div class="mb-2"></div>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <a cButton [routerLink]="['./addroute']" color="primary">Add Route</a>
+                <a cButton (click)="viewAddRouteModal()" color="primary">Add Route</a>
             </div>
             <div class="mb-3"></div>
             @for (service of services; track service.service_number; let i = $index;) {
@@ -39,8 +39,10 @@
                           </c-col>
                           <c-col class="align-self-end">
                               <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                  <a cButton color="info" variant="outline">Edit</a>
-                                  <a cButton color="danger" variant="outline">Delete</a>
+                                  <a cButton color="info" variant="outline"
+                                  (click)="viewEditRouteModal()">Edit</a>
+                                  <a cButton color="danger" variant="outline"
+                                  (click)="viewDeleteRouteModal()">Delete</a>
                               </div>
                           </c-col>
                       </c-row>
@@ -67,3 +69,7 @@
       </c-tabs>
     </c-card-body>
 </c-card>
+
+<app-addroutemodal></app-addroutemodal>
+<app-editroutemodal></app-editroutemodal>
+<app-deleteroutemodal></app-deleteroutemodal>

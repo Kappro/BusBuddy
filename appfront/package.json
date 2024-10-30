@@ -33,7 +33,8 @@
     "ngx-scrollbar": "^13.0.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.14.10"
+    "zone.js": "~0.14.10",
+    "leaflet": "^1.9.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.2.9",
@@ -43,6 +44,7 @@
     "@types/jasmine": "~5.1.0",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^20.16.1",
+    "@types/leaflet": "^1.9.14",
     "jasmine-core": "~5.2.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",

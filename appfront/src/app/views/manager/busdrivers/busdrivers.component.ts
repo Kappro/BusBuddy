@@ -87,7 +87,6 @@ export class BusdriversComponent implements AfterViewInit {
   // @ts-ignore
   public users: any[];
   @ViewChild(DriverHistoryModalComponent) driverHistoryModal!: DriverHistoryModalComponent;
-  public isViewingHistory: boolean = false;
 
   constructor(private http: HttpClient, private api: ApiService) {
     this.http.get<any>(this.api.API_URL+"/drivers/get_all").subscribe({
@@ -101,16 +100,10 @@ export class BusdriversComponent implements AfterViewInit {
     });
   }
 
-  activeItem = signal(0);
-
   ngAfterViewInit() {
     if(this.driverHistoryModal) {
       console.log('Modal component is available.')
     }
-  }
-
-  handleActiveItemChange(value: string | number | undefined) {
-    this.activeItem.set(<number>value);
   }
 
   openViewHistory(driver_uid: number, driver_name: string) {
@@ -120,7 +113,6 @@ export class BusdriversComponent implements AfterViewInit {
           this.driverHistoryModal.history = message;
           this.driverHistoryModal.driver_name = driver_name;
           console.log(this.driverHistoryModal.history);
-          this.isViewingHistory = true;
           this.driverHistoryModal.toggleVisibility()
           console.log(this.driverHistoryModal.visible)
         },
@@ -131,9 +123,5 @@ export class BusdriversComponent implements AfterViewInit {
     } else {
       console.error("Modal component is not initialised");
     }
-  }
-
-  handleDriverHistoryModalVisibility(visible: boolean) {
-    this.isViewingHistory = visible;
   }
 }

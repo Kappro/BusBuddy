@@ -10,6 +10,16 @@ service_stop_connection = db.Table('service_bus_stops', db.Model.metadata,
                                     ), {})
                                    )
 
+
+def _get_bus_stop(bus_stop_code: int or str):
+    proper = int(bus_stop_code)
+    stop = [R for R in db.session.execute(db.select(Stop)).scalars().all()
+            if (R.stop_code == proper)]
+    if len(stop) == 0:
+        return None
+    return stop[0]
+
+
 class Service(db.Model):
     __tablename__ = 'service'
 
@@ -25,8 +35,16 @@ class Service(db.Model):
 
     @property
     def stops(self) -> list:
-        stops_list = db.session.execute(db.select(service_stop_connection).filter_by(service_number = self.service_number)).all()
-        return [str(R.bus_stop_code) for R in stops_list]
+        stops_list = [_get_bus_stop(R) for R in db.session.execute(db.select(service_stop_connection)).scalars().all()
+                           if R.service_number == self.service_number]
+        return stops_list
+
+    def add_stop(self, stop_code, sequence_number):
+        db.session.execute(db.insert(service_stop_connection)
+                           .values(service_number=self.service_number,
+                                   bus_stop_code=stop_code,
+                                   sequence_number=sequence_number))
+        db.session.commit()
 
     def json(self):
         return {

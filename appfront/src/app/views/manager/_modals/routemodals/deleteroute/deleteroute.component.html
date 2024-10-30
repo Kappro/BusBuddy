@@ -1,0 +1,71 @@
+<c-modal size="xl" id="deleteRouteModal" [visible]="visible" (visibleChange)="handleVisibilityChange($event)" backdrop="static">
+  <c-modal-content>
+    <c-modal-header>
+      <h5 cModalTitle>Delete Route</h5>
+    </c-modal-header>
+    <c-modal-body>
+      <div class="d-flex fkex-row align-items-center mb-3">
+        <c-container>
+          <c-row class="justify-content-center">
+            <c-col>
+              <c-card class="mx-4">
+                <c-card-body class="p-4">
+                  <form cForm id="delRouteForm">
+                    <h3>Delete Route</h3>
+                    <p class="text-body-secondary">Delete an existing route</p>
+                      <div class="mb-3">
+                          <label cLabel for="inputBusServiceDel">Bus Service</label>
+                          <input cFormControl
+                                  id="inputBusServiceDel"
+                                  placeholder="Example: 179" disabled
+                          />
+                      </div>
+                      <div class="mb-3">
+                        <label cLabel class="mb-1">Current Bus Stops</label>
+                        <textarea cFormControl rows="3" placeholder="10000, 10001, 10002..." disabled id="delBusStopList" #oldBusStops></textarea>
+                      </div>
+                    <div class="map-container">
+                      <div class="map-frame">
+                        <div id="mapdel"></div>
+                      </div>
+                    </div>
+                      <div class="d-grid mb-3">
+                        <c-row>
+                          <c-col class="d-grid mb-3" [xs]>
+                            <button cButton color="danger" variant="outline" [cModalToggle]="staticBackdropModal2del.id">Cancel</button>
+                          </c-col>
+                          <c-col class="d-grid mb-3" [xs]>
+                            <button cButton color="primary" [cModalToggle]="staticBackdropModaldel.id">Confirm</button>
+                          </c-col>
+                        </c-row>
+                      </div>
+                  </form>
+                </c-card-body>
+              </c-card>
+            </c-col>
+          </c-row>
+        </c-container>
+      </div>
+    </c-modal-body>
+  </c-modal-content>
+</c-modal>
+
+<c-modal #staticBackdropModaldel backdrop="static" id="staticBackdropModaldel">
+  <c-modal-header>
+    <h5 cModalTitle>Delete Route</h5>
+  </c-modal-header>
+  <c-modal-body>Delete Route successful.</c-modal-body>
+  <c-modal-footer>
+    <button [cModalToggle]="staticBackdropModaldel.id" cButton color="success" variant="outline" (click)="clickClose()">Close</button>
+  </c-modal-footer>
+</c-modal>
+
+<c-modal #staticBackdropModal2del backdrop="static" id="staticBackdropModal2del">
+  <c-modal-header>
+    <h5 cModalTitle>Delete Route</h5>
+  </c-modal-header>
+  <c-modal-body>Route deletion cancelled.</c-modal-body>
+  <c-modal-footer>
+    <button [cModalToggle]="staticBackdropModal2del.id" cButton color="danger" variant="outline" (click)="clickClose()">Close</button>
+  </c-modal-footer>
+</c-modal>

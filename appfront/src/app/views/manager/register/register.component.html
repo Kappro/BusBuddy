@@ -10,38 +10,70 @@
                 <span cInputGroupText>
                   <svg cIcon name="cilUser"></svg>
                 </span>
-                <input cFormControl formControlName="username" placeholder="Username" name="username" required/>
+                <input cFormControl formControlName="username"
+                       placeholder="Username"
+                       name="username"
+                       required
+                (input)="validateUsername($event)"/>
               </c-input-group>
+              <p style="color:red"
+                  *ngIf="!validities['username']">* Username is blank!</p>
               <c-input-group class="mb-3">
                 <span cInputGroupText>&#64;</span>
-                <input cFormControl formControlName="email" placeholder="Email" name="email" required/>
+                <input cFormControl formControlName="email"
+                       placeholder="Email"
+                       name="email"
+                       required
+                       (input)="validateEmail($event)"/>
               </c-input-group>
+              <p style="color:red"
+                  *ngIf="!validities['email']">* Invalid email address!</p>
               <c-input-group class="mb-3">
                 <span cInputGroupText>
                   <svg cIcon name="cilPhone"></svg>
                 </span>
-                <input cFormControl formControlName="contact" placeholder="Contact Number" type="number" name="contact" required/>
+                <input cFormControl formControlName="contact"
+                       placeholder="Contact Number"
+                       name="contact"
+                       required
+                       (input)="validateContact($event)"/>
               </c-input-group>
+              <p style="color:red"
+                  *ngIf="!validities['contact']">* Invalid contact number!</p>
               <c-input-group class="mb-3">
                 <span cInputGroupText>
                   <svg cIcon name="cilLockLocked"></svg>
                 </span>
-                <input cFormControl formControlName="password" placeholder="Password" type="password" name="password" required/>
+                <input cFormControl formControlName="password"
+                       placeholder="Password"
+                       type="password"
+                       name="password"
+                       required
+                       (input)="validateRepeatPassword($event)"/>
               </c-input-group>
               <c-input-group class="mb-4">
                 <span cInputGroupText>
                   <svg cIcon name="cilLockLocked"></svg>
                 </span>
-                <input cFormControl formControlName="confirm_password" placeholder="Repeat password" type="password" name="confirm_password" required/>
-                @if (repeat_password) {
-                  <p style="color:red">* Please double-check the password confirmation!</p>
-                }
+                <input cFormControl formControlName="confirm_password"
+                       placeholder="Repeat password"
+                       type="password"
+                       name="confirm_password"
+                       required
+                       (input)="validateRepeatPassword($event)"/>
               </c-input-group>
+              <p style="color:red"
+                  *ngIf="!validities['repeat_password']">* Password does not match!</p>
               <div class="d-grid">
-                <button cButton type="submit" color="success">Create Account</button>
-                @if (success) {
-                  <p style="color:forestgreen">Account has been successfully added!</p>
-                }
+                <button cButton
+                        color="danger"
+                        *ngIf="!valid"
+                        disabled>Create Account</button>
+                <button cButton type="submit"
+                        color="success"
+                        *ngIf="valid">Create Account</button>
+                <p style="color:forestgreen"
+                  *ngIf="success">Account has been successfully added!</p>
               </div>
             </form>
           </c-card-body>

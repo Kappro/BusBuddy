@@ -1,0 +1,105 @@
+<c-modal size="xl" id="addRouteModal" [visible]="visible" (visibleChange)="handleVisibilityChange($event)" backdrop="static">
+  <c-modal-content>
+    <c-modal-header>
+      <h5 cModalTitle>Add Route</h5>
+    </c-modal-header>
+    <c-modal-body>
+      <div class="d-flex flex-row align-items-center mb-3">
+        <c-container>
+          <c-row class="justify-content-center">
+            <c-col>
+              <c-card class="mx-4">
+                <c-card-body class="p-4">
+                  <form [formGroup]="addRouteForm">
+                    <h3>Add Route</h3>
+                    <p class="text-body-secondary">Create a new route</p>
+                    <div class="mb-3">
+                      <label cLabel for="inputBusService">Bus Service</label>
+                      <input cFormControl
+                             id="inputBusService"
+                             formControlName="inputBusService"
+                             placeholder="Bus Service Number"
+                             name="inputBusService"
+                             (input)="checkServiceNumber($event)"
+                      />
+                      <p cTextColor="danger" *ngIf="duplicate">Service already exists!</p>
+                      <p cTextColor="danger" *ngIf="empty">Please input service number!</p>
+                    </div>
+                    <div class="mb-3">
+                      <label cLabel class="mb-1">Bus Stops (comma-separated)</label>
+                      <textarea cFormControl
+                                rows="3" placeholder="10000, 10001, 10002..."
+                                id="inputBusStops"
+                                formControlName="inputBusStops"
+                                (input)="checkStops($event)"
+                      ></textarea>
+                      @if (!valid) {
+                        @if (invalid.length==0) {
+                          <p cTextColor="danger">No stop codes have been inputted!</p>
+                        }
+                        @else {
+                          <p cTextColor="danger">The following stop codes are not found or invalid: </p>
+                          @for (stop of invalid; track stop.id) {
+                            <p cTextColor="danger">{{ stop.stop_code }}</p>
+                          }
+                        }
+                      }
+                    </div>
+                    <div class="d-grid mb-3">
+                      <button cButton variant="outline" color="secondary"
+                              *ngIf="!valid"
+                              disabled>View On Map</button>
+                      <button cButton variant="outline" color="secondary"
+                              *ngIf="valid"
+                              (click)="inputStopsMap($event)">View On Map</button>
+                    </div>
+                    <div class="map-container">
+                      <div class="map-frame">
+                        <div id="map"></div>
+                      </div>
+                    </div>
+                    <div class="d-grid mb-3">
+                      <c-row>
+                        <c-col class="d-grid mb-3" [xs]>
+                          <button cButton color="danger" variant="outline" [cModalToggle]="staticBackdropModal2add.id">Cancel</button>
+                        </c-col>
+                        <c-col class="d-grid mb-3" [xs]>
+                          <button cButton color="primary"
+                                  *ngIf="!valid || duplicate || empty"
+                                  disabled>Confirm</button>
+                          <button cButton color="primary"
+                                  *ngIf="valid && !duplicate && !empty"
+                                  (click)="onSubmit()"
+                                  [cModalToggle]="staticBackdropModaladd.id">Confirm</button>
+                        </c-col>
+                      </c-row>
+                    </div>
+                  </form>
+                </c-card-body>
+              </c-card>
+            </c-col>
+          </c-row>
+        </c-container>
+      </div>
+    </c-modal-body>
+  </c-modal-content>
+</c-modal>
+
+<c-modal #staticBackdropModaladd backdrop="static" id="staticBackdropModaladd">
+  <c-modal-header>
+    <h5 cModalTitle>Add Route</h5>
+  </c-modal-header>
+  <c-modal-body>Add Route creation successful.</c-modal-body>
+  <c-modal-footer>
+    <button [cModalToggle]="staticBackdropModaladd.id" cButton color="success" variant="outline" (click)="clickClose()">Close</button>
+  </c-modal-footer>
+</c-modal>
+<c-modal #staticBackdropModal2add backdrop="static" id="staticBackdropModal2add">
+  <c-modal-header>
+    <h5 cModalTitle>Add Route</h5>
+  </c-modal-header>
+  <c-modal-body>Add Route creation cancelled.</c-modal-body>
+  <c-modal-footer>
+    <button [cModalToggle]="staticBackdropModal2add.id" cButton color="danger" variant="outline" (click)="clickClose()">Close</button>
+  </c-modal-footer>
+</c-modal>

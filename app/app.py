@@ -1,16 +1,16 @@
 from flask import Flask, request, jsonify, render_template, redirect, url_for, session
 from flask_cors import CORS
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, current_user
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, current_user
 from hashlib import sha256
 import os
 from dotenv import load_dotenv
 
-from models.accounts.utils import last_duty, get_bus, get_account, get_bus_stop, get_deployment, \
-    get_driver_deployment_history
+from models.utils import last_duty, get_bus, get_account, get_bus_stop, get_deployment, \
+    get_driver_deployment_history, get_service
 from models.shared import db
 from models.accounts.account import Account, AccountAccess, DriverStatus
 from models.entities.bus import Bus, BusStatus
-from models.entities.route import Stop, Service, service_stop_connection
+from models.entities.route import Stop, Service
 from models.deployment import Deployment, DeploymentStatus
 
 import json
@@ -222,12 +222,38 @@ def get_all_stops():
     else:
         return 401
 
+@app.route('/api/stops/get_by_service', methods=['POST'])
+@jwt_required()
+def get_stops_by_service():
+    if current_user.access == AccountAccess.MANAGER:
+        data = request.get_json()
+        service_number = data.get('service_number')
+        service = get_service(service_number)
+        return [R.json() for R in service.stops], 201
+    else:
+        return 401
+
 @app.route('/api/services/get_all', methods=['GET'])
 @jwt_required()
 def get_all_services():
     if current_user.access == AccountAccess.MANAGER:
         services_list = [R for R in db.session.execute(db.select(Service)).scalars().all()]
         return [R.json() for R in services_list], 201
+    else:
+        return 401
+
+@app.route('/api/services/add_new', methods=['POST'])
+@jwt_required()
+def add_service():
+    if current_user.access == AccountAccess.MANAGER:
+        data = request.get_json()
+        service = Service(data.get('service'))
+        stops = data.get('stops')
+        stops = [stop.strip() for stop in stops]
+        if len(stops)>0:
+            for i in range(len(stops)):
+                service.add_stop(stops[i], i+1)
+        return jsonify({'message': f'Service Added Successfully'}), 201
     else:
         return 401
 
@@ -328,14 +354,6 @@ def change_deployment():
                          deployment=deployment,
                          bus=bus,
                          driver_name=driver_name)
-
-@app.route('/add_service', methods=['GET', 'POST'])
-def add_service():
-  if request.method == 'POST':
-    data = request.form
-    service_number = data.get('service_number')
-    Service(service_number)
-  return render_template('add_service.html')
 
 @app.route('/add_service_to_stop', methods=['GET', 'POST'])
 def add_service_to_stop():
