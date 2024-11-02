@@ -19,181 +19,143 @@
           </button>
         </c-tabs-list>
         <c-tabs-content>
-            @for (request of requests; track request.requestId; let i = $index;) {
-                @if (request.currentStatus == 'PreDeployment' || request.currentStatus == 'BufferTime') {
-                    <c-tab-panel [itemKey]="0" class="p-3">
-                        <c-card [cBorder]="{top: {color: 'secondary', width: 5}}">
-                            <c-card-body>
-                                <c-row>
-                                    <c-col>
-                                        <h5 cCardTitile>Request {{ request.requestId }} <c-badge color="secondary">{{ request.currentStatus }}</c-badge></h5>
-                                        <h6 cCardSubtitle class="mb-2 text-medium-emphasis">
-                                            Bus Service: {{ request.serviceNo }}
-                                        </h6>
-                                        <p cCardText>
-                                            Assigned Driver: {{ request.driverName }} <br>
-                                            Deployment will start at: {{ request.dateTimeStart }}
-                                        </p>
-                                    </c-col>
-                                    <c-col class="align-self-end">
-                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                            <button cButton color="info" variant="outline">Deploy Additional Bus</button> 
-                                            <button cButton color="primary" variant="outline">Change Driver</button> 
-                                        </div>
-                                    </c-col>
-                                </c-row>
-                            </c-card-body>
-                        </c-card>
-                    </c-tab-panel>
+          <c-tab-panel class="p-3" [itemKey]="0">
+            @for (dep of deployments; track dep.uid; let i = $index;) {
+              @switch (dep.current_status) {
+                @case ("Buffer Time") {
+                  <ng-container [ngTemplateOutlet]="BufferTimeCard"
+                  [ngTemplateOutletContext]="{dep: dep}"></ng-container>
                 }
-                @if (request.currentStatus == 'Ongoing' || request.currentStatus == 'Completed') {
-                    <c-tab-panel [itemKey]="0" class="p-3">
-                        @if (request.currentStatus == 'Ongoing') {
-                            <c-card [cBorder]="{top: {color: 'warning', width: 5}}">
-                                <c-card-body>
-                                    <c-row>
-                                        <c-col>
-                                            <h5 cCardTitile>Request {{ request.requestId }} <c-badge color="warning">{{ request.currentStatus }}</c-badge></h5>
-                                            <h6 cCardSubtitle class="mb-2 text-medium-emphasis">
-                                                Bus Service: {{ request.serviceNo }}
-                                            </h6>
-                                            <p cCardText>
-                                                Assigned Driver: {{ request.driverName }} <br>
-                                                Deployment started at: {{ request.dateTimeStart }}
-                                            </p>
-                                        </c-col>
-                                        <c-col class="align-self-end">
-                                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                                <button cButton color="info" variant="outline">Deploy Additional Bus</button> 
-                                            </div>
-                                        </c-col>
-                                    </c-row>
-                                </c-card-body>
-                            </c-card>
-                        } 
-                        @else {
-                            <c-card [cBorder]="{top: {color: 'success', width: 5}}">
-                                <c-card-body>
-                                    <c-row>
-                                        <c-col>
-                                            <h5 cCardTitile>Request {{ request.requestId }} <c-badge color="success">{{ request.currentStatus }}</c-badge></h5>
-                                            <h6 cCardSubtitle class="mb-2 text-medium-emphasis">
-                                                Bus Service: {{ request.serviceNo }}
-                                            </h6>
-                                            <p cCardText>
-                                                Assigned Driver: {{ request.driverName }} <br>
-                                                Deployment started at: {{ request.dateTimeStart }} <br>
-                                                Deployment completed at: {{ request.dateTimeEnd }}
-                                            </p>
-                                        </c-col>
-                                        <c-col class="align-self-end">
-                                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                                <button cButton color="info" variant="outline">Deploy Additional Bus</button> 
-                                            </div>
-                                        </c-col>
-                                    </c-row>
-                                </c-card-body>
-                            </c-card>
-                        }
-                    </c-tab-panel>
-                    <c-tab-panel [itemKey]="1" class="p-3">
-                        @if (request.currentStatus == 'Ongoing') {
-                            <c-card [cBorder]="{top: {color: 'warning', width: 5}}">
-                                <c-card-body>
-                                    <c-row>
-                                        <c-col>
-                                            <h5 cCardTitile>Request {{ request.requestId }} <c-badge color="warning">{{ request.currentStatus }}</c-badge></h5>
-                                            <h6 cCardSubtitle class="mb-2 text-medium-emphasis">
-                                                Bus Service: {{ request.serviceNo }}
-                                            </h6>
-                                            <p cCardText>
-                                                Assigned Driver: {{ request.driverName }} <br>
-                                                Deployment started at: {{ request.dateTimeStart }}
-                                            </p>
-                                        </c-col>
-                                        <c-col class="align-self-end">
-                                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                                <button cButton color="info" variant="outline">Deploy Additional Bus</button> 
-                                            </div>
-                                        </c-col>
-                                    </c-row>
-                                </c-card-body>
-                            </c-card>
-                        } 
-                        @else {
-                            <c-card [cBorder]="{top: {color: 'success', width: 5}}">
-                                <c-card-body>
-                                    <c-row>
-                                        <c-col>
-                                            <h5 cCardTitile>Request {{ request.requestId }} <c-badge color="success">{{ request.currentStatus }}</c-badge></h5>
-                                            <h6 cCardSubtitle class="mb-2 text-medium-emphasis">
-                                                Bus Service: {{ request.serviceNo }}
-                                            </h6>
-                                            <p cCardText>
-                                                Assigned Driver: {{ request.driverName }} <br>
-                                                Deployment started at: {{ request.dateTimeStart }} <br>
-                                                Deployment completed at: {{ request.dateTimeEnd }}
-                                            </p>
-                                        </c-col>
-                                        <c-col class="align-self-end">
-                                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                                <button cButton color="info" variant="outline">Deploy Additional Bus</button> 
-                                            </div>
-                                        </c-col>
-                                    </c-row>
-                                </c-card-body>
-                            </c-card>
-                        }
-                    </c-tab-panel>
+                @case ("Ongoing") {
+                  <ng-container [ngTemplateOutlet]="OngoingCard"
+                  [ngTemplateOutletContext]="{dep: dep}"></ng-container>
                 }
-                @if (request.currentStatus == 'Cancelled') {
-                    <c-tab-panel [itemKey]="0" class="p-3">
-                        <c-card [cBorder]="{top: {color: 'danger', width: 5}}">
-                            <c-card-body>
-                                <c-row>
-                                    <c-col>
-                                        <h5 cCardTitile>Request {{ request.requestId }} <c-badge color="danger">{{ request.currentStatus }}</c-badge></h5>
-                                        <h6 cCardSubtitle class="mb-2 text-medium-emphasis">
-                                            Bus Service: {{ request.serviceNo}}
-                                        </h6>
-                                        <p cCardText>
-                                            Assigned Driver: {{ request.driverName }} <br>
-                                        </p>
-                                    </c-col>
-                                    <c-col class="align-self-end">
-                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                            <button cButton color="info" variant="outline">Deploy Additional Bus</button> 
-                                        </div>
-                                    </c-col>
-                                </c-row>
-                            </c-card-body>
-                        </c-card>
-                    </c-tab-panel>
-                    <c-tab-panel [itemKey]="2" class="p-3">
-                        <c-card [cBorder]="{top: {color: 'danger', width: 5}}">
-                            <c-card-body>
-                                <c-row>
-                                    <c-col>
-                                        <h5 cCardTitile>Request {{ request.requestId }} <c-badge color="danger">{{ request.currentStatus }}</c-badge></h5>
-                                        <h6 cCardSubtitle class="mb-2 text-medium-emphasis">
-                                            Bus Service: {{ request.serviceNo}}
-                                        </h6>
-                                        <p cCardText>
-                                            Assigned Driver: {{ request.driverName }} <br>
-                                        </p>
-                                    </c-col>
-                                    <c-col class="align-self-end">
-                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                            <button cButton color="info" variant="outline">Deploy Additional Bus</button> 
-                                        </div>
-                                    </c-col>
-                                </c-row>
-                            </c-card-body>
-                        </c-card>
-                    </c-tab-panel>
+                @case ("Completed") {
+                  <ng-container [ngTemplateOutlet]="CompletedCard"
+                  [ngTemplateOutletContext]="{dep: dep}"></ng-container>
                 }
+                @case ("Cancelled") {
+                  <ng-container [ngTemplateOutlet]="CancelledCard"
+                  [ngTemplateOutletContext]="{dep: dep}"></ng-container>
+                }
+              }
             }
+          </c-tab-panel>
+          <c-tab-panel class="p-3" [itemKey]="1">
+            @for (dep of deployments; track dep.uid; let i = $index;) {
+              @switch (dep.current_status) {
+                @case ("Buffer Time") {
+                  <ng-container *ngTemplateOutlet="BufferTimeCard; context: {dep: dep}"></ng-container>
+                }
+                @case ("Ongoing") {
+                  <ng-container *ngTemplateOutlet="OngoingCard; context: {dep: dep}"></ng-container>
+                }
+                @case ("Completed") {
+                  <ng-container *ngTemplateOutlet="CompletedCard; context: {dep: dep}"></ng-container>
+                }
+              }
+            }
+          </c-tab-panel>
+          <c-tab-panel class="p-3" [itemKey]="2">
+            @for (dep of deployments; track dep.uid; let i = $index;) {
+              @switch (dep.current_status) {
+                @case ("Cancelled") {
+                  <ng-container *ngTemplateOutlet="CancelledCard; context: {dep: dep}"></ng-container>
+                }
+              }
+            }
+          </c-tab-panel>
         </c-tabs-content>
       </c-tabs>
     </c-card-body>
 </c-card>
+
+<ng-template #BufferTimeCard let-dep="dep">
+  <c-card [cBorder]="{top: {color: 'secondary', width: 5}}">
+      <c-card-body>
+          <c-row>
+              <c-col>
+                  <h5 cCardTitle>Deployment #{{ dep.uid }} <c-badge color="secondary">{{ dep.current_status }}</c-badge></h5>
+                  <h6 cCardSubtitle class="mb-2 text-medium-emphasis">
+                      Bus Service: {{ dep.service_number }}
+                  </h6>
+                  <p cCardText>
+                      Assigned Driver: {{ dep.driver_name }} <br>
+                      Deployment will Start at: {{ dep.datetime_start }}
+                  </p>
+              </c-col>
+              <c-col class="align-self-end">
+                  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                      <button cButton color="primary" variant="outline">Change Driver</button>
+                  </div>
+                  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                      <button cButton color="danger" variant="outline">Cancel</button>
+                  </div>
+              </c-col>
+          </c-row>
+      </c-card-body>
+  </c-card>
+  <div class="p-2"></div>
+</ng-template>
+
+<ng-template #OngoingCard let-dep="dep">
+    <c-card [cBorder]="{top: {color: 'warning', width: 5}}">
+        <c-card-body>
+            <c-row>
+                <c-col>
+                    <h5 cCardTitle>Deployment #{{ dep.uid }} <c-badge color="secondary">{{ dep.current_status }}</c-badge></h5>
+                    <h6 cCardSubtitle class="mb-2 text-medium-emphasis">
+                        Bus Service: {{ dep.service_number }}
+                    </h6>
+                    <p cCardText>
+                        Assigned Driver: {{ dep.driver_name }} <br>
+                        Deployment Started at: {{ dep.datetime_start }}
+                    </p>
+                </c-col>
+            </c-row>
+        </c-card-body>
+    </c-card>
+  <div class="p-2"></div>
+</ng-template>
+
+<ng-template #CompletedCard let-dep="dep">
+    <c-card [cBorder]="{top: {color: 'success', width: 5}}">
+        <c-card-body>
+            <c-row>
+                <c-col>
+                    <h5 cCardTitle>Deployment #{{ dep.uid }} <c-badge color="secondary">{{ dep.current_status }}</c-badge></h5>
+                    <h6 cCardSubtitle class="mb-2 text-medium-emphasis">
+                        Bus Service: {{ dep.service_number }}
+                    </h6>
+                    <p cCardText>
+                        Assigned Driver: {{ dep.driver_name }} <br>
+                        Deployment Started at: {{ dep.datetime_start }} <br>
+                        Deployment Completed at: {{ dep.datetime_end }}
+                    </p>
+                </c-col>
+            </c-row>
+        </c-card-body>
+    </c-card>
+  <div class="p-2"></div>
+</ng-template>
+
+<ng-template #CancelledCard let-dep="dep">
+    <c-card [cBorder]="{top: {color: 'danger', width: 5}}">
+        <c-card-body>
+            <c-row>
+                <c-col>
+                    <h5 cCardTitle>Deployment #{{ dep.uid }} <c-badge color="secondary">{{ dep.current_status }}</c-badge></h5>
+                    <h6 cCardSubtitle class="mb-2 text-medium-emphasis">
+                        Bus Service: {{ dep.service_number }}
+                    </h6>
+                    <p cCardText>
+                        Assigned Driver: {{ dep.driver_name }} <br>
+                        Deployment Started at: {{ dep.datetime_start }} <br>
+                        Deployment Cancelled as at: {{ dep.datetime_end }}
+                    </p>
+                </c-col>
+            </c-row>
+        </c-card-body>
+    </c-card>
+  <div class="p-2"></div>
+</ng-template>

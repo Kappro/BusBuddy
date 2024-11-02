@@ -2,8 +2,8 @@ import { Component, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { DOCUMENT, NgStyle } from '@angular/common';
 import { ChartjsComponent } from '@coreui/angular-chartjs';
 import { IconDirective } from '@coreui/icons-angular';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink, ActivatedRoute } from '@angular/router';
+import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {RouterLink, ActivatedRoute, Router} from '@angular/router';
 import { AvatarComponent,
           ButtonGroupComponent,
           CardFooterComponent,
@@ -15,6 +15,8 @@ import { AvatarComponent,
           CardHeaderComponent, ContainerComponent, RowComponent, ColComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective,
           ModalModule} from '@coreui/angular';
 import * as L from 'leaflet';
+import {HttpClient} from "@angular/common/http";
+import {ApiService} from "../../../../../services/api.service";
 
 interface IBusStop {
   long: number;
@@ -60,36 +62,16 @@ L.Marker.prototype.options.icon = iconDefault;
 })
 export class DeleteRouteModalComponent implements AfterViewInit {
 
-  public routes: IRoute[] = [
-    {
-      routeId: 1,
-      serviceNumber: '179',
-      stopsList: [10000, 10001, 10002, 10003, 10004]
-    },
-    {
-      routeId: 2,
-      serviceNumber: '179a',
-      stopsList: [20000, 20001, 20002, 20003, 20004]
-    },
-    {
-      routeId: 3,
-      serviceNumber: '179b',
-      stopsList: [30000, 30001, 30002, 30003, 30004]
-    },
-    {
-      routeId: 4,
-      serviceNumber: '199',
-      stopsList: [40000, 40001, 40002, 40003, 40004]
-    }
-  ];
-
   private map!: L.Map;
 
-  public routeId:any;
+  public serviceNumber: string = "";
   display: boolean = false;
   public visible: boolean = false;
-  @Output() visibilityChange = new EventEmitter<boolean>();
+  public availableStops: any[] = [];
+  public stops: any[] = [];
+  @Output() closedModal = new EventEmitter<void>();
   private markersLayer = new L.LayerGroup();
+  public deleteRouteForm: FormGroup;
 
   public initMap(): void {
     this.map = L.map('mapdel', {
@@ -110,36 +92,28 @@ export class DeleteRouteModalComponent implements AfterViewInit {
     }, 500);
   }
 
-  constructor() {
-
-  }
-
-  ngOnInit() {
-
+  constructor(private http: HttpClient,
+              private api: ApiService,
+              private formbuilder: FormBuilder,
+              private router: Router) {
+    this.deleteRouteForm = this.formbuilder.group({
+      inputBusStops: ['']
+    })
   }
 
   ngAfterViewInit(): void {
 
   }
 
-  public inputStopsMap(inputBusStops: string):void {
-
-    var array = inputBusStops.split(',');
+  private updateStopsMapWithList(stops: any[]): void {
     this.markersLayer.clearLayers();
 
-    var busStops: { [code: string]: IBusStop; } = {
-      "10000": {lat: 1.347764, long: 103.680274},
-      "10001": {lat: 1.347477, long: 103.679489}
-    };
-
-    for(var i=0; i < array.length; i++) {
-      array[i] = array[i].replace(/^\s*/, "").replace(/\s*$/, "");
-      if(busStops[array[i]] != null) {
-        const marker = L.marker([busStops[array[i]].lat,busStops[array[i]].long]);
-        var num:Number = i+1;
-        marker.bindPopup("Bus Stop " + num + "<br>Bus Stop Code: " + array[i]);
-        this.markersLayer.addLayer(marker);
-      }
+    for(let i=0; i < stops.length; i++) {
+      let busStop = this.availableStops.find((stop) => stop.stop_code === stops[i]);
+      const marker = L.marker([busStop.latitude,busStop.longitude]);
+      let num:Number = i+1;
+      marker.bindPopup("Bus Stop " + num + "<br>Bus Stop Code: " + stops[i]);
+      this.markersLayer.addLayer(marker);
     }
     this.markersLayer.addTo(this.map);
   }
@@ -168,16 +142,32 @@ export class DeleteRouteModalComponent implements AfterViewInit {
 
   }
 
-  toggleVisibility() {
-    if(!this.visible) {this.initMap();}
+  toggleVisibility(stopsList?: any[]) {
+    if(!this.visible) {
+      this.initMap();
+      if(stopsList) {
+        this.updateStopsMapWithList(stopsList);
+      }
+    }
     this.visible = !this.visible;
   }
 
   clickClose() {
     this.map.off();
     this.map.remove();
-    (<HTMLFormElement>document.getElementById("delRouteForm")).reset();
+    this.deleteRouteForm.reset();
     this.visible = false;
+    this.closedModal.emit();
   }
 
+  onConfirm() {
+    this.http.post<any>(this.api.API_URL + "/services/delete", {'service_number': this.serviceNumber}).subscribe({
+        next: (message) => {
+          console.log(message);
+        },
+        error: (e) => {
+          console.log(e);
+        }
+      });
+  }
 }

@@ -1,0 +1,53 @@
+<c-modal size="lg" id="changeDriverModal" [visible]="visible" (visibleChange)="handleVisibilityChange($event)">
+  <c-modal-content>
+    <c-modal-header>
+      <h5 cModalTitle>Delete Stop</h5>
+      <button cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>
+      <h6 color="danger">Please confirm deletion of Stop {{ stop.stop_code }}.</h6>
+      <strong>Stop Name: </strong><p>{{ stop.stop_name }}</p>
+      <strong>Latitude: </strong><p>{{ stop.latitude }}</p>
+      <strong>Longitude: </strong><p>{{ stop.longitude }}</p>
+      <strong>Affected Services:</strong>
+      @for (service of stop.services; track service.service_number; let i = $index;) {
+        <p>Service {{ service.service_number }}</p>
+      }
+    </c-modal-body>
+    <c-modal-footer>
+      <div class="d-grid mb-3">
+        <c-row>
+          <c-col class="d-grid mb-3" [xs]>
+            <button cButton color="danger" variant="outline" [cModalToggle]="staticBackdropModal2del.id">Cancel</button>
+          </c-col>
+          <c-col class="d-grid mb-3" [xs]>
+            <button cButton color="primary"
+                    (click)="onConfirm()"
+                    [cModalToggle]="staticBackdropModal.id">Confirm</button>
+          </c-col>
+        </c-row>
+      </div>
+    </c-modal-footer>
+  </c-modal-content>
+</c-modal>
+
+<c-modal #staticBackdropModal backdrop="static" id="staticBackdropModal">
+  <c-modal-header>
+    <h5 cModalTitle>Delete Stop</h5>
+  </c-modal-header>
+  <c-modal-body>Delete Stop successful.</c-modal-body>
+  <c-modal-footer>
+    <button [cModalToggle]="staticBackdropModal.id" cButton color="success" variant="outline"
+    (click)="this.closedModal.emit()">Close</button>
+  </c-modal-footer>
+</c-modal>
+
+<c-modal #staticBackdropModal2del backdrop="static" id="staticBackdropModal2del">
+  <c-modal-header>
+    <h5 cModalTitle>Delete Stop</h5>
+  </c-modal-header>
+  <c-modal-body>Stop deletion cancelled.</c-modal-body>
+  <c-modal-footer>
+    <button [cModalToggle]="staticBackdropModal2del.id" cButton color="danger" variant="outline">Close</button>
+  </c-modal-footer>
+</c-modal>

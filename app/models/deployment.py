@@ -1,3 +1,5 @@
+from sqlalchemy import text
+
 from .shared import db
 from datetime import datetime, timedelta
 from enum import Enum
@@ -84,6 +86,7 @@ class Deployment(db.Model):
                       if (R.uid == int(driver_id))][0]
             driver.driver_status = DriverStatus.GOING_BUS
         db.session.add(self)
+        db.session.commit()
         db.session.add(DeploymentStatusLogEntry(self._uid, self._current_status))
         db.session.commit()
 
@@ -230,6 +233,16 @@ class Deployment(db.Model):
                 db.session.commit()
                 return
 
+    @property
+    def service_number(self):
+        bus = db.session.execute(text(f"SELECT * FROM busbuddy.bus WHERE license_plate='{self._bus_license_plate}'")).all()[0]
+        return bus.service_number
+
+    @property
+    def driver_name(self):
+        driver = db.session.execute(text(f"SELECT * FROM busbuddy.account WHERE id='{self._driver_id}'")).all()[0]
+        return driver.name
+
     def json(self):
         return {
             'driver_id': self._driver_id,
@@ -237,5 +250,7 @@ class Deployment(db.Model):
             'datetime_start': self._datetime_start,
             'datetime_end': self._datetime_end,
             'current_status': self._current_status.value,
-            'uid': self._uid
+            'uid': self._uid,
+            'service_number': self.service_number,
+            'driver_name': self.driver_name
         }

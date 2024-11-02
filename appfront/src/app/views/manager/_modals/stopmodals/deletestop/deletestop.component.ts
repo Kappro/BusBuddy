@@ -1,6 +1,6 @@
 import {Component, Injectable, OnInit, Output} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {ApiService} from "../../../../services/api.service";
+import {ApiService} from "../../../../../services/api.service";
 import {
   ButtonCloseDirective,
   ButtonDirective,
@@ -8,7 +8,7 @@ import {
   CardComponent,
   CardGroupComponent,
   CardTextDirective,
-  CardTitleDirective,
+  CardTitleDirective, ColComponent,
   ContainerComponent,
   FormControlDirective,
   InputGroupComponent,
@@ -19,15 +19,17 @@ import {
   ModalDialogComponent,
   ModalFooterComponent,
   ModalHeaderComponent,
-  ModalTitleDirective
+  ModalTitleDirective, ModalToggleDirective, RowComponent
 } from "@coreui/angular";
 import {IconDirective} from "@coreui/icons-angular";
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {EventEmitter} from "@angular/core";
 import {NgIf} from "@angular/common";
+import {Access} from "../../../../../_models/account";
+import {firstValueFrom} from "rxjs";
 
 @Component({
-  selector: 'app-changedrivermodal',
+  selector: 'app-deletestopmodal',
   standalone: true,
   imports: [
     ButtonDirective,
@@ -50,72 +52,52 @@ import {NgIf} from "@angular/common";
     CardTitleDirective,
     CardTextDirective,
     CardGroupComponent,
-    NgIf
+    NgIf,
+    ModalToggleDirective,
+    ColComponent,
+    RowComponent
   ],
-  templateUrl: './changedrivermodal.component.html',
-  styleUrl: './changedrivermodal.component.scss'
+  templateUrl: './deletestop.component.html',
+  styleUrl: './deletestop.component.scss'
 })
-export class ChangeDriverModalComponent implements OnInit {
+export class DeleteStopModalComponent implements OnInit {
   public visible = false;
-  // @ts-ignore
-  public users: any[];
-  // @ts-ignore
-  public filteredDrivers: any[];
-  public deployment: any = {};
-  // @ts-ignore
-  public searchDriver: FormGroup;
+  public stop: any = {
+    stop_code: "",
+    stop_name: "",
+    latitude: "",
+    longitude: "",
+    services: []
+  };
 
-  @Output() visibilityChange = new EventEmitter<boolean>();
+  @Output() closedModal = new EventEmitter<void>();
 
   constructor(private http: HttpClient,
-              private api: ApiService,
-              private formbuilder: FormBuilder) {
+              private api: ApiService
+              ) {
   }
 
   ngOnInit() {
-    this.http.get<any>(this.api.API_URL + "/drivers/get_all").subscribe({
-      next: (message) => {
-        this.users = message;
-        console.log(this.users);
-        this.filteredDrivers = this.users;
-      },
-      error: (e) => {
-        this.users = [];
-      }
-    });
-    this.searchDriver = this.formbuilder.group({
-      searchInput: ['']
-    })
+
   }
 
   toggleVisibility() {
     this.visible = !this.visible;
-    if (!this.visible) {
-      this.filteredDrivers = this.users;
-    }
   }
 
   handleVisibilityChange(event: any) {
     this.visible = event;
   }
 
-  search(event: any) {
-    const keyword = this.searchDriver.get('searchInput')?.value.toLowerCase();
-    this.filteredDrivers = this.users.filter(item => item.name.toLowerCase().includes(keyword));
-  }
-
-  changeDriver(deployment_uid: number, driver_uid: number) {
-    console.log(deployment_uid)
-    this.http.post<any>(this.api.API_URL + "/deployments/change_driver",
-      {"deployment_uid": String(deployment_uid),
-        "driver_uid": String(driver_uid)}).subscribe({
+  onConfirm() {
+    const params = {stop_code: this.stop.stop_code};
+    this.http.post<any>(this.api.API_URL + "/stops/delete", params).subscribe({
       next: (message) => {
         console.log(message);
-        location.reload();
       },
       error: (e) => {
         console.log(e);
       }
-    });
+    })
   }
 }

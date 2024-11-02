@@ -1,0 +1,82 @@
+<c-modal size="xl" id="changeDriverModal" [visible]="visible" (visibleChange)="handleVisibilityChange($event)">
+  <c-modal-content>
+    <c-modal-header>
+      <h5 cModalTitle>Add Stop</h5>
+      <button cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>
+      <form [formGroup]="addStopForm">
+        <c-input-group class="mb-3">
+          <span cInputGroupText>
+            <svg cIcon name="cilMagnifyingGlass"></svg>
+          </span>
+          <input cFormControl formControlName="stopCode"
+                 placeholder="Stop Code"
+                 name="stopCode"
+                 required
+          (input)="validateStopCode($event)"/>
+        </c-input-group>
+        <p style="color:red" *ngIf="!validities['codeNotEmpty']">* Stop code is empty!</p>
+        <p style="color:red" *ngIf="!validities['codeNumber']">* Please input a valid number!</p>
+        <p style="color:red" *ngIf="!validities['codeNotDuplicate']">* Stop code already exists!</p>
+        <c-input-group class="mb-3">
+          <span cInputGroupText>
+            <svg cIcon name="cilClipboard"></svg>
+          </span>
+          <input cFormControl formControlName="stopName"
+                 placeholder="Stop Name"
+                 name="stopName"
+                 required
+          (input)="validateStopName($event)"/>
+        </c-input-group>
+        <p style="color:red" *ngIf="!validities['name']">* Stop name is empty!</p>
+        <c-input-group class="mb-3">
+          <span cInputGroupText>
+            <svg cIcon name="cilLocationPin"></svg>
+          </span>
+          <input cFormControl formControlName="latitude"
+                 placeholder="Latitude"
+                 name="latitude"
+                 required
+          (input)="validateLatitude($event)"/>
+        </c-input-group>
+        <p style="color:red" *ngIf="!validities['lat']">* Please input a valid latitude!</p>
+        <c-input-group class="mb-3">
+          <span cInputGroupText>
+            <svg cIcon name="cilLocationPin"></svg>
+          </span>
+          <input cFormControl formControlName="longitude"
+                 placeholder="Longitude"
+                 name="longitude"
+                 required
+          (input)="validateLongitude($event)"/>
+        </c-input-group>
+        <p style="color:red" *ngIf="!validities['long']">* Please input a valid latitude!</p>
+        <div class="d-grid">
+          <button cButton
+                  color="danger"
+                  *ngIf="!valid"
+                  disabled>Create Stop</button>
+          <button cButton type="submit"
+                  color="success"
+                  *ngIf="valid"
+                  (click)="onSubmit()"
+                  [cModalToggle]="staticBackdropModaladd.id">Create Stop</button>
+        </div>
+      </form>
+    </c-modal-body>
+    <c-modal-footer>
+    </c-modal-footer>
+  </c-modal-content>
+</c-modal>
+
+<c-modal #staticBackdropModaladd backdrop="static" id="staticBackdropModaladd">
+  <c-modal-header>
+    <h5 cModalTitle>Add Route</h5>
+  </c-modal-header>
+  <c-modal-body>Add Route creation successful.</c-modal-body>
+  <c-modal-footer>
+    <button [cModalToggle]="staticBackdropModaladd.id" cButton color="success" variant="outline"
+    (click)="this.closedModal.emit()">Close</button>
+  </c-modal-footer>
+</c-modal>

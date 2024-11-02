@@ -1,9 +1,9 @@
 import { Component, AfterViewInit, Output, EventEmitter } from '@angular/core';
-import { DOCUMENT, NgStyle } from '@angular/common';
+import {DOCUMENT, NgIf, NgStyle} from '@angular/common';
 import { ChartjsComponent } from '@coreui/angular-chartjs';
 import { IconDirective } from '@coreui/icons-angular';
-import { RouterLink, ActivatedRoute } from '@angular/router';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {RouterLink, ActivatedRoute, Router} from '@angular/router';
+import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AvatarComponent, ModalModule, ButtonCloseDirective,
           ButtonGroupComponent,
           CardFooterComponent,
@@ -14,11 +14,8 @@ import { AvatarComponent, ModalModule, ButtonCloseDirective,
           TableDirective, FormLabelDirective, FormSelectDirective, FormCheckComponent, FormCheckInputDirective, ColDirective,
           CardHeaderComponent, ContainerComponent, RowComponent, ColComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective } from '@coreui/angular';
 import * as L from 'leaflet';
-
-interface IBusStop {
-  long: number;
-  lat: number;
-}
+import {HttpClient} from "@angular/common/http";
+import {ApiService} from "../../../../../services/api.service";
 
 interface IRoute {
   routeId: number,
@@ -45,51 +42,32 @@ L.Marker.prototype.options.icon = iconDefault;
     templateUrl: './editroute.component.html',
     styleUrls: ['./editroute.component.scss'],
     standalone: true,
-    imports: [ReactiveFormsModule, ChartjsComponent, AvatarComponent, NgStyle,
-      ButtonGroupComponent, RouterLink, ModalModule, ButtonCloseDirective,
-      CardFooterComponent,
-      FormCheckLabelDirective,
-      GutterDirective,
-      ProgressBarDirective,
-      ProgressComponent,
-      TableDirective,
-      FormDirective, InputGroupComponent, InputGroupTextDirective, FormControlDirective, FormLabelDirective, FormSelectDirective, FormCheckComponent, FormCheckInputDirective, ColDirective,
-      CardHeaderComponent, ContainerComponent, RowComponent, ColComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent, InputGroupTextDirective, IconDirective, FormControlDirective, ButtonDirective]
+  imports: [ReactiveFormsModule, ChartjsComponent, AvatarComponent, NgStyle,
+    ButtonGroupComponent, RouterLink, ModalModule, ButtonCloseDirective,
+    CardFooterComponent,
+    FormCheckLabelDirective,
+    GutterDirective,
+    ProgressBarDirective,
+    ProgressComponent,
+    TableDirective,
+    FormDirective, InputGroupComponent, InputGroupTextDirective, FormControlDirective, FormLabelDirective, FormSelectDirective, FormCheckComponent, FormCheckInputDirective, ColDirective,
+    CardHeaderComponent, ContainerComponent, RowComponent, ColComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent, InputGroupTextDirective, IconDirective, FormControlDirective, ButtonDirective, NgIf]
 })
 export class EditRouteModalComponent implements AfterViewInit {
 
   private map!: L.Map;
 
-  public routeId: any;
+  public serviceNumber: string = "";
   public visible: boolean = false;
-  public oldStops: any = "";
-  public newStops: any = "";
+  public currentStops: any[] = [];
+  public oldStops: any[] = [];
+  public availableStops: any[] = [];
+  public valid: boolean = false;
+  public editRouteForm: FormGroup;
+  public invalid: any[] = [];
 
   display: boolean = false;
-  @Output() visibilityChange = new EventEmitter<boolean>();
-
-  public routes: IRoute[] = [
-    {
-      routeId: 1,
-      serviceNumber: '179',
-      stopsList: [10000, 10001, 10002, 10003, 10004]
-    },
-    {
-      routeId: 2,
-      serviceNumber: '179a',
-      stopsList: [20000, 20001, 20002, 20003, 20004]
-    },
-    {
-      routeId: 3,
-      serviceNumber: '179b',
-      stopsList: [30000, 30001, 30002, 30003, 30004]
-    },
-    {
-      routeId: 4,
-      serviceNumber: '199',
-      stopsList: [40000, 40001, 40002, 40003, 40004]
-    }
-  ];
+  @Output() closedModal = new EventEmitter<void>();
 
   private markersLayer = new L.LayerGroup();
 
@@ -112,44 +90,87 @@ export class EditRouteModalComponent implements AfterViewInit {
     }, 500);
   }
 
-  constructor() {
+  constructor(private http: HttpClient,
+              private api: ApiService,
+              private formbuilder: FormBuilder,
+              private router: Router) {
+    this.editRouteForm = this.formbuilder.group({
+      inputBusStops: ['']
+    })
+  }
+
+  ngAfterViewInit() {
 
   }
 
-  ngOnInit() {
-
-  }
-
-  ngAfterViewInit(): void {
-  }
-
-  public inputStopsMap(inputBusStops: string):void {
-
-    var array = inputBusStops.split(',');
+  private updateStopsMapWithList(stops: any[]): void {
     this.markersLayer.clearLayers();
 
-    var busStops: { [code: string]: IBusStop; } = {
-      "10000": {lat: 1.347764, long: 103.680274},
-      "10001": {lat: 1.347477, long: 103.679489}
-    };
-
-    for(var i=0; i < array.length; i++) {
-      array[i] = array[i].replace(/^\s*/, "").replace(/\s*$/, "");
-      if(busStops[array[i]] != null) {
-        const marker = L.marker([busStops[array[i]].lat,busStops[array[i]].long]);
-        var num:Number = i+1;
-        marker.bindPopup("Bus Stop " + num + "<br>Bus Stop Code: " + array[i]);
-        this.markersLayer.addLayer(marker);
-      }
+    for(let i=0; i < stops.length; i++) {
+      let busStop = this.availableStops.find((stop) => stop.stop_code === stops[i]);
+      const marker = L.marker([busStop.latitude,busStop.longitude]);
+      let num:Number = i+1;
+      marker.bindPopup("Bus Stop " + num + "<br>Bus Stop Code: " + stops[i]);
+      this.markersLayer.addLayer(marker);
     }
     this.markersLayer.addTo(this.map);
+  }
+
+  public inputStopsMap(event?: any):void {
+
+    let array = this.editRouteForm.get('inputBusStops')?.value.split(',');
+    this.markersLayer.clearLayers();
+
+    for(let i=0; i < array.length; i++) {
+      array[i] = array[i].replace(/^\s*/, "").replace(/\s*$/, "");
+      let busStop = this.availableStops.find((stop) => (stop.stop_code.toString()) === array[i]);
+      const marker = L.marker([busStop.latitude,busStop.longitude]);
+      let num:Number = i+1;
+      marker.bindPopup("Bus Stop " + num + "<br>Bus Stop Code: " + array[i]);
+      this.markersLayer.addLayer(marker);
+    }
+    this.markersLayer.addTo(this.map);
+  }
+
+
+  public checkStops(event: any) {
+    this.invalid = [];
+    let input = this.editRouteForm.get('inputBusStops')?.value;
+    if(input.length==0) {
+      return;
+    }
+    let array = input.split(',');
+
+    for(let i=0; i < array.length; i++) {
+      array[i] = array[i].replace(/^\s*/, "").replace(/\s*$/, "");
+      if(!this.availableStops.find((stop) => (stop.stop_code.toString()) === array[i])) {
+        this.invalid.push({'id': i, 'stop_code': array[i]});
+      }
+    }
+    this.valid = (this.invalid.length == 0);
+  }
+
+  onSubmit() {
+    this.currentStops = this.editRouteForm.get('inputBusStops')?.value.split(',');
 
   }
 
-  public setBusStopConfirmationPopup(oldStops:string, newStops:string):void {
-    this.oldStops = oldStops;
-    this.newStops = newStops;
-    this.display = true;
+  onConfirm() {
+    let service = this.serviceNumber;
+    let stops = this.currentStops;
+
+    let params = {
+      service: service,
+      new_stops: stops
+    }
+    this.http.post<any>(this.api.API_URL + "/services/edit", params).subscribe({
+        next: (message) => {
+          console.log(message);
+        },
+        error: (e) => {
+          console.log(e);
+        }
+      })
   }
 
   handleVisibilityChange(event: any) {
@@ -177,16 +198,22 @@ export class EditRouteModalComponent implements AfterViewInit {
 
   }
 
-  toggleVisibility() {
-    if(!this.visible) {this.initMap();}
+  toggleVisibility(stopsList?: any[]) {
+    if(!this.visible) {
+      this.initMap();
+      if(stopsList) {
+        this.updateStopsMapWithList(stopsList);
+      }
+    }
     this.visible = !this.visible;
   }
 
   clickClose() {
     this.map.off();
     this.map.remove();
-    (<HTMLFormElement>document.getElementById("editRouteForm")).reset();
+    this.editRouteForm.reset();
     this.visible = false;
+    this.closedModal.emit()
   }
 
 }

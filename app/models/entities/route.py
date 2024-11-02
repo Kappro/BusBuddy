@@ -1,5 +1,8 @@
+from sqlalchemy import text
+
 from ..shared import db
 from .load import Load
+
 
 service_stop_connection = db.Table('service_bus_stops', db.Model.metadata,
                                     db.Column('service_number', db.String(10), db.ForeignKey('services.service_number')),
@@ -35,8 +38,9 @@ class Service(db.Model):
 
     @property
     def stops(self) -> list:
-        stops_list = [_get_bus_stop(R) for R in db.session.execute(db.select(service_stop_connection)).scalars().all()
-                           if R.service_number == self.service_number]
+        db_stops = db.session.execute(text(f"SELECT * FROM busbuddy.service_bus_stops WHERE service_number='{self.service_number}'")).all()
+        stops_list = [_get_bus_stop(R[1]) for R in db_stops]
+        print(stops_list)
         return stops_list
 
     def add_stop(self, stop_code, sequence_number):
@@ -44,6 +48,15 @@ class Service(db.Model):
                            .values(service_number=self.service_number,
                                    bus_stop_code=stop_code,
                                    sequence_number=sequence_number))
+        db.session.commit()
+
+    def clear_stops(self):
+        db.session.execute(text(f"DELETE FROM busbuddy.service_bus_stops WHERE service_number='{self.service_number}'"))
+        db.session.commit()
+
+    def delete(self):
+        self.clear_stops()
+        db.session.execute(text(f"DELETE FROM busbuddy.service WHERE service_number='{self.service_number}'"))
         db.session.commit()
 
     def json(self):
@@ -71,7 +84,7 @@ class Stop(db.Model):
         db.session.commit()
 
     def __repr__(self):
-        return f'<Stop {self.name}>'
+        return f'<Stop {self.stop_name}>'
 
     @property
     def current_load(self):
@@ -83,11 +96,20 @@ class Stop(db.Model):
         self._current_load = new_load
         db.session.commit()
 
+    @property
+    def services(self) -> list:
+        return db.session.execute(text(f"SELECT * FROM busbuddy.service WHERE stop_code='{self.stop_code}'")).all()
+
     def add_service(self, service_number, sequence_number):
         db.session.execute(db.insert(service_stop_connection)
                            .values(service_number=service_number,
                                    bus_stop_code=self.stop_code,
                                    sequence_number=sequence_number))
+        db.session.commit()
+
+    def delete(self):
+        db.session.execute(text(f"DELETE FROM busbuddy.service_bus_stops WHERE bus_stop_code = '{self.stop_code}'"))
+        db.session.execute(text(f"DELETE FROM busbuddy.bus_stop WHERE stop_code = '{self.stop_code}'"))
         db.session.commit()
 
     def json(self):

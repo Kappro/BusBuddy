@@ -40,9 +40,9 @@
                           <c-col class="align-self-end">
                               <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                   <a cButton color="info" variant="outline"
-                                  (click)="viewEditRouteModal()">Edit</a>
+                                  (click)="viewEditRouteModal(service.service_number)">Edit</a>
                                   <a cButton color="danger" variant="outline"
-                                  (click)="viewDeleteRouteModal()">Delete</a>
+                                  (click)="viewDeleteRouteModal(service.service_number)">Delete</a>
                               </div>
                           </c-col>
                       </c-row>
@@ -51,16 +51,39 @@
             }
           </c-tab-panel>
           <c-tab-panel [itemKey]="1" class="p-3">
-            @for (stop of stops; track stop.stop_code; let i = $index;) {
+            <c-col></c-col>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a cButton (click)="viewAddStopModal()" color="primary">Add Stop</a>
+            </div>
+            <form [formGroup]="searchStop">
+              <h5>Filter:</h5>
+              <c-input-group class="mb-3">
+                <span cInputGroupText>
+                  <svg cIcon name="cilClipboard"></svg>
+                </span>
+                <input cFormControl formControlName="searchInput"
+                       placeholder="Enter stop code or name"
+                       name="searchInput" required (input)="search($event)"/>
+              </c-input-group>
+            </form>
+            @for (stop of filteredStops; track stop.stop_code; let i = $index;) {
               <c-card [cBorder]="{top: {color: 'secondary', width: 3}}">
                 <c-card-header>
                   <h5 cCardTitle>Stop {{ stop.stop_code }} - {{stop.stop_name}}</h5>
                 </c-card-header>
                   <c-card-body>
+                    <c-row>
                       <c-col>
                         <p cCardText>Latitude: {{ stop.latitude }}</p>
                         <p cCardText>Longitude: {{ stop.longitude }} </p>
                       </c-col>
+                      <c-col class="align-self-end">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a cButton color="danger" variant="outline"
+                         (click)="viewDeleteStopModal(stop.stop_code)">Delete</a>
+                        </div>
+                      </c-col>
+                    </c-row>
                   </c-card-body>
               </c-card><div class="mb-2"></div>
             }
@@ -70,6 +93,8 @@
     </c-card-body>
 </c-card>
 
-<app-addroutemodal></app-addroutemodal>
-<app-editroutemodal></app-editroutemodal>
-<app-deleteroutemodal></app-deleteroutemodal>
+<app-addroutemodal (closedModal)="refresh()"></app-addroutemodal>
+<app-editroutemodal (closedModal)="refresh()"></app-editroutemodal>
+<app-deleteroutemodal (closedModal)="refresh()"></app-deleteroutemodal>
+<app-addstopmodal (closedModal)="refresh()"></app-addstopmodal>
+<app-deletestopmodal (closedModal)="refresh()"></app-deletestopmodal>

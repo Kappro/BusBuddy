@@ -61,7 +61,7 @@ export class AddRouteModalComponent implements AfterViewInit {
   public empty: boolean = true;
   public invalid: any[] = [];
 
-  @Output() visibilityChange = new EventEmitter<boolean>();
+  @Output() closedModal = new EventEmitter<void>();
 
   public initMap(): void {
     this.map = L.map('map', {
@@ -176,6 +176,7 @@ export class AddRouteModalComponent implements AfterViewInit {
     this.map.remove();
     this.addRouteForm.reset();
     this.visible = false;
+    this.closedModal.emit()
   }
 
 }

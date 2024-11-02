@@ -1,9 +1,12 @@
+import logging
+
 from flask import Flask, request, jsonify, render_template, redirect, url_for, session
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, current_user
 from hashlib import sha256
 import os
 from dotenv import load_dotenv
+from sqlalchemy import text
 
 from models.utils import last_duty, get_bus, get_account, get_bus_stop, get_deployment, \
     get_driver_deployment_history, get_service
@@ -28,6 +31,8 @@ DATABASE_HOST = os.environ.get("HOST")
 
 # initialize flask application
 app = Flask(__name__)
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://'+DATABASE_USER+':'+DATABASE_PASSWORD+'@localhost:'+DATABASE_HOST+'/busbuddy'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -35,6 +40,7 @@ app.config['JWT_TOKEN_LOCATION'] = ['headers']
 app.config['JWT_SECRET_KEY'] = 'jwtjwtjwtjwt123123123123'
 app.secret_key = 'DEV_KEY'
 db.init_app(app)
+
 jwt = JWTManager(app)
 
 @app.route('/')
@@ -176,6 +182,18 @@ def change_driver():
         return jsonify({'message': f'Change Driver Success, New Deployment Created'}), 201
     return 401
 
+@app.route('/api/deployments/check_new', methods=['GET'])
+@jwt_required()
+def check_new_requests():
+    if current_user.access == AccountAccess.MANAGER:
+        deployments = db.session.execute(text(f"SELECT * FROM busbuddy.deployment_log WHERE current_status='PREDEPLOYMENT'")).all()
+        if len(deployments) > 0:
+            return jsonify({'message': True}), 201
+        else:
+            return jsonify({'message': False}), 201
+    else:
+        return 401
+
 @app.route('/api/deployments/get_new', methods=['GET'])
 @jwt_required()
 def get_new_requests():
@@ -191,6 +209,15 @@ def get_new_requests():
                   'datetime_start': R.datetime_start,
                   'current_status': R.current_status
                 } for R in deployments], 201
+    else:
+        return 401
+
+@app.route('/api/deployments/get_all', methods=['GET'])
+@jwt_required()
+def get_all_deployments():
+    if current_user.access == AccountAccess.MANAGER:
+        deployments = [R.json() for R in db.session.execute(db.select(Deployment)).scalars().all()]
+        return deployments, 201
     else:
         return 401
 
@@ -233,6 +260,51 @@ def get_stops_by_service():
     else:
         return 401
 
+@app.route('/api/stops/create', methods=['POST'])
+@jwt_required()
+def create_stop():
+    if current_user.access == AccountAccess.MANAGER:
+        data = request.get_json()
+        stop_code = data.get('stop_code')
+        stop_name = data.get('stop_name')
+        latitude = data.get('latitude')
+        longitude = data.get('longitude')
+        Stop(stop_code, stop_name, latitude, longitude)
+        return jsonify({'message': f'Stop {stop_code} Created Successfully'}), 201
+    else:
+        return 401
+
+@app.route('/api/stops/get_stop_details', methods=['POST'])
+@jwt_required()
+def get_stop_details():
+    if current_user.access == AccountAccess.MANAGER:
+        data = request.get_json()
+        stop_code = data.get('stop_code')
+        stop = get_bus_stop(stop_code)
+        service_list = db.session.execute(text(f"SELECT * FROM busbuddy.service_bus_stops WHERE bus_stop_code='{stop_code}'")).all()
+        message = {
+            'stop_code': stop.stop_code,
+            'stop_name': stop.stop_name,
+            'latitude': stop.latitude,
+            'longitude': stop.longitude,
+            'services': [R.json() for R in service_list]
+        }
+        return jsonify(message), 201
+    else:
+        return 401
+
+@app.route('/api/stops/delete', methods=['POST'])
+@jwt_required()
+def delete_stop():
+    if current_user.access == AccountAccess.MANAGER:
+        data = request.get_json()
+        stop_code = data.get('stop_code')
+        stop = get_bus_stop(stop_code)
+        stop.delete()
+        return jsonify({'message': f'Stop {stop_code} Deleted Successfully'}), 201
+    else:
+        return 401
+
 @app.route('/api/services/get_all', methods=['GET'])
 @jwt_required()
 def get_all_services():
@@ -254,6 +326,31 @@ def add_service():
             for i in range(len(stops)):
                 service.add_stop(stops[i], i+1)
         return jsonify({'message': f'Service Added Successfully'}), 201
+    else:
+        return 401
+
+@app.route('/api/services/edit', methods=['POST'])
+@jwt_required()
+def edit_service():
+    if current_user.access == AccountAccess.MANAGER:
+        data = request.get_json()
+        service = get_service(data.get('service'))
+        new_stops = data.get('new_stops')
+        service.clear_stops()
+        for i in range(len(new_stops)):
+            service.add_stop(new_stops[i], i+1)
+        return jsonify({'message': f'Service Edited Successfully'}), 201
+    else:
+        return 401
+
+@app.route('/api/services/delete', methods=['POST'])
+@jwt_required()
+def delete_service():
+    if current_user.access == AccountAccess.MANAGER:
+        data = request.get_json()
+        service = get_service(data.get('service_number'))
+        service.delete()
+        return jsonify({'message': f'Service Deleted Successfully'}), 201
     else:
         return 401
 

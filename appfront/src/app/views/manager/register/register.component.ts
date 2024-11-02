@@ -86,6 +86,7 @@ export class RegisterComponent {
 
   validateUsername(event: any) {
     this.validities['username'] = (this.register.get('username')?.value.length > 0);
+    this.valid = this.checkValidity();
   }
 
   validateContact(event: any) {
