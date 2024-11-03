@@ -1,0 +1,88 @@
+<div class="d-flex fkex-row align-items-center mb-3">
+    <c-container>
+        <c-row class="justify-content-center">
+            <c-col>
+                <h4>Your Deployments: </h4>
+                <br/>
+                <!-- No deployments -->
+                @if(deployment == null)
+                {
+                    <c-col class="mx-4">
+                        <c-widget-stat-b
+                          title="No deployment currently"
+                          class="mb-4"
+                          text="There are no deployments assigned to you currently."
+                        >
+                          <br><br>
+                          <c-progress class="my-2" thin [value]="0" color="primary" />
+                        </c-widget-stat-b>
+                    </c-col>
+                }
+                <!-- Have deployments -->
+                @else
+                {
+                    <c-card class="mx-4">
+                        <c-card-body class="p-4">
+                            <h2 cCardTitle>Current Deployment</h2>
+                            <h6 cCardSubtitle class="mb-2 text-medium-emphasis">
+                                You are activated for a deployment.
+                            </h6>
+                            <hr/>
+                            <h5>Deployment Details:</h5>
+                            <br/>
+                            <form cForm name="deploymentDetails">
+                                <c-row>
+                                    <c-col [xs]>
+                                        <label cLabel for="busService">Bus Service</label>
+                                        <input cFormControl
+                                            id="busService"
+                                            disabled
+                                            style="background-color:transparent;"
+                                            [value] = "detailsBusService"
+                                        />
+                                    </c-col>
+                                    <c-col [xs]>
+                                        <label cLabel for="licPlate">Bus License Plate</label>
+                                        <input cFormControl
+                                            id="licPlate"
+                                            disabled
+                                            style="background-color:transparent;"
+                                            [value] = "detailsBusLicensePlate"
+                                        />
+                                    </c-col>
+                                    <c-col [xs]>
+                                        <label cLabel for="curStatus">Current Status</label>
+                                        <input cFormControl
+                                            id="curStatus"
+                                            disabled
+                                            style="background-color:transparent;"
+                                            [value] = "detailsBusCurrentStatus"
+                                        />
+                                    </c-col>
+                                </c-row>
+                            </form>
+                            <br/>
+                            <c-row>
+                                <label cLabel>Route</label>
+                                <div class="mb-3">
+                                    <div id="map"></div>
+                                </div>
+                            </c-row>
+                            <hr/>
+                            <c-row>
+                                <div style="text-align: center">
+                                    <p id="startDriveInfo">
+                                        Click 'Start Drive' once you are ready to start the drive.
+                                    </p>
+                                </div>
+                                <c-col class="d-grid mb-3 justify-content-md-center" [xs]>
+                                    <button cButton (click)="startDriveBtn()" type="submit" id="startDriveBtn">Start Drive</button>
+                                </c-col>
+                            </c-row>
+                        </c-card-body>
+                    </c-card>   
+                }
+            </c-col>
+        </c-row>
+    </c-container>
+</div>  

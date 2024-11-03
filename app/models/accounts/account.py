@@ -84,6 +84,7 @@ class Account(db.Model):
     def json(self):
         if self._access == AccountAccess.MANAGER:
             return {
+                'uid': self.uid,
                 'name': self.name,
                 'password_hashed': self._password_hashed,
                 'email': self.email,
@@ -93,6 +94,7 @@ class Account(db.Model):
             }
         else:
             return {
+                'uid': self.uid,
                 'name': self.name,
                 'password_hashed': self._password_hashed,
                 'email' : self.email,

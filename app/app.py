@@ -32,7 +32,7 @@ DATABASE_HOST = os.environ.get("HOST")
 # initialize flask application
 app = Flask(__name__)
 log = logging.getLogger('werkzeug')
-log.setLevel(logging.ERROR)
+# log.setLevel(logging.ERROR)
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://'+DATABASE_USER+':'+DATABASE_PASSWORD+'@localhost:'+DATABASE_HOST+'/busbuddy'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -140,6 +140,22 @@ def get_driver_history_by_uid():
         driver = get_account(uid)
         if driver:
             return get_driver_deployment_history(driver), 201
+    return 401
+
+@app.route('/api/drivers/get_current_deployment', methods=['POST'])
+@jwt_required()
+def get_current_deployment():
+    if current_user.access == AccountAccess.DRIVER:
+        data = request.get_json()
+        uid = data.get('uid')
+        deployment = db.session.execute(text(f"SELECT * FROM busbuddy.deployment_log "+\
+                                             f"WHERE ACCOUNT_id='{uid}' "+\
+                                             f"AND (current_status='BUFFER_TIME' "+\
+                                             f"OR current_status='ONGOING')")).all()
+        if deployment:
+            return deployment.json(), 201
+        else:
+            return {}, 201
     return 401
 
 @app.route('/api/deployments/early_approve', methods=['POST'])

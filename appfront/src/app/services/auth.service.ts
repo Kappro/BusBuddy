@@ -62,7 +62,7 @@ export class AuthService {
   }
 
   async retrieveIdentity() {
-    let account = new Account("bad", "bad", "bad", Access.BADACCOUNT, new Date(0));
+    let account = new Account(-1, "bad", "bad", "bad", Access.BADACCOUNT, new Date(0));
     if(!this.isLoggedIn) {
       return account;
     }
@@ -71,7 +71,8 @@ export class AuthService {
       let access = Access.BADACCOUNT;
       if(stream.type=="MANAGER") {access = Access.MANAGER}
       else if(stream.type=="DRIVER") {access = Access.DRIVER}
-      account = new Account(stream.name,
+      account = new Account(+stream.uid,
+        stream.name,
         stream.password_hashed,
         stream.email,
         access,

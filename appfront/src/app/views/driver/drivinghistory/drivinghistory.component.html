@@ -1,0 +1,45 @@
+<div class="d-flex fkex-row align-items-center mb-3">
+    <c-container>
+        <c-row class="justify-content-center">
+            <c-col>
+                <h4>Your Driving History: </h4>
+                <br/>
+
+                <table
+                    [hover]="true"
+                    [responsive]="true"
+                    [striped]="true"
+                    align="middle"
+                    cTable
+                    class="mb-0 border">
+                    <thead class="text-nowrap text-truncate">
+                    <tr>
+                        <th class="bg-body-tertiary">Deployed Bus</th>
+                        <th class="bg-body-tertiary">Status</th>
+                        <th class="bg-body-tertiary">Datetime Started</th>
+                        <th class="bg-body-tertiary">Datetime Ended</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        @for (dep of history; track dep.uid; let i = $index) {
+                        <tr>
+                            <td>
+                            <div>{{ dep.bus_license_plate }}</div>
+                            </td>
+                            <td>
+                            <div>{{ dep.current_status }}</div>
+                            </td>
+                            <td>
+                            <div>{{ dep.datetime_start }}</div>
+                            </td>
+                            <td>
+                            <div>{{ dep.datetime_end }}</div>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </c-col>
+        </c-row>
+    </c-container>
+</div>

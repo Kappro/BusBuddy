@@ -12,6 +12,7 @@ export enum Access {
 }
 
 export class Account {
+  uid: number;
   name: string;
   password_hashed: string;
   email: string;
@@ -19,7 +20,8 @@ export class Account {
   driver_status?: DriverStatus;
   datetime_registered: Date;
 
-  constructor(name: string, password_hashed: string, email: string, access: Access, datetime_registered: Date, driver_status?: DriverStatus) {
+  constructor(uid: number, name: string, password_hashed: string, email: string, access: Access, datetime_registered: Date, driver_status?: DriverStatus) {
+    this.uid = uid;
     this.name = name;
     this.password_hashed = password_hashed;
     this.email = email;

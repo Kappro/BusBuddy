@@ -47,6 +47,17 @@ export class LoginComponent {
                 }
               );
             }
+            else if(account.access==Access.DRIVER) {
+              this.router.navigate(['driver']).then(
+                result => {
+                  console.log("Redirect "+result);
+                }
+              ).catch(
+                error => {
+                  console.error("Redirect failed "+error);
+                }
+              );
+            }
           }
         );
       },

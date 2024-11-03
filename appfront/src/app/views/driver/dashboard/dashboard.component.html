@@ -1,0 +1,107 @@
+<div class="d-flex fkex-row align-items-center mb-3">
+    <c-container>
+        <c-row class="justify-content-center">
+            <c-col>
+                <h4>Welcome, Bus Driver.</h4>
+                <br/>
+                <c-card class="mx-4">
+                    <c-card-body class="p-4">
+                        <h2 cCardTitle>Announcements</h2>
+                        <h6 cCardSubtitle class="mb-2 text-medium-emphasis">
+                            View all the latest announcement here
+                        </h6>
+                        <br>
+                        <div class="mb-3">
+                            <c-row>
+                                @if(slides[0].id == -1)
+                                {
+                                    <p>
+                                        No Announcements currently.
+                                    </p>
+                                }
+                                @else
+                                {
+                                    <c-carousel [dark]="true">
+                                        <c-carousel-indicators></c-carousel-indicators>
+                                        <c-carousel-inner>
+                                          <c-carousel-item *ngFor="let slide of slides">
+                                            <img cImg
+                                              alt="{{slide.title}}"
+                                              class="d-block w-100"
+                                              loading="lazy"
+                                              src="{{slide.src}}"
+                                            />
+                                            <c-carousel-caption class="d-none d-md-block">
+                                              <h3>{{slide.title}}</h3>
+                                              <p>{{slide.subtitle}}</p>
+                                            </c-carousel-caption>
+                                          </c-carousel-item>
+                                        </c-carousel-inner>
+                                        <c-carousel-control [routerLink] caption="Previous" direction="prev"></c-carousel-control>
+                                        <c-carousel-control [routerLink] caption="Next" direction="next"></c-carousel-control>
+                                    </c-carousel>
+                                }
+                            </c-row>
+                        </div>
+                        <div class="mb-3">
+                            <c-row>
+                                <c-col class="d-grid mb-3" [xs]>
+                                    <table cTable >
+                                    <thead cTableColor="dark">
+                                    <tr>
+                                      <th scope="col">#</th>
+                                      <th scope="col">Announcements</th>
+                                      <th scope="col"></th>
+                                      <th scope="col"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @for(s of slides; track s.id; let i = $index)
+                                    {
+                                        <tr>
+                                            <th scope="row">{{ s.id }}</th>
+                                            <td class="AnnTitle">{{ s.title }}</td>
+                                            <td class="AnnSubtitle">{{ s.subtitle }}</td>
+                                            <td><button cButton color="link" (click)="clickAnn(i)">Click here</button></td>
+                                          </tr>
+                                    }
+                                    </tbody>
+                                  </table>
+                                </c-col>
+                            </c-row>
+                        </div>
+                    </c-card-body>
+                </c-card>
+            </c-col>
+        </c-row>
+    </c-container>
+</div>
+
+<c-modal #staticBackdropModalAnn backdrop="static" id="staticBackdropModalAnn" [visible]="displayAnn" size="xl">
+    <c-modal-header>
+        <h5 cModalTitle>Announcement</h5>
+        <button cButtonClose (click)="closeAnn()"></button>
+    </c-modal-header>
+    <c-modal-body>
+        <div class="d-flex fkex-row align-items-center mb-3">
+            <c-container>
+                <c-row class="justify-content-center">
+                    <c-col>
+                        <img cImg [src]="imgSrc" align="center" class="ModalAnnImg" />
+                    </c-col>
+                </c-row>
+                <c-row class="justify-content-center">
+                    <c-col>
+                        <br/>
+                        <h5>Announcement text</h5>
+                        <p>
+                            Text here. Text here. Text here. Text here. Text here. Text here. adnxcuiahxcohxziojqiwqjidpaxk
+                        </p>
+                    </c-col>
+                </c-row>
+            </c-container>
+        </div>
+    </c-modal-body>
+    <c-modal-footer>
+    </c-modal-footer>
+</c-modal>

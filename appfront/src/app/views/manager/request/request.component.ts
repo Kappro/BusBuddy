@@ -86,6 +86,9 @@ export class RequestComponent implements OnInit {
       console.log('Modal component is available.')
     }
     const reqTimer = setInterval(() => {
+      if (this.router.url==='/login') {
+        clearInterval(reqTimer);
+      }
       this.http.get<any>(this.api.API_URL + "/deployments/check_new").subscribe({
         next: (message) => {
           if (message.message !== this.new) {

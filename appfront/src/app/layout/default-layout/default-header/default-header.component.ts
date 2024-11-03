@@ -1,11 +1,12 @@
 import { NgStyle, NgTemplateOutlet } from '@angular/common';
-import { Component, computed, inject, input } from '@angular/core';
+import {Component, computed, inject, input, OnInit} from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import {
+  AlignDirective,
   AvatarComponent,
   BadgeComponent,
-  BreadcrumbRouterComponent,
+  BreadcrumbRouterComponent, ColComponent,
   ColorModeService,
   ContainerComponent,
   DropdownComponent,
@@ -27,14 +28,20 @@ import {
 } from '@coreui/angular';
 
 import { IconDirective } from '@coreui/icons-angular';
+import {AuthService} from "../../../services/auth.service";
+import {Access} from "../../../_models/account";
 
 @Component({
   selector: 'app-default-header',
   templateUrl: './default-header.component.html',
   standalone: true,
-  imports: [ContainerComponent, HeaderTogglerDirective, SidebarToggleDirective, IconDirective, HeaderNavComponent, NavItemComponent, NavLinkDirective, RouterLink, RouterLinkActive, NgTemplateOutlet, BreadcrumbRouterComponent, ThemeDirective, DropdownComponent, DropdownToggleDirective, TextColorDirective, AvatarComponent, DropdownMenuDirective, DropdownHeaderDirective, DropdownItemDirective, BadgeComponent, DropdownDividerDirective, ProgressBarDirective, ProgressComponent, NgStyle]
+  imports: [ContainerComponent, HeaderTogglerDirective, SidebarToggleDirective, IconDirective, HeaderNavComponent,
+    NavItemComponent, NavLinkDirective, RouterLink, RouterLinkActive, NgTemplateOutlet, BreadcrumbRouterComponent,
+    ThemeDirective, DropdownComponent, DropdownToggleDirective, TextColorDirective, AvatarComponent, DropdownMenuDirective,
+    DropdownHeaderDirective, DropdownItemDirective, BadgeComponent, DropdownDividerDirective, ProgressBarDirective,
+    ProgressComponent, NgStyle, ColComponent, AlignDirective]
 })
-export class DefaultHeaderComponent extends HeaderComponent {
+export class DefaultHeaderComponent extends HeaderComponent implements OnInit {
 
   readonly #colorModeService = inject(ColorModeService);
   readonly colorMode = this.#colorModeService.colorMode;
@@ -50,8 +57,23 @@ export class DefaultHeaderComponent extends HeaderComponent {
     return this.colorModes.find(mode => mode.name === currentMode)?.icon ?? 'cilSun';
   });
 
-  constructor() {
+  public user: any;
+  public access: any = "Bad";
+
+  constructor(private auth: AuthService) {
     super();
+  }
+
+  ngOnInit() {
+    this.auth.retrieveIdentity().then(account => {
+      this.user = account;
+      if(this.user.access===Access.MANAGER) {
+      this.access = "Manager";
+      }
+      else if(this.user.access===Access.DRIVER) {
+        this.access = "Driver";
+      }
+    });
   }
 
   sidebarId = input('sidebar1');

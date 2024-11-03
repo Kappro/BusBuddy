@@ -3,7 +3,7 @@ import {AppComponent} from "./app.component";
 import {LoginComponent} from "./views/login/login.component";
 import {LoginGuardService, RoleGuardService} from "./services/auth.guard.service";
 import {Access} from "./_models/account";
-import {DefaultLayoutComponent} from "./layout";
+import {DefaultDriverLayoutComponent, DefaultManagerLayoutComponent} from "./layout";
 import {LogoutComponent} from "./services/logout.component";
 
 export const appRoutes: Routes = [
@@ -19,13 +19,23 @@ export const appRoutes: Routes = [
   },
   {
     path: 'manager',
-    component: DefaultLayoutComponent,
+    component: DefaultManagerLayoutComponent,
     data: {
       title: 'Manager',
       expectedRoles: [Access.MANAGER]
     },
     canActivate: [RoleGuardService],
     loadChildren: () => import("./views/manager/routes")
+  },
+  {
+    path: 'driver',
+    component: DefaultDriverLayoutComponent,
+    data: {
+      title: 'Driver',
+      expectedRoles: [Access.DRIVER]
+    },
+    canActivate: [RoleGuardService],
+    loadChildren: () => import("./views/driver/routes")
   },
   {
     path: 'logout',
