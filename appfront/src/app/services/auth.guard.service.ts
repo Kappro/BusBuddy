@@ -55,6 +55,7 @@ export const LoginGuardService: CanActivateFn = (
     return auth.retrieveIdentity().then(
       account => {
         if(account.access==Access.MANAGER) {return router.navigate(['manager'])}
+        else if(account.access===Access.DRIVER) {return router.navigate(['driver'])}
         else return true;
       }
     ).catch(

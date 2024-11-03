@@ -5,6 +5,7 @@ from enum import Enum
 
 class BusStatus(Enum):
     UNSERVICEABLE = "Unserviceable"
+    RESERVED = "Reserved"
     IN_DEPOT = "In Depot"
     TRAINING = "Training"
     ON_ROUTE = "On Route"
@@ -40,7 +41,7 @@ class Bus(db.Model):
     license_plate = db.Column('license_plate', db.String(10), primary_key=True)
     capacity = db.Column('capacity', db.Integer, nullable=False)
     _current_load = db.Column('current_load',db.Enum(Load), nullable=False, default=Load.LOW)
-    service_number = db.Column(db.String(10), db.ForeignKey('services.service_number'), nullable=True)
+    service_number = db.Column(db.String(10), db.ForeignKey('service.service_number'), nullable=True)
     _current_status = db.Column('current_status',db.Enum(BusStatus), nullable=False, default=BusStatus.IN_DEPOT)
     status_log = db.relationship('BusStatusLogEntry', backref='bus', lazy=True)
 

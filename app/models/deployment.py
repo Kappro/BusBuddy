@@ -1,5 +1,8 @@
+from time import sleep
+
 from sqlalchemy import text
 
+from .entities.route import Service
 from .shared import db
 from datetime import datetime, timedelta
 from enum import Enum
@@ -10,6 +13,7 @@ class DeploymentStatus(Enum):
     PREDEPLOYMENT = "Predeployment"
     BUFFER_TIME = "Buffer Time"
     ONGOING = "Ongoing"
+    RETURNING = "Returning"
     COMPLETED = "Completed"
     CANCELLED = "Cancelled"
 
@@ -69,6 +73,7 @@ class Deployment(db.Model):
     _current_status = db.Column('current_status', db.Enum(DeploymentStatus), nullable=False)
     status_log = db.relationship('DeploymentStatusLogEntry', backref='deployment_log', lazy='dynamic')
     _uid = db.Column('uid', db.Integer, unique=True, nullable=False, autoincrement=True)
+    current_stop = db.Column('current_stop', db.Integer, nullable=False)
 
     __table_args__ = (db.PrimaryKeyConstraint(_driver_id,
                                               _bus_license_plate,
@@ -78,16 +83,26 @@ class Deployment(db.Model):
     def __init__(self, driver_id, bus_license_plate, current_status=DeploymentStatus.PREDEPLOYMENT):
         self._driver_id = int(driver_id)
         self._bus_license_plate = bus_license_plate
-        self._datetime_start = datetime.now() + timedelta(seconds=30)
+        datetime_start = datetime.now() + timedelta(seconds=30)
+        self._datetime_start = datetime_start
         self._datetime_end = None
         self._current_status = current_status
+        self.current_stop = -1
         if current_status==DeploymentStatus.PREDEPLOYMENT:
             driver = [R for R in db.session.execute(db.select(Account)).scalars().all()
                       if (R.uid == int(driver_id))][0]
             driver.driver_status = DriverStatus.GOING_BUS
+            bus = [R for R in db.session.execute(db.select(Bus)).scalars().all()
+                   if (R.license_plate == self._bus_license_plate)][0]
+            bus.current_status = BusStatus.RESERVED
         db.session.add(self)
         db.session.commit()
-        db.session.add(DeploymentStatusLogEntry(self._uid, self._current_status))
+        dep = db.session.execute(
+            text(f"SELECT * FROM busbuddy.deployment_log "+\
+                 f"WHERE (ACCOUNT_id='{driver_id}' "+\
+                 f"AND BUS_license_plate='{bus_license_plate}' "+\
+                 f"AND current_status='{current_status.name}')")).all()[0]
+        db.session.add(DeploymentStatusLogEntry(dep.uid, current_status))
         db.session.commit()
 
     def __repr__(self):
@@ -151,12 +166,43 @@ class Deployment(db.Model):
     def cancel(self):
         if self._current_status == DeploymentStatus.PREDEPLOYMENT or self._current_status == DeploymentStatus.BUFFER_TIME:
             self.new_status(DeploymentStatus.CANCELLED)
-            driver = [R for R in db.session.execute(db.select(Account)).scalars().all()
-                      if (R.uid == self._driver_id)][0]
-            driver.driver_status = DriverStatus.ON_BREAK
             self._datetime_end = datetime.now()
             if self._datetime_start < self._datetime_end:
                 self._datetime_start = self._datetime_end
+            db.session.commit()
+            return True
+        else:
+            return False
+
+    def start_drive(self):
+        if self._current_status == DeploymentStatus.BUFFER_TIME:
+            self.new_status(DeploymentStatus.ONGOING)
+            self.current_stop = 1
+            db.session.commit()
+            return True
+        else:
+            return False
+
+    def complete_stop(self):
+        if self._current_status == DeploymentStatus.ONGOING:
+            self.current_stop += 1
+            db.session.commit()
+            return True
+        else:
+            return False
+
+    def complete(self):
+        if self._current_status == DeploymentStatus.ONGOING:
+            self.new_status(DeploymentStatus.RETURNING)
+            self._datetime_end = datetime.now()
+            db.session.commit()
+            return True
+        else:
+            return False
+
+    def return_bus(self):
+        if self._current_status == DeploymentStatus.RETURNING:
+            self.new_status(DeploymentStatus.COMPLETED)
             db.session.commit()
             return True
         else:
@@ -169,6 +215,7 @@ class Deployment(db.Model):
             if (
                     new_status == DeploymentStatus.PREDEPLOYMENT or
                     new_status == DeploymentStatus.ONGOING or
+                    new_status == DeploymentStatus.RETURNING or
                     new_status == DeploymentStatus.COMPLETED
                 ):
                 raise InvalidStatusChangeException('Deployment in predeployment can only be cancelled or put into buffer time.')
@@ -177,6 +224,8 @@ class Deployment(db.Model):
                 self._current_status = DeploymentStatus.CANCELLED
                 db.session.add(DeploymentStatusLogEntry(self._uid,
                                                         self._current_status))
+                [R for R in db.session.execute(db.select(Bus)).scalars().all()
+                 if R.license_plate == self._bus_license_plate][0].current_status = BusStatus.IN_DEPOT
                 db.session.commit()
                 return
             elif new_status == DeploymentStatus.BUFFER_TIME:
@@ -191,9 +240,10 @@ class Deployment(db.Model):
             if (
                     new_status == DeploymentStatus.PREDEPLOYMENT or
                     new_status == DeploymentStatus.BUFFER_TIME or
+                    new_status == DeploymentStatus.RETURNING or
                     new_status == DeploymentStatus.COMPLETED
                 ):
-                raise InvalidStatusChangeException('Deployment in predeployment can only be cancelled or put ongoing.')
+                raise InvalidStatusChangeException('Deployment in buffer time can only be cancelled or put ongoing.')
             elif new_status == DeploymentStatus.CANCELLED:
                 self._datetime_end = datetime.now()
                 self._current_status = DeploymentStatus.CANCELLED
@@ -201,6 +251,8 @@ class Deployment(db.Model):
                                                         self._current_status))
                 [R for R in db.session.execute(db.select(Account)).scalars().all()
                  if R.uid == self._driver_id][0].driver_status = DriverStatus.ON_BREAK
+                [R for R in db.session.execute(db.select(Bus)).scalars().all()
+                 if R.license_plate == self._bus_license_plate][0].current_status = BusStatus.IN_DEPOT
                 db.session.commit()
                 return
             elif new_status == DeploymentStatus.ONGOING:
@@ -218,9 +270,28 @@ class Deployment(db.Model):
                     new_status == DeploymentStatus.PREDEPLOYMENT or
                     new_status == DeploymentStatus.BUFFER_TIME or
                     new_status == DeploymentStatus.ONGOING or
+                    new_status == DeploymentStatus.COMPLETED or
                     new_status == DeploymentStatus.CANCELLED
                 ):
-                raise InvalidStatusChangeException('Deployment in predeployment can only be completed.')
+                raise InvalidStatusChangeException('Deployment in ongoing can only be put to returning.')
+            elif new_status == DeploymentStatus.RETURNING:
+                self._datetime_end = datetime.now()
+                self._current_status = DeploymentStatus.RETURNING
+                db.session.add(DeploymentStatusLogEntry(self._uid,
+                                                        self._current_status))
+                [R for R in db.session.execute(db.select(Bus)).scalars().all()
+                 if R.license_plate == self._bus_license_plate][0].current_status = BusStatus.RETURNING
+                db.session.commit()
+                return
+        elif self._current_status == DeploymentStatus.RETURNING:
+            if (
+                    new_status == DeploymentStatus.PREDEPLOYMENT or
+                    new_status == DeploymentStatus.BUFFER_TIME or
+                    new_status == DeploymentStatus.ONGOING or
+                    new_status == DeploymentStatus.RETURNING or
+                    new_status == DeploymentStatus.CANCELLED
+                ):
+                raise InvalidStatusChangeException('Deployment in returning can only be completed.')
             elif new_status == DeploymentStatus.COMPLETED:
                 self._datetime_end = datetime.now()
                 self._current_status = DeploymentStatus.COMPLETED
@@ -232,6 +303,7 @@ class Deployment(db.Model):
                  if R.license_plate == self._bus_license_plate][0].current_status = BusStatus.IN_DEPOT
                 db.session.commit()
                 return
+
 
     @property
     def service_number(self):
@@ -252,5 +324,6 @@ class Deployment(db.Model):
             'current_status': self._current_status.value,
             'uid': self._uid,
             'service_number': self.service_number,
-            'driver_name': self.driver_name
+            'driver_name': self.driver_name,
+            'current_stop': self.current_stop
         }

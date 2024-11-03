@@ -1,88 +1,176 @@
 <div class="d-flex fkex-row align-items-center mb-3">
-    <c-container>
-        <c-row class="justify-content-center">
-            <c-col>
-                <h4>Your Deployments: </h4>
-                <br/>
-                <!-- No deployments -->
-                @if(deployment == null)
-                {
-                    <c-col class="mx-4">
-                        <c-widget-stat-b
-                          title="No deployment currently"
-                          class="mb-4"
-                          text="There are no deployments assigned to you currently."
-                        >
-                          <br><br>
-                          <c-progress class="my-2" thin [value]="0" color="primary" />
-                        </c-widget-stat-b>
-                    </c-col>
-                }
-                <!-- Have deployments -->
-                @else
-                {
-                    <c-card class="mx-4">
-                        <c-card-body class="p-4">
-                            <h2 cCardTitle>Current Deployment</h2>
-                            <h6 cCardSubtitle class="mb-2 text-medium-emphasis">
-                                You are activated for a deployment.
-                            </h6>
-                            <hr/>
-                            <h5>Deployment Details:</h5>
-                            <br/>
-                            <form cForm name="deploymentDetails">
-                                <c-row>
-                                    <c-col [xs]>
-                                        <label cLabel for="busService">Bus Service</label>
-                                        <input cFormControl
-                                            id="busService"
-                                            disabled
-                                            style="background-color:transparent;"
-                                            [value] = "detailsBusService"
-                                        />
-                                    </c-col>
-                                    <c-col [xs]>
-                                        <label cLabel for="licPlate">Bus License Plate</label>
-                                        <input cFormControl
-                                            id="licPlate"
-                                            disabled
-                                            style="background-color:transparent;"
-                                            [value] = "detailsBusLicensePlate"
-                                        />
-                                    </c-col>
-                                    <c-col [xs]>
-                                        <label cLabel for="curStatus">Current Status</label>
-                                        <input cFormControl
-                                            id="curStatus"
-                                            disabled
-                                            style="background-color:transparent;"
-                                            [value] = "detailsBusCurrentStatus"
-                                        />
-                                    </c-col>
-                                </c-row>
-                            </form>
-                            <br/>
-                            <c-row>
-                                <label cLabel>Route</label>
-                                <div class="mb-3">
-                                    <div id="map"></div>
-                                </div>
-                            </c-row>
-                            <hr/>
-                            <c-row>
-                                <div style="text-align: center">
-                                    <p id="startDriveInfo">
-                                        Click 'Start Drive' once you are ready to start the drive.
-                                    </p>
-                                </div>
-                                <c-col class="d-grid mb-3 justify-content-md-center" [xs]>
-                                    <button cButton (click)="startDriveBtn()" type="submit" id="startDriveBtn">Start Drive</button>
-                                </c-col>
-                            </c-row>
-                        </c-card-body>
-                    </c-card>   
-                }
-            </c-col>
-        </c-row>
-    </c-container>
-</div>  
+  <c-container>
+    <c-row class="justify-content-center">
+      <c-col>
+        <h4>Your Deployment: </h4>
+        <br/>
+        @if(exists==="loading") {
+          <c-spinner size="sm"/>
+          <strong>Loading...</strong>
+        }@else if(exists==="no")
+        {
+          <!-- No deployments -->
+          <c-col class="mx-4">
+            <c-widget-stat-b
+              title="No deployment currently"
+              class="mb-4"
+              text="There are no deployments assigned to you currently."
+            >
+              <br><br>
+              <c-progress class="my-2" thin [value]="0" color="primary" />
+            </c-widget-stat-b>
+          </c-col>
+        } @else {
+          <!-- Have deployments -->
+          <ng-container [ngTemplateOutlet]="BufferTimeCard"
+                        *ngIf="deployment.current_status==='Buffer Time'"></ng-container>
+          <ng-container [ngTemplateOutlet]="OngoingCard"
+                        *ngIf="deployment.current_status==='Ongoing'"></ng-container>
+          <ng-container [ngTemplateOutlet]="ReturningCard"
+                        *ngIf="deployment.current_status==='Returning'"></ng-container>
+        }
+      </c-col>
+    </c-row>
+  </c-container>
+</div>
+
+<ng-template #mapTemplate>
+  <div class="map-container">
+    <div class="map-frame">
+      <div id="map"></div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #deploymentDetailsTemplate>
+  <form cForm name="deploymentDetails">
+    <c-row>
+      <c-col [xs]>
+        <label cLabel for="busService">Bus Service</label>
+        <input cFormControl
+               id="busService"
+               disabled
+               style="background-color:transparent;"
+               [value] = "deployment.service_number"
+        />
+      </c-col>
+      <c-col [xs]>
+        <label cLabel for="licPlate">Bus License Plate</label>
+        <input cFormControl
+               id="licPlate"
+               disabled
+               style="background-color:transparent;"
+               [value] = "deployment.bus_license_plate"
+        />
+      </c-col>
+      <c-col [xs]>
+        <label cLabel for="nextStopName">Next Stop</label>
+        <input cFormControl
+               id="nextStopName"
+               disabled
+               style="background-color:transparent;"
+               [value] = "nextStopName"
+        />
+      </c-col>
+    </c-row>
+  </form>
+</ng-template>
+
+<ng-template #BufferTimeCard>
+  <c-card class="mx-4">
+    <c-card-body class="p-4">
+      <h2 cCardTitle>Current Deployment</h2>
+      <h6 cCardSubtitle class="mb-2 text-medium-emphasis">
+        You are activated for a deployment. Please go to the terminal stated in "Next Stop" to pick up the designated bus.
+      </h6>
+      <hr/>
+      <h5>Deployment Details:</h5>
+      <br/>
+        <ng-container [ngTemplateOutlet]="deploymentDetailsTemplate"></ng-container>
+      <br/>
+      <c-row>
+        <label cLabel>Route</label>
+        <ng-container [ngTemplateOutlet]="mapTemplate"></ng-container>
+      </c-row>
+      <hr/>
+      <c-row>
+        <div style="text-align: center">
+          <p>
+            Click 'Start Drive' once you are ready to start the drive.
+          </p>
+        </div>
+        <c-col class="d-grid mb-3 justify-content-md-center" [xs]>
+          <button cButton id="startDriveBtn" (click)="startDrive()">Start Drive</button>
+        </c-col>
+      </c-row>
+    </c-card-body>
+  </c-card>
+</ng-template>
+
+<ng-template #OngoingCard>
+  <c-card class="mx-4">
+    <c-card-body class="p-4">
+      <h2 cCardTitle>Current Deployment</h2>
+      <h6 cCardSubtitle class="mb-2 text-medium-emphasis">
+        You are currently on the road.
+      </h6>
+      <hr/>
+      <h5>Deployment Details:</h5>
+      <br/>
+        <ng-container [ngTemplateOutlet]="deploymentDetailsTemplate"></ng-container>
+      <br/>
+      <c-row>
+        <h5></h5>
+      </c-row>
+      <c-row>
+        <label cLabel>Route</label>
+        <ng-container [ngTemplateOutlet]="mapTemplate"></ng-container>
+      </c-row>
+      <hr/>
+      <c-row>
+        <div style="text-align: center">
+          <p id="startDriveInfo">
+            Click 'Next Stop' once you arrive at the next stop.
+          </p>
+        </div>
+        <c-col class="d-grid mb-3 justify-content-md-center" [xs]>
+          <button cButton id="nextStopBtn" (click)="nextStop()">Next Stop</button>
+        </c-col>
+      </c-row>
+    </c-card-body>
+  </c-card>
+</ng-template>
+
+<ng-template #ReturningCard>
+  <c-card class="mx-4">
+    <c-card-body class="p-4">
+      <h2 cCardTitle>Current Deployment</h2>
+      <h6 cCardSubtitle class="mb-2 text-medium-emphasis">
+        Please return the bus to the original position.
+      </h6>
+      <hr/>
+      <h5>Deployment Details:</h5>
+      <br/>
+        <ng-container [ngTemplateOutlet]="deploymentDetailsTemplate"></ng-container>
+      <br/>
+      <c-row>
+        <h5></h5>
+      </c-row>
+      <c-row>
+        <label cLabel>Route</label>
+        <ng-container [ngTemplateOutlet]="mapTemplate"></ng-container>
+      </c-row>
+      <hr/>
+      <c-row>
+        <div style="text-align: center">
+          <p id="endDriveInfo">
+            Click 'Returned' once you have parked the bus.
+          </p>
+        </div>
+        <c-col class="d-grid mb-3 justify-content-md-center" [xs]>
+          <button cButton id="endDriveBtn" (click)="endDrive()">Returned</button>
+        </c-col>
+      </c-row>
+    </c-card-body>
+  </c-card>
+</ng-template>

@@ -39,8 +39,8 @@ class Service(db.Model):
     @property
     def stops(self) -> list:
         db_stops = db.session.execute(text(f"SELECT * FROM busbuddy.service_bus_stops WHERE service_number='{self.service_number}'")).all()
-        stops_list = [_get_bus_stop(R[1]) for R in db_stops]
-        print(stops_list)
+        stops_list = sorted([R for R in db_stops], key=lambda stop: stop[2], reverse=False)
+        stops_list = [_get_bus_stop(R[1]) for R in stops_list]
         return stops_list
 
     def add_stop(self, stop_code, sequence_number):

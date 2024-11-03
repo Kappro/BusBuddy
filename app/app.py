@@ -134,13 +134,16 @@ def get_driver_by_uid():
 @app.route('/api/drivers/get_history_by_uid', methods=['POST'])
 @jwt_required()
 def get_driver_history_by_uid():
-    if current_user.access == AccountAccess.MANAGER:
-        data = request.get_json()
-        uid = data.get('driver_uid')
-        driver = get_account(uid)
-        if driver:
-            return get_driver_deployment_history(driver), 201
-    return 401
+    data = request.get_json()
+    uid = data.get('driver_uid')
+    driver = get_account(uid)
+    if driver:
+        if current_user.access == AccountAccess.DRIVER:
+            return [R for R in get_driver_deployment_history(driver)
+                    if (R['current_status']=="Completed" or R['current_status']=="Cancelled")], 201
+        return get_driver_deployment_history(driver), 201
+    else:
+        return {}, 201
 
 @app.route('/api/drivers/get_current_deployment', methods=['POST'])
 @jwt_required()
@@ -148,14 +151,17 @@ def get_current_deployment():
     if current_user.access == AccountAccess.DRIVER:
         data = request.get_json()
         uid = data.get('uid')
-        deployment = db.session.execute(text(f"SELECT * FROM busbuddy.deployment_log "+\
+        deployment_tuple = db.session.execute(text(f"SELECT * FROM busbuddy.deployment_log "+\
                                              f"WHERE ACCOUNT_id='{uid}' "+\
                                              f"AND (current_status='BUFFER_TIME' "+\
-                                             f"OR current_status='ONGOING')")).all()
-        if deployment:
-            return deployment.json(), 201
+                                             f"OR current_status='ONGOING' "+\
+                                             f"OR current_status='RETURNING')")).one_or_none()
+        if deployment_tuple:
+            deployment = db.get_or_404(Deployment, (deployment_tuple[0], deployment_tuple[1], deployment_tuple[2]))
+            stops = [R.json() for R in get_service(deployment.service_number).stops]
+            return jsonify({'deployment': deployment.json(), 'route': stops}), 201
         else:
-            return {}, 201
+            return jsonify({'deployment': {'uid': -1}}), 201
     return 401
 
 @app.route('/api/deployments/early_approve', methods=['POST'])
@@ -170,6 +176,59 @@ def early_approve():
         else:
             return jsonify({'message': "Approval Failed"}), 500
     return 401
+
+@app.route('/api/deployments/start_drive', methods=['POST'])
+@jwt_required()
+def start_drive():
+    if current_user.access == AccountAccess.DRIVER:
+        data = request.get_json()
+        uid = data.get('deployment_uid')
+        deployment = get_deployment(uid)
+        if deployment.start_drive():
+            return jsonify({'message': "Successfully Started"}), 201
+        else:
+            return jsonify({'message': "Failed to Start"}), 500
+    return 401
+
+@app.route('/api/deployments/reach_next_stop', methods=['POST'])
+@jwt_required()
+def reach_next_stop():
+    if current_user.access == AccountAccess.DRIVER:
+        data = request.get_json()
+        uid = data.get('deployment_uid')
+        deployment = get_deployment(uid)
+        if deployment.complete_stop():
+            return jsonify({'message': "Successfully At Next Stop"}), 201
+        else:
+            return jsonify({'message': "Failed to Go Next Stop"}), 500
+    return 401
+
+@app.route('/api/deployments/complete_deployment', methods=['POST'])
+@jwt_required()
+def complete_deployment():
+    if current_user.access == AccountAccess.DRIVER:
+        data = request.get_json()
+        uid = data.get('deployment_uid')
+        deployment = get_deployment(uid)
+        if deployment.complete():
+            return jsonify({'message': "Successfully Completed"}), 201
+        else:
+            return jsonify({'message': "Failed to Complete"}), 500
+    return 401
+
+@app.route('/api/deployments/return_bus', methods=['POST'])
+@jwt_required()
+def return_bus():
+    if current_user.access == AccountAccess.DRIVER:
+        data = request.get_json()
+        uid = data.get('deployment_uid')
+        deployment = get_deployment(uid)
+        if deployment.return_bus():
+            return jsonify({'message': 'Bus Returned to Depot'}), 201
+        else:
+            return jsonify({'message': 'Bus Return Failed'}), 500
+    else:
+        return 401
 
 @app.route('/api/deployments/cancel', methods=['POST'])
 @jwt_required()
