@@ -5,13 +5,17 @@ import { HttpClient } from "@angular/common/http";
 import {AuthService} from "../../services/auth.service";
 import {Router, ActivatedRoute} from "@angular/router";
 import {FormsModule} from "@angular/forms";
+import {TextColorDirective} from "@coreui/angular";
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   imports: [
-    FormsModule
+    FormsModule,
+    TextColorDirective,
+    NgIf
   ],
   standalone: true
 })
@@ -19,6 +23,7 @@ export class LoginComponent {
   email: string = '';
   password: string = '';
   access: string = '';
+  failed: boolean = false;
 
   constructor(private apiservice: ApiService,
               private http: HttpClient,
@@ -34,6 +39,9 @@ export class LoginComponent {
     };
     this.authservice.login(params).subscribe({
       next: (message) => {
+        if(message==='Error Logging In.') {
+          this.failed = true;
+        }
         this.authservice.retrieveIdentity().then(
           account => {
             if(account.access==Access.MANAGER) {
@@ -61,8 +69,8 @@ export class LoginComponent {
           }
         );
       },
-      error: (message) => {
-        console.log('Error ', message)
+      error: (e) => {
+        console.log('Error '+ e);
       }
     });
   }
