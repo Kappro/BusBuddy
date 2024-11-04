@@ -185,7 +185,11 @@ export class RequestComponent implements OnInit {
     }
   }
 
-  handleChangeDriverModalVisibility(visible: boolean) {
-    this.isChangingDriver = visible;
+  refresh() {
+    this.router.navigateByUrl('/',{skipLocationChange:true}).then(()=>{
+      this.router.navigate([this.router.url]).then(()=>{
+        console.log(`Refreshing ${this.router.url}`)
+      })
+    })
   }
 }

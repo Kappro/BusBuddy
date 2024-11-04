@@ -86,10 +86,12 @@
               </c-col>
               <c-col class="align-self-end">
                   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                      <button cButton color="primary" variant="outline">Change Driver</button>
+                      <button cButton color="primary" variant="outline"
+                      (click)="openChangeDriver(dep.uid)">Change Driver</button>
                   </div>
                   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                      <button cButton color="danger" variant="outline">Cancel</button>
+                      <button cButton color="danger" variant="outline"
+                      (click)="openCancelConfirmation(dep.uid)">Cancel</button>
                   </div>
               </c-col>
           </c-row>
@@ -159,3 +161,6 @@
     </c-card>
   <div class="p-2"></div>
 </ng-template>
+
+<app-changedrivermodal (closedModal)="refresh()"></app-changedrivermodal>
+<app-confirmcanceldeploymentmodal (closedModal)="refresh()"></app-confirmcanceldeploymentmodal>

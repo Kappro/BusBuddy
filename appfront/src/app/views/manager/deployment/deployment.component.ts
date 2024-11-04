@@ -1,4 +1,4 @@
-import {Component, Input, signal} from '@angular/core';
+import {Component, Input, signal, ViewChild} from '@angular/core';
 import { IconDirective } from '@coreui/icons-angular';
 import {
   BorderDirective,
@@ -26,6 +26,10 @@ import {ApiService} from "../../../services/api.service";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {NgTemplateOutlet} from "@angular/common";
+import {ChangeDriverModalComponent} from "../_modals/changedrivermodal/changedrivermodal.component";
+import {
+  ConfirmCancelDeploymentModalComponent
+} from "../_modals/confirmcanceldeployment/confirmcanceldeployment.component";
 
 interface IRequest {
   requestId: number,
@@ -46,11 +50,14 @@ interface IRequest {
   imports: [TabPanelComponent, TabDirective, BadgeModule,
     TabsComponent,
     TabsContentComponent,
-    TabsListComponent, BorderDirective, CardHeaderComponent, ContainerComponent, RowComponent, ColComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent, InputGroupTextDirective, IconDirective, FormControlDirective, ButtonDirective, CardTitleDirective, CardSubtitleDirective, CardTextDirective, NgTemplateOutlet]
+    TabsListComponent, BorderDirective, CardHeaderComponent, ContainerComponent, RowComponent, ColComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent, InputGroupTextDirective, IconDirective, FormControlDirective, ButtonDirective, CardTitleDirective, CardSubtitleDirective, CardTextDirective, NgTemplateOutlet, ChangeDriverModalComponent, ConfirmCancelDeploymentModalComponent]
 })
 export class DeploymentComponent {
 
   public deployments: any[] = [];
+
+  @ViewChild(ChangeDriverModalComponent) changeDriverModal!: ChangeDriverModalComponent;
+  @ViewChild(ConfirmCancelDeploymentModalComponent) cancelDeploymentModal!: ConfirmCancelDeploymentModalComponent;
 
   // 'driver_id': self._driver_id,
   // 'bus_license_plate': self._bus_license_plate,
@@ -78,6 +85,39 @@ export class DeploymentComponent {
 
   handleActiveItemChange(value: string | number | undefined) {
     this.activeItem.set(<number>value);
+  }
+
+  refresh() {
+    this.router.navigateByUrl('/',{skipLocationChange:true}).then(()=>{
+      this.router.navigate([this.router.url]).then(()=>{
+        console.log(`Refreshing ${this.router.url}`)
+      })
+    })
+  }
+
+  openChangeDriver(deployment_uid: number) {
+    if(this.changeDriverModal) {
+      this.http.post<any>(this.api.API_URL + "/deployments/get_by_uid", {'deployment_uid': String(deployment_uid)}).subscribe({
+        next: (message) => {
+          this.changeDriverModal.deployment = message;
+          console.log(this.changeDriverModal.deployment);
+          this.changeDriverModal.toggleVisibility();
+          console.log(this.changeDriverModal.visible);
+        },
+        error: (e) => {
+          console.log(e);
+        }
+      });
+    } else {
+      console.error("Modal component is not initialised");
+    }
+  }
+
+  openCancelConfirmation(deployment_uid: number) {
+    if(this.cancelDeploymentModal) {
+      this.cancelDeploymentModal.deployment_uid = deployment_uid;
+      this.cancelDeploymentModal.toggleVisibility();
+    }
   }
 
 }

@@ -51,6 +51,8 @@
                        required
                        (input)="validateRepeatPassword($event)"/>
               </c-input-group>
+              <p style="color:red"
+                  *ngIf="!validities['empty_password']">* Please enter a password!</p>
               <c-input-group class="mb-4">
                 <span cInputGroupText>
                   <svg cIcon name="cilLockLocked"></svg>

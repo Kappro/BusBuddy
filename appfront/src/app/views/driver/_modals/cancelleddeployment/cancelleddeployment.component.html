@@ -1,0 +1,15 @@
+<c-modal size="xl" id="changeDriverModal" [visible]="visible" (visibleChange)="handleVisibilityChange($event)">
+  <c-modal-content>
+    <c-modal-header>
+      <h5 cModalTitle>New Deployment</h5>
+    </c-modal-header>
+    <c-modal-body>
+      <h6>Your deployment has been cancelled. You are no longer required for this deployment.</h6>
+    </c-modal-body>
+    <c-modal-footer>
+      <c-col>
+       <button cButton color="primary" (click)="close()">Understood</button>
+      </c-col>
+    </c-modal-footer>
+  </c-modal-content>
+</c-modal>

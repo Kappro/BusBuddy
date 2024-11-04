@@ -144,6 +144,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
 
     public mapInitialised = false;
     public inited = false;
+    public loadingMap = false;
 
     public map!: L.Map;
     public markersLayer = new L.LayerGroup();
@@ -173,6 +174,9 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     }
 
     public inputStopsMap():void {
+      if(!this.loadingMap) {
+        this.loadingMap = true;
+      }
       this.markersLayer.clearLayers();
 
       for(let i=0; i < this.route.length; i++) {
@@ -186,14 +190,16 @@ export class OverviewComponent implements OnInit, AfterViewInit {
         this.markersLayer.addLayer(marker);
       }
       this.markersLayer.addTo(this.map);
+      this.loadingMap = false;
     }
 
     refresh(): void {
+      if(this.router.url!=='/driver/overview') {
+        return;
+      }
       this.auth.retrieveIdentity().then(account => {
-        const params = {uid: account.uid};
-        this.http.post<any>(this.api.API_URL + "/drivers/get_current_deployment", params).subscribe({
+        this.http.get<any>(this.api.API_URL + "/drivers/get_current_deployment").subscribe({
           next: (message) => {
-            console.log(message);
             if(message.deployment.uid === -1) {
               if(this.mapInitialised) {
                 this.map.off();
@@ -274,7 +280,10 @@ export class OverviewComponent implements OnInit, AfterViewInit {
         next: (message) => {
           console.log(message);
           this.refresh();
-          setTimeout(() => {this.inputStopsMap();}, 1000);
+          setTimeout(() => {
+            this.loadingMap = true;
+            this.inputStopsMap();
+          }, 1000);
         },
         error: (e) => {
           console.log(e);
@@ -286,6 +295,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
       this.http.post<any>(this.api.API_URL + "/deployments/return_bus", {deployment_uid: this.deployment.uid}).subscribe({
         next: (message) => {
           console.log(message);
+          this.loadingMap = true;
           this.refresh();
           setTimeout(() => {this.inputStopsMap();}, 1000);
         },

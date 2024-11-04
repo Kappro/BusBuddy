@@ -22,7 +22,8 @@ export class RegisterComponent {
     'username': false,
     'email': false,
     'contact': false,
-    'repeat_password': false
+    'repeat_password': false,
+    'empty_password': false
   }
   public valid = false;
   public success = false;
@@ -33,7 +34,8 @@ export class RegisterComponent {
       'username': false,
       'email': false,
       'contact': false,
-      'repeat_password': false
+      'repeat_password': false,
+      'empty_password': false
     }
     this.valid = false;
     this.success = false;
@@ -68,7 +70,8 @@ export class RegisterComponent {
         'username': false,
         'email': false,
         'contact': false,
-        'repeat_password': false
+        'repeat_password': false,
+        'empty_password': false
       }
     }
   }
@@ -103,6 +106,7 @@ export class RegisterComponent {
 
   validateRepeatPassword(event: any) {
     this.validities['repeat_password'] = (this.register.get('password')?.value == this.register.get('confirm_password')?.value);
+    this.validities['empty_password'] = (this.register.get('password')?.value.length > 0);
     this.valid = this.checkValidity();
   }
 }

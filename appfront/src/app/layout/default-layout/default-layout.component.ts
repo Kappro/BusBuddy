@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {Route, Router, RouterLink, RouterOutlet} from '@angular/router';
 import { NgScrollbar } from 'ngx-scrollbar';
 
@@ -21,8 +21,12 @@ import {JwtHelperService} from "@auth0/angular-jwt";
 import {timer} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {ApiService} from "../../services/api.service";
-import {Access} from "../../_models/account";
-import {AuthService} from "../../services/auth.service";
+import {
+  NewDeploymentModalComponent
+} from "../../views/driver/_modals/newdeployment/newdeployment.component";
+import {
+  CancelledDeploymentModalComponent
+} from "../../views/driver/_modals/cancelleddeployment/cancelleddeployment.component";
 
 function isOverflown(element: HTMLElement) {
   return (
@@ -51,7 +55,9 @@ function isOverflown(element: HTMLElement) {
     ShadowOnScrollDirective,
     ContainerComponent,
     RouterOutlet,
-    DefaultFooterComponent
+    DefaultFooterComponent,
+    NewDeploymentModalComponent,
+    CancelledDeploymentModalComponent
   ]
 })
 export class DefaultManagerLayoutComponent implements OnInit {
@@ -95,6 +101,10 @@ export class DefaultManagerLayoutComponent implements OnInit {
     }, 1000);
   }
 
+  startInterval() {
+
+  }
+
   onScrollbarUpdate($event: any) {
     // if ($event.verticalUsed) {
     // console.log('verticalUsed', $event.verticalUsed);
@@ -122,11 +132,18 @@ export class DefaultManagerLayoutComponent implements OnInit {
     ShadowOnScrollDirective,
     ContainerComponent,
     RouterOutlet,
-    DefaultFooterComponent
+    DefaultFooterComponent,
+    NewDeploymentModalComponent,
+    CancelledDeploymentModalComponent
   ]
 })
-export class DefaultDriverLayoutComponent implements OnInit {
+export class DefaultDriverLayoutComponent implements AfterViewInit {
+
+  @ViewChild(NewDeploymentModalComponent) newDeploymentNotif!: NewDeploymentModalComponent;
+  @ViewChild(CancelledDeploymentModalComponent) cancelledDeploymentNotif!: CancelledDeploymentModalComponent;
+
   public navItems = navItemsDriver;
+  public lastStatus = "";
 
   constructor(private http: HttpClient,
               private api: ApiService,
@@ -134,8 +151,41 @@ export class DefaultDriverLayoutComponent implements OnInit {
               private router: Router) {
   }
 
-  ngOnInit() {
+  startInterval() {
+    const dvrInt = setInterval(() => {
+      if (this.router.url==='/login') {
+        clearInterval(dvrInt);
+      }
+      this.http.get<any>(this.api.API_URL + "/drivers/get_current_deployment").subscribe({
+        next: (message) => {
+          console.log(this.lastStatus);
+          if(message.deployment.uid!==-1) {
+            if(this.lastStatus==="") {
+              this.newDeploymentNotif.toggleVisibility();
+              this.lastStatus = message.deployment.current_status;
+              clearInterval(dvrInt);
+            }
+            else if(message.deployment.current_status==='Buffer Time') {
+              this.lastStatus = 'Buffer Time';
+            }
+          }
+          else {
+            if(this.lastStatus==='Buffer Time') {
+              this.cancelledDeploymentNotif.toggleVisibility();
+              clearInterval(dvrInt);
+            }
+            this.lastStatus = "";
+          }
+        },
+        error: (e) => {
+          console.log(e);
+        }
+      })
+    }, 1000);
+  }
 
+  ngAfterViewInit() {
+    this.startInterval();
   }
 
   onScrollbarUpdate($event: any) {

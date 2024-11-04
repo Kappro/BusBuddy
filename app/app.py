@@ -1,5 +1,4 @@
 import logging
-
 from flask import Flask, request, jsonify, render_template, redirect, url_for, session
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, current_user
@@ -145,14 +144,12 @@ def get_driver_history_by_uid():
     else:
         return {}, 201
 
-@app.route('/api/drivers/get_current_deployment', methods=['POST'])
+@app.route('/api/drivers/get_current_deployment', methods=['GET'])
 @jwt_required()
 def get_current_deployment():
     if current_user.access == AccountAccess.DRIVER:
-        data = request.get_json()
-        uid = data.get('uid')
         deployment_tuple = db.session.execute(text(f"SELECT * FROM busbuddy.deployment_log "+\
-                                             f"WHERE ACCOUNT_id='{uid}' "+\
+                                             f"WHERE ACCOUNT_id='{current_user.uid}' "+\
                                              f"AND (current_status='BUFFER_TIME' "+\
                                              f"OR current_status='ONGOING' "+\
                                              f"OR current_status='RETURNING')")).one_or_none()
@@ -540,43 +537,123 @@ def add_service_to_stop():
   available_stops = [R for R in db.session.execute(db.select(Stop)).scalars().all()]
   return render_template('add_service_to_stop.html', available_services=available_services, available_stops=available_stops)
 
-@app.route('/priv1', methods=['GET'])
-def __private_func():
-    with open("D:/NTU Projects/SC2006/179route", "r") as f:
-        thing = json.load(f)
+@app.route('/forads/services/get', methods=['GET'])
+def ads_get_services():
+    services = [R.service_number for R in db.session.execute(db.select(Service)).scalars().all()]
+    return jsonify({'services': services}), 201
 
-    routes = [{"stop_code": R['BusStopCode'], "sequence_number": R['StopSequence']} for R in thing['value'] if
-              R['ServiceNo'] == '179']
+@app.route('/forads/deployments/progresses_by_service', methods=['POST'])
+def ads_get_all_progress():
+    deployments = [R for R in db.session.execute(db.select(Deployment)).scalars().all()
+                   if (R.current_status==DeploymentStatus.ONGOING.value or R.current_status==DeploymentStatus.RETURNING.value)]
+    data = request.get_json()
+    service_number = data['service_number']
+    service_deployments = [R for R in deployments if R.service_number==service_number]
+    if len(service_deployments)==0:
+        return jsonify({'stops_left': []}), 201
+    progresses = [int(R.current_stop) for R in service_deployments]
+    return jsonify({'progresses': progresses}), 201
 
-    urlbase = "https://datamall2.mytransport.sg/ltaodataservice/BusStops?$skip="
+@app.route('/forads/deployments/stops_left_by_service', methods=['POST'])
+def ads_get_all_stops_left():
+    deployments = [R for R in db.session.execute(db.select(Deployment)).scalars().all()
+                   if (R.current_status==DeploymentStatus.ONGOING.value or
+                       R.current_status==DeploymentStatus.PREDEPLOYMENT.value or
+                       R.current_status==DeploymentStatus.BUFFER_TIME.value)]
+    data = request.get_json()
+    service_number = data['service_number']
+    service_deployments = [R for R in deployments if R.service_number==service_number]
+    if len(service_deployments)==0:
+        return jsonify({'stops_left': []}), 201
+    service = [R for R in db.session.execute(db.select(Service)).scalars().all()
+               if R.service_number==service_number][0]
+    total_stops = len(service.stops)
+    stops_left = []
+    for R in service_deployments:
+        if int(R.current_stop) == -1:
+            stops_left.append(total_stops)
+        else:
+            stops_left.append(total_stops - int(R.current_stop))
+    return jsonify({'stops_left': stops_left}), 201
 
-    payload = {}
-    headers = {
-        'AccountKey': 'WhxR8Z/nSgu+Yj804DZVpA== '
-    }
+@app.route('/forads/services/get_high_loads', methods=['POST'])
+def ads_get_high_loads():
+    service_number = request.get_json()['service_number']
+    service = [R for R in db.session.execute(db.select(Service)).scalars().all()
+               if R.service_number == service_number][0]
+    high_loads = []
+    stops = service.stops
+    for i in range(len(stops)):
+        if stops[i].current_load.value != 1:
+            stops.append({
+                'sequence_number': i+1,
+                'load': stops[i].current_load.value
+            })
+            stops.append(i+1)
+    return jsonify({'stops': high_loads}), 201
 
-    for n in routes:
-        result = []
-        x = 0
-        while len(result) == 0:
-            response = requests.request("GET", urlbase + str(x), headers=headers, data=payload)
-            result = [R for R in response.json()['value'] if R['BusStopCode'] == n['stop_code']]
-            if len(result) == 0:
-                x += 500
-            else:
-                Stop(result[0]['BusStopCode'], result[0]['Description'], result[0]['Latitude'], result[0]['Longitude'])
-                break
-    return 201
+@app.route('/forads/buses/get_by_service', methods=['POST'])
+def ads_get_service_buses():
+    service_number = request.get_json()['service_number']
+    buses = [R for R in db.session.execute(db.select(Bus)).scalars().all()
+             if R.service_number == service_number]
+    buses_json = [R.json() for R in buses]
+    return jsonify({'buses': buses_json}), 201
 
-@app.route('/priv2', methods=['GET'])
-def __private_func2():
-    with open("D:/NTU Projects/SC2006/179route", "r") as f:
-        thing = json.load(f)
+@app.route('/forads/drivers/get_available', methods=['GET'])
+def ads_get_available_drivers():
+    drivers = [R.json() for R in db.session.execute(db.select(Account)).scalars().all()
+               if R.driver_status==DriverStatus.ON_BREAK]
+    return jsonify({'drivers': drivers}), 201
 
-    for n in [R for R in thing['value'] if R['ServiceNo'] == '179']:
-        print(n['BusStopCode'])
-        stop = get_bus_stop(n['BusStopCode'])
-        stop.add_service('179', n['StopSequence'])
+@app.route('/forads/deployments/deploy', methods=['POST'])
+def ads_deploy():
+    data = request.get_json()
+    driver_uid = data['driver_uid']
+    bus_license_plate = data['bus_license_plate']
+    Deployment(driver_uid, bus_license_plate)
+    return jsonify({'message': "Deployment Successful"}), 201
+
+# @app.route('/priv1', methods=['GET'])
+# def __private_func():
+#     with open("D:/NTU Projects/SC2006/busbuddy/199route", "r") as f:
+#         thing = json.load(f)
+#
+#     routes = [{"stop_code": R['BusStopCode'], "sequence_number": R['StopSequence']} for R in thing['value'] if
+#               R['ServiceNo'] == '199']
+#     print(routes)
+#
+#     urlbase = "https://datamall2.mytransport.sg/ltaodataservice/BusStops?$skip="
+#
+#     payload = {}
+#     headers = {
+#         'AccountKey': 'WhxR8Z/nSgu+Yj804DZVpA== '
+#     }
+#
+#     for n in routes:
+#         result = []
+#         x = 0
+#         while len(result) == 0:
+#             response = requests.request("GET", urlbase + str(x), headers=headers, data=payload)
+#             result = [R for R in response.json()['value'] if R['BusStopCode'] == n['stop_code']]
+#             if len(result) == 0:
+#                 x += 500
+#             else:
+#                 if db.session.execute(text(f"SELECT * FROM busbuddy.bus_stop WHERE stop_code='{result[0]['BusStopCode']}'")).one_or_none():
+#                     break
+#                 Stop(result[0]['BusStopCode'], result[0]['Description'], result[0]['Latitude'], result[0]['Longitude'])
+#                 break
+#     return 201
+#
+# @app.route('/priv2', methods=['GET'])
+# def __private_func2():
+#     with open("D:/NTU Projects/SC2006/busbuddy/199route", "r") as f:
+#         thing = json.load(f)
+#
+#     for n in [R for R in thing['value'] if R['ServiceNo'] == '199']:
+#         print(n['BusStopCode'])
+#         stop = get_bus_stop(n['BusStopCode'])
+#         stop.add_service('199', n['StopSequence'])
 
 if __name__ == '__main__':
   # run web server

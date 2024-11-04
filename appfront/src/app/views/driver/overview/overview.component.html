@@ -100,7 +100,9 @@
           </p>
         </div>
         <c-col class="d-grid mb-3 justify-content-md-center" [xs]>
-          <button cButton id="startDriveBtn" (click)="startDrive()">Start Drive</button>
+          <button cButton id="startDriveBtn" (click)="startDrive()" *ngIf="!loadingMap">Start Drive</button>
+          <button cButton id="startDriveBtnDisabled" disabled *ngIf="loadingMap">Returned</button>
+          <c-spinner size="sm" *ngIf="loadingMap"/>
         </c-col>
       </c-row>
     </c-card-body>
@@ -134,7 +136,9 @@
           </p>
         </div>
         <c-col class="d-grid mb-3 justify-content-md-center" [xs]>
-          <button cButton id="nextStopBtn" (click)="nextStop()">Next Stop</button>
+          <button cButton id="nextStopBtn" (click)="nextStop()" *ngIf="!loadingMap">Next Stop</button>
+          <button cButton id="nextStopBtnDisabled" disabled *ngIf="loadingMap">Next Stop</button>
+          <c-spinner size="sm" *ngIf="loadingMap"/>
         </c-col>
       </c-row>
     </c-card-body>
@@ -168,7 +172,9 @@
           </p>
         </div>
         <c-col class="d-grid mb-3 justify-content-md-center" [xs]>
-          <button cButton id="endDriveBtn" (click)="endDrive()">Returned</button>
+          <button cButton id="endDriveBtn" (click)="endDrive()" *ngIf="!loadingMap">Returned</button>
+          <button cButton id="endDriveBtnDisabled" disabled *ngIf="loadingMap">Returned</button>
+          <c-spinner size="sm" *ngIf="loadingMap"/>
         </c-col>
       </c-row>
     </c-card-body>

@@ -8,7 +8,7 @@ import {
   CardComponent,
   CardGroupComponent,
   CardTextDirective,
-  CardTitleDirective,
+  CardTitleDirective, ColComponent,
   ContainerComponent,
   FormControlDirective,
   InputGroupComponent,
@@ -25,9 +25,10 @@ import {IconDirective} from "@coreui/icons-angular";
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {EventEmitter} from "@angular/core";
 import {NgIf} from "@angular/common";
+import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-changedrivermodal',
+  selector: 'app-confirmcanceldeploymentmodal',
   standalone: true,
   imports: [
     ButtonDirective,
@@ -50,65 +51,37 @@ import {NgIf} from "@angular/common";
     CardTitleDirective,
     CardTextDirective,
     CardGroupComponent,
-    NgIf
+    NgIf,
+    ColComponent
   ],
-  templateUrl: './changedrivermodal.component.html',
-  styleUrl: './changedrivermodal.component.scss'
+  templateUrl: './confirmcanceldeployment.component.html',
+  styleUrl: './confirmcanceldeployment.component.scss'
 })
-export class ChangeDriverModalComponent implements OnInit {
+export class ConfirmCancelDeploymentModalComponent implements OnInit {
   public visible = false;
-  // @ts-ignore
-  public users: any[];
-  // @ts-ignore
-  public filteredDrivers: any[];
-  public deployment: any = {};
-  // @ts-ignore
-  public searchDriver: FormGroup;
+  public deployment_uid!: number;
 
   @Output() closedModal = new EventEmitter<void>();
 
-  constructor(private http: HttpClient,
-              private api: ApiService,
-              private formbuilder: FormBuilder) {
+  constructor(private router: Router,
+              private http: HttpClient,
+              private api: ApiService) {
   }
 
   ngOnInit() {
-    this.http.get<any>(this.api.API_URL + "/drivers/get_all").subscribe({
-      next: (message) => {
-        this.users = message;
-        console.log(this.users);
-        this.filteredDrivers = this.users;
-      },
-      error: (e) => {
-        this.users = [];
-      }
-    });
-    this.searchDriver = this.formbuilder.group({
-      searchInput: ['']
-    })
+
   }
 
   toggleVisibility() {
     this.visible = !this.visible;
-    if (!this.visible) {
-      this.filteredDrivers = this.users;
-    }
   }
 
   handleVisibilityChange(event: any) {
     this.visible = event;
   }
 
-  search(event: any) {
-    const keyword = this.searchDriver.get('searchInput')?.value.toLowerCase();
-    this.filteredDrivers = this.users.filter(item => item.name.toLowerCase().includes(keyword));
-  }
-
-  changeDriver(deployment_uid: number, driver_uid: number) {
-    console.log(deployment_uid)
-    this.http.post<any>(this.api.API_URL + "/deployments/change_driver",
-      {"deployment_uid": String(deployment_uid),
-        "driver_uid": String(driver_uid)}).subscribe({
+  cancel() {
+    this.http.post<any>(this.api.API_URL + "/deployments/cancel", {deployment_uid: this.deployment_uid}).subscribe({
       next: (message) => {
         console.log(message);
         this.visible = false;
@@ -117,6 +90,11 @@ export class ChangeDriverModalComponent implements OnInit {
       error: (e) => {
         console.log(e);
       }
-    });
+    })
+  }
+
+  close() {
+    this.visible = false;
+    this.closedModal.emit();
   }
 }

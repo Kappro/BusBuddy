@@ -88,10 +88,9 @@ class Bus(db.Model):
 
     def json(self):
         return {
-            'id': self.id,
-            'serviceNumber': self.service_number,
+            'service_number': self.service_number,
             'capacity': self.capacity,
-            'currentLoad': self.current_load.value,  # Convert enum to string for JSON
-            'status': self.status.value,  # Convert enum to string for JSON
-            'licensePlate': self.license_plate
+            'current_load': self.current_load.value,  # Convert enum to string for JSON
+            'current_status': self.current_status.value,  # Convert enum to string for JSON
+            'license_plate': self.license_plate
         }
