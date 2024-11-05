@@ -29,7 +29,7 @@ CREATE TABLE `account` (
   `email` varchar(100) NOT NULL,
   `contact` int NOT NULL,
   `type` enum('MANAGER','DRIVER') NOT NULL,
-  `driver_status` enum('OFF_WORK','ON_BREAK','DRIVING','GOING_BUS') DEFAULT NULL,
+  `driver_status` enum('OFF_WORK','RESERVED','ON_BREAK','GOING_BUS','DRIVING') DEFAULT NULL,
   `datetime_registered` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb3;
@@ -74,32 +74,6 @@ INSERT INTO `bus` VALUES ('SBS0001A',100,'IN_DEPOT','179','LOW'),('SBS0001B',100
 UNLOCK TABLES;
 
 --
--- Table structure for table `bus_status_log`
---
-
-DROP TABLE IF EXISTS `bus_status_log`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `bus_status_log` (
-  `BUS_license_plate` varchar(10) NOT NULL,
-  `new_bus_status` enum('UNSERVICEABLE','RESERVED','IN_DEPOT','TRAINING','ON_ROUTE','RETURNING') NOT NULL,
-  `datetime_changed` datetime NOT NULL,
-  PRIMARY KEY (`BUS_license_plate`,`datetime_changed`),
-  KEY `fk_BUS_STATUS_LOG_BUSES_idx` (`BUS_license_plate`),
-  CONSTRAINT `fk_BUS_STATUS_LOG_BUSES` FOREIGN KEY (`BUS_license_plate`) REFERENCES `bus` (`license_plate`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `bus_status_log`
---
-
-LOCK TABLES `bus_status_log` WRITE;
-/*!40000 ALTER TABLE `bus_status_log` DISABLE KEYS */;
-/*!40000 ALTER TABLE `bus_status_log` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `bus_stop`
 --
 
@@ -122,7 +96,7 @@ CREATE TABLE `bus_stop` (
 
 LOCK TABLES `bus_stop` WRITE;
 /*!40000 ALTER TABLE `bus_stop` DISABLE KEYS */;
-INSERT INTO `bus_stop` VALUES (21371,'Blk 680C',1.34523,103.706,'LOW'),(21379,'Blk 263',1.34535,103.706,'LOW'),(22009,'Boon Lay Int',1.33932,103.705,'LOW'),(22451,'Opp Blk 643',1.33817,103.696,'LOW'),(22459,'Blk 643',1.33856,103.696,'LOW'),(22481,'Blk 691A CP',1.34246,103.706,'LOW'),(22489,'Blk 683A',1.34258,103.705,'LOW'),(22501,'Blk 662A',1.33769,103.703,'LOW'),(22509,'Blk 664C',1.33799,103.703,'LOW'),(22511,'Blk 658C',1.33746,103.7,'LOW'),(22519,'Blk 608',1.33773,103.7,'LOW'),(22521,'Pioneer Stn Exit A',1.33742,103.698,'LOW'),(22529,'Pioneer Stn Exit B',1.33777,103.697,'LOW'),(27011,'Hall 11 Blk 55',1.35586,103.686,'LOW'),(27021,'Hall 15',1.35324,103.682,'LOW'),(27031,'Hall 12',1.35187,103.681,'LOW'),(27041,'NIE CP 7',1.35072,103.679,'LOW'),(27051,'NIE Lib',1.34845,103.677,'LOW'),(27061,'Sch of ADM',1.34985,103.684,'LOW'),(27069,'Blk 41',1.35009,103.684,'LOW'),(27071,'Nanyang Cres Halls',1.35508,103.685,'LOW'),(27091,'Opp Blk 271 CP',1.34911,103.704,'LOW'),(27099,'Blk 271 CP',1.35024,103.704,'LOW'),(27101,'Opp Westwood Sec Sch',1.35259,103.701,'LOW'),(27109,'Westwood Sec Sch',1.35309,103.701,'LOW'),(27121,'Bef Nanyang Ave',1.35682,103.695,'LOW'),(27129,'Opp Nanyang Ave',1.35733,103.695,'LOW'),(27169,'Bef Jln Bahar',1.35693,103.694,'LOW'),(27171,'Bef Lor Danau',1.35605,103.692,'LOW'),(27179,'Aft Lor Danau',1.35618,103.692,'LOW'),(27181,'PUB Sub-Stn',1.35588,103.689,'LOW'),(27189,'Opp PUB Sub-Stn',1.35607,103.689,'LOW'),(27199,'Hall 11',1.35434,103.687,'LOW'),(27209,'Halls 8 & 9',1.35151,103.686,'LOW'),(27211,'Lee Wee Nam Lib',1.34793,103.681,'LOW'),(27219,'NIE Blk 2',1.34793,103.68,'LOW'),(27221,'Sch Of CEE',1.34623,103.679,'LOW'),(27231,'Wee Kim Wee Sch of C&I',1.34208,103.679,'LOW'),(27241,'SPMS',1.33999,103.681,'LOW'),(27251,'Academic Bldg Sth',1.34115,103.684,'LOW'),(27261,'Hall 4',1.34332,103.686,'LOW'),(27281,'Hall 1',1.34565,103.688,'LOW'),(27291,'Opp Hall 6',1.34772,103.687,'LOW'),(27301,'Blk 978',1.34045,103.694,'LOW'),(27309,'Blk 705',1.34107,103.694,'LOW'),(27311,'Hall 2',1.34902,103.685,'LOW'),(27321,'Blk 949',1.34404,103.692,'LOW'),(27329,'Blk 840',1.34404,103.692,'LOW');
+INSERT INTO `bus_stop` VALUES (1000,'Test',1,1,'LOW'),(21371,'Blk 680C',1.34523,103.706,'LOW'),(21379,'Blk 263',1.34535,103.706,'LOW'),(22009,'Boon Lay Int',1.33932,103.705,'LOW'),(22451,'Opp Blk 643',1.33817,103.696,'LOW'),(22459,'Blk 643',1.33856,103.696,'LOW'),(22481,'Blk 691A CP',1.34246,103.706,'LOW'),(22489,'Blk 683A',1.34258,103.705,'LOW'),(22501,'Blk 662A',1.33769,103.703,'LOW'),(22509,'Blk 664C',1.33799,103.703,'LOW'),(22511,'Blk 658C',1.33746,103.7,'LOW'),(22519,'Blk 608',1.33773,103.7,'LOW'),(22521,'Pioneer Stn Exit A',1.33742,103.698,'LOW'),(22529,'Pioneer Stn Exit B',1.33777,103.697,'LOW'),(27011,'Hall 11 Blk 55',1.35586,103.686,'LOW'),(27021,'Hall 15',1.35324,103.682,'LOW'),(27031,'Hall 12',1.35187,103.681,'LOW'),(27041,'NIE CP 7',1.35072,103.679,'LOW'),(27051,'NIE Lib',1.34845,103.677,'LOW'),(27061,'Sch of ADM',1.34985,103.684,'LOW'),(27069,'Blk 41',1.35009,103.684,'LOW'),(27071,'Nanyang Cres Halls',1.35508,103.685,'LOW'),(27091,'Opp Blk 271 CP',1.34911,103.704,'LOW'),(27099,'Blk 271 CP',1.35024,103.704,'LOW'),(27101,'Opp Westwood Sec Sch',1.35259,103.701,'LOW'),(27109,'Westwood Sec Sch',1.35309,103.701,'LOW'),(27121,'Bef Nanyang Ave',1.35682,103.695,'LOW'),(27129,'Opp Nanyang Ave',1.35733,103.695,'LOW'),(27169,'Bef Jln Bahar',1.35693,103.694,'LOW'),(27171,'Bef Lor Danau',1.35605,103.692,'LOW'),(27179,'Aft Lor Danau',1.35618,103.692,'LOW'),(27181,'PUB Sub-Stn',1.35588,103.689,'LOW'),(27189,'Opp PUB Sub-Stn',1.35607,103.689,'LOW'),(27199,'Hall 11',1.35434,103.687,'LOW'),(27209,'Halls 8 & 9',1.35151,103.686,'LOW'),(27211,'Lee Wee Nam Lib',1.34793,103.681,'LOW'),(27219,'NIE Blk 2',1.34793,103.68,'LOW'),(27221,'Sch Of CEE',1.34623,103.679,'LOW'),(27231,'Wee Kim Wee Sch of C&I',1.34208,103.679,'LOW'),(27241,'SPMS',1.33999,103.681,'LOW'),(27251,'Academic Bldg Sth',1.34115,103.684,'LOW'),(27261,'Hall 4',1.34332,103.686,'LOW'),(27281,'Hall 1',1.34565,103.688,'LOW'),(27291,'Opp Hall 6',1.34772,103.687,'LOW'),(27301,'Blk 978',1.34045,103.694,'LOW'),(27309,'Blk 705',1.34107,103.694,'LOW'),(27311,'Hall 2',1.34902,103.685,'LOW'),(27321,'Blk 949',1.34404,103.692,'LOW'),(27329,'Blk 840',1.34404,103.692,'LOW');
 /*!40000 ALTER TABLE `bus_stop` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -147,7 +121,7 @@ CREATE TABLE `deployment_log` (
   KEY `fk_ACCOUNT_has_BUS_ACCOUNT1_idx` (`ACCOUNT_id`),
   CONSTRAINT `deployment_log_ibfk_1` FOREIGN KEY (`ACCOUNT_id`) REFERENCES `account` (`id`),
   CONSTRAINT `fk_ACCOUNT_has_BUS_BUS1` FOREIGN KEY (`BUS_license_plate`) REFERENCES `bus` (`license_plate`)
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -172,7 +146,7 @@ CREATE TABLE `deployment_status_log` (
   `DEPLOYMENT_LOG_uid` int NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`DEPLOYMENT_LOG_uid`,`datetime_changed`),
   CONSTRAINT `deployment_status_log_ibfk_2` FOREIGN KEY (`DEPLOYMENT_LOG_uid`) REFERENCES `deployment_log` (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -271,4 +245,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-05  2:43:13
+-- Dump completed on 2024-11-06  3:13:47
