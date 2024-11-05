@@ -1,7 +1,9 @@
 import requests
 import json
 
-from flask import jsonify
+from flask import jsonify, Flask
+
+app = Flask(__name__)
 
 api_link = 'http://localhost:8080/forads'
 
@@ -66,7 +68,8 @@ def deploy(driver_queue, bus_queue):
                             })
     return response.json()['message']
 
-if __name__ == '__main__':
+@app.route('/')
+def main():
     drivers_queue = get_available_drivers_uids()
     services = get_services()
     bus_queues = {}
@@ -97,3 +100,6 @@ if __name__ == '__main__':
 
         print(f"Iteration {i} done!")
         i += 1
+
+if __name__ == '__main__':
+    app.run(HOST='0.0.0.0', port=1234)
