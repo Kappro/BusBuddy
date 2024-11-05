@@ -144,10 +144,11 @@ export class DeleteRouteModalComponent implements AfterViewInit {
 
   toggleVisibility(stopsList?: any[]) {
     if(!this.visible) {
-      this.initMap();
-      if(stopsList) {
+      try {this.initMap();}
+      finally{
+        if(stopsList) {
         this.updateStopsMapWithList(stopsList);
-      }
+      }}
     }
     this.visible = !this.visible;
   }

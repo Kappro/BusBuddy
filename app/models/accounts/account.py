@@ -7,6 +7,7 @@ from datetime import datetime
 
 class DriverStatus(Enum):
     OFF_WORK = "Off Work"
+    RESERVED = "Reserved for Drive"
     ON_BREAK = "On Break"
     GOING_BUS = "Going to Bus"
     DRIVING = "Driving"

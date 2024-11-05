@@ -158,7 +158,10 @@ export class AddRouteModalComponent implements AfterViewInit {
   }
 
   toggleVisibility() {
-    if(!this.visible) {this.initMap();}
+    if(!this.visible) {
+      try {this.initMap();}
+      finally {}
+    }
     this.visible = !this.visible;
     // setTimeout(() => {
     //   if (!this.visible) {
@@ -176,7 +179,7 @@ export class AddRouteModalComponent implements AfterViewInit {
     this.map.remove();
     this.addRouteForm.reset();
     this.visible = false;
-    this.closedModal.emit()
+    this.closedModal.emit();
   }
 
 }

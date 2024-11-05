@@ -45,8 +45,8 @@
                         <div>{{ user.contact }}</div>
                       </td>
                       <td>
-                        <div class="fw-semibold text-nowrap" *ngIf="user.last_duty!=null">{{ user.last_duty }}</div>
-                        <div class="fw-semibold text-nowrap" *ngIf="user.last_duty==null">No Duties Done</div>
+                        <div class="fw-semibold text-nowrap" *ngIf="user.last_duty.uid!==-1">{{ user.last_duty.datetime_end }}</div>
+                        <div class="fw-semibold text-nowrap" *ngIf="user.last_duty.uid===-1">No Duties Done</div>
                       </td>
                       <td>
                         <button cButton color="primary"

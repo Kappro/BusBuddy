@@ -200,9 +200,11 @@ export class EditRouteModalComponent implements AfterViewInit {
 
   toggleVisibility(stopsList?: any[]) {
     if(!this.visible) {
-      this.initMap();
-      if(stopsList) {
-        this.updateStopsMapWithList(stopsList);
+      try {this.initMap();}
+      finally {
+        if (stopsList) {
+          this.updateStopsMapWithList(stopsList);
+        }
       }
     }
     this.visible = !this.visible;

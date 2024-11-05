@@ -91,7 +91,7 @@ class Deployment(db.Model):
         if current_status==DeploymentStatus.PREDEPLOYMENT:
             driver = [R for R in db.session.execute(db.select(Account)).scalars().all()
                       if (R.uid == int(driver_id))][0]
-            driver.driver_status = DriverStatus.GOING_BUS
+            driver.driver_status = DriverStatus.RESERVED
             bus = [R for R in db.session.execute(db.select(Bus)).scalars().all()
                    if (R.license_plate == self._bus_license_plate)][0]
             bus.current_status = BusStatus.RESERVED
@@ -224,6 +224,8 @@ class Deployment(db.Model):
                 self._current_status = DeploymentStatus.CANCELLED
                 db.session.add(DeploymentStatusLogEntry(self._uid,
                                                         self._current_status))
+                [R for R in db.session.execute(db.select(Account)).scalars().all()
+                 if R.uid == self._driver_id][0].driver_status = DriverStatus.ON_BREAK
                 [R for R in db.session.execute(db.select(Bus)).scalars().all()
                  if R.license_plate == self._bus_license_plate][0].current_status = BusStatus.IN_DEPOT
                 db.session.commit()
@@ -232,6 +234,8 @@ class Deployment(db.Model):
                 self._current_status = DeploymentStatus.BUFFER_TIME
                 db.session.add(DeploymentStatusLogEntry(self._uid,
                                                         self._current_status))
+                [R for R in db.session.execute(db.select(Account)).scalars().all()
+                 if R.uid == self._driver_id][0].driver_status = DriverStatus.ON_BREAK
                 [R for R in db.session.execute(db.select(Account)).scalars().all()
                 if R.uid == self._driver_id][0].driver_status = DriverStatus.GOING_BUS
                 db.session.commit()

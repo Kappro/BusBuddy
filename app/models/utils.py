@@ -6,10 +6,10 @@ from .shared import db
 
 def last_duty(account: Account):
     duties = [R for R in db.session.execute(db.select(Deployment)).scalars().all()
-              if (R.driver_id==account._uid and R.current_status==DeploymentStatus.COMPLETED)]
+              if (R.driver_id==account.uid and R.current_status=='Completed')]
     if len(duties)==0:
-        return None
-    return max(duties, key=lambda x: x.datetime_end)
+        return {'uid': -1}
+    return max([R for R in duties], key=lambda x: x.datetime_end).json()
 
 def get_account(account_uid: int or str):
     proper = int(account_uid)

@@ -143,12 +143,15 @@ export class DefaultDriverLayoutComponent implements AfterViewInit {
   @ViewChild(CancelledDeploymentModalComponent) cancelledDeploymentNotif!: CancelledDeploymentModalComponent;
 
   public navItems = navItemsDriver;
-  public lastStatus = "";
 
   constructor(private http: HttpClient,
               private api: ApiService,
               private cdr: ChangeDetectorRef,
               private router: Router) {
+    if(localStorage.getItem("lastStatus")!=="outofscope" ||
+    localStorage.getItem("lastStatus")!="Buffer Time") {
+      localStorage.setItem("lastStatus", 'outofscope');
+    }
   }
 
   startInterval() {
@@ -158,23 +161,25 @@ export class DefaultDriverLayoutComponent implements AfterViewInit {
       }
       this.http.get<any>(this.api.API_URL + "/drivers/get_current_deployment").subscribe({
         next: (message) => {
-          console.log(this.lastStatus);
-          if(message.deployment.uid!==-1) {
-            if(this.lastStatus==="") {
-              this.newDeploymentNotif.toggleVisibility();
-              this.lastStatus = message.deployment.current_status;
-              clearInterval(dvrInt);
+          console.log(localStorage.getItem("lastStatus"));
+          if(message.deployment.uid!==-1) { // exists
+            if(localStorage.getItem("lastStatus")==="outofscope") { // if previously not exist, means must now be buffer time
+              localStorage.setItem("lastStatus", 'Buffer Time');
+              if(this.router.url!=='/driver/overview') {
+                this.newDeploymentNotif.toggleVisibility();
+                clearInterval(dvrInt);
+              }
             }
-            else if(message.deployment.current_status==='Buffer Time') {
-              this.lastStatus = 'Buffer Time';
+            else if(message.deployment.current_status==='Buffer Time') { // if previously buffer time
+              localStorage.setItem("lastStatus", 'Buffer Time');
             }
           }
           else {
-            if(this.lastStatus==='Buffer Time') {
+            if(localStorage.getItem("lastStatus")==='Buffer Time') {
               this.cancelledDeploymentNotif.toggleVisibility();
               clearInterval(dvrInt);
             }
-            this.lastStatus = "";
+            localStorage.setItem("lastStatus", "outofscope");
           }
         },
         error: (e) => {

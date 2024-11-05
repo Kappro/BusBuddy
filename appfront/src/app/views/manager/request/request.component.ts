@@ -79,12 +79,7 @@ export class RequestComponent implements OnInit {
     });
   }
 
-  activeItem = signal(0);
-
-  ngOnInit() {
-    if(this.changeDriverModal) {
-      console.log('Modal component is available.')
-    }
+  onClock() {
     const reqTimer = setInterval(() => {
       if (this.router.url==='/login') {
         clearInterval(reqTimer);
@@ -97,11 +92,8 @@ export class RequestComponent implements OnInit {
               next: (message) => {
                 this.requests = message;
                 console.log("Length="+this.requests.length);
-                this.router.navigateByUrl('/',{skipLocationChange:true}).then(()=>{
-                  this.router.navigate([this.router.url]).then(()=>{
-                    console.log(`Refreshing ${this.router.url}`)
-                  })
-                })
+                clearInterval(reqTimer);
+                this.refresh();
               },
               error: (e) => {
                 this.requests = [];
@@ -112,6 +104,15 @@ export class RequestComponent implements OnInit {
         }
       })
     }, 1000);
+  }
+
+  activeItem = signal(0);
+
+  ngOnInit() {
+    if(this.changeDriverModal) {
+      console.log('Modal component is available.')
+    }
+    this.onClock();
   }
 
   handleActiveItemChange(value: string | number | undefined) {
@@ -125,11 +126,7 @@ export class RequestComponent implements OnInit {
         this.http.get<any>(this.api.API_URL+"/deployments/get_new").subscribe({
           next: (message) => {
             this.requests = message;
-            this.router.navigateByUrl('/',{skipLocationChange:true}).then(()=>{
-              this.router.navigate([this.router.url]).then(()=>{
-                console.log(`Refreshing ${this.router.url}`)
-              })
-            })
+            this.refresh();
           },
           error: (e) => {
             this.requests = [];
@@ -149,11 +146,7 @@ export class RequestComponent implements OnInit {
         this.http.get<any>(this.api.API_URL+"/deployments/get_new").subscribe({
           next: (message) => {
             this.requests = message;
-            this.router.navigateByUrl('/',{skipLocationChange:true}).then(()=>{
-              this.router.navigate([this.router.url]).then(()=>{
-                console.log(`Refreshing ${this.router.url}`)
-              })
-            })
+            this.refresh();
           },
           error: (e) => {
             this.requests = [];
@@ -186,10 +179,20 @@ export class RequestComponent implements OnInit {
   }
 
   refresh() {
-    this.router.navigateByUrl('/',{skipLocationChange:true}).then(()=>{
+    setTimeout(() => {this.router.navigateByUrl('/',{skipLocationChange:true}).then(()=>{
       this.router.navigate([this.router.url]).then(()=>{
+        this.http.get<any>(this.api.API_URL+"/deployments/get_new").subscribe({
+          next: (message) => {
+            this.requests = message;
+            console.log("Length="+this.requests.length);
+          },
+          error: (e) => {
+            this.requests = [];
+          }
+        });
         console.log(`Refreshing ${this.router.url}`)
+        this.onClock();
       })
-    })
+    })}, 1000)
   }
 }

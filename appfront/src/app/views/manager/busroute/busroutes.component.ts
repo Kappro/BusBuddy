@@ -162,7 +162,8 @@ export class BusRoutesComponent implements AfterViewInit {
   }
 
   refresh() {
-    this.http.get<any>(this.api.API_URL + "/stops/get_all").subscribe({
+    setTimeout(() => {
+      this.http.get<any>(this.api.API_URL + "/stops/get_all").subscribe({
         next: (message) => {
           // @ts-ignore
           this.stops = message;
@@ -170,8 +171,8 @@ export class BusRoutesComponent implements AfterViewInit {
             next: (message) => {
               // @ts-ignore
               this.services = message;
-              this.router.navigateByUrl('/',{skipLocationChange:true}).then(()=>{
-                this.router.navigate([this.router.url.split("#")[0]]).then(()=>{
+              this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+                this.router.navigate([this.router.url.split("#")[0]]).then(() => {
                   console.log(`Refreshing ${this.router.url}`)
                 })
               })
@@ -185,6 +186,7 @@ export class BusRoutesComponent implements AfterViewInit {
           console.log(e);
         }
       })
+    }, 1000);
   }
 
   search(event?: any) {

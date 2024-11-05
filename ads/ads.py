@@ -49,7 +49,7 @@ def number_of_deployments_needed(service_number):
         if stop['current_load'] == 2:
             threshold = 2
         elif stop['current_load'] == 3:
-            threshold = 4
+            threshold = 3
 
         for progress in get_progresses(service_number):
             if progress < stop:
@@ -75,10 +75,10 @@ def main():
     bus_queues = {}
     for service in services:
         bus_queues[service] = [R['license_plate'] for R in get_available_buses(service)]
+    i = 1
 
     while True:
         # detect changes
-        i = 1
         print(f"Starting iteration {i}, initialising...")
         services = get_services()
         new_available_drivers = get_available_drivers_uids()
@@ -102,4 +102,4 @@ def main():
         i += 1
 
 if __name__ == '__main__':
-    app.run(HOST='0.0.0.0', port=1234)
+    app.run(host='0.0.0.0', port=1234)

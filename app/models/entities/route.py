@@ -62,6 +62,8 @@ class Service(db.Model):
     def json(self):
         return {
             'service_number': self.service_number,
+            'number_of_stops': len(self.stops),
+            'start_stop_name': self.stops[0].stop_name
         }
 
 class Stop(db.Model):

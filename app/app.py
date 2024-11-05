@@ -1,11 +1,13 @@
 import logging
 from flask import Flask, request, jsonify, render_template, redirect, url_for, session
 from flask_cors import CORS
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, current_user
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, current_user, get_jwt, get_jwt_identity, \
+    set_access_cookies
 from hashlib import sha256
 import os
 from dotenv import load_dotenv
 from sqlalchemy import text
+from datetime import datetime, timezone, timedelta
 
 from models.utils import last_duty, get_bus, get_account, get_bus_stop, get_deployment, \
     get_driver_deployment_history, get_service
@@ -79,7 +81,7 @@ def login():
   if len(account_list)==0:
     return jsonify({'message': 'Login Unsuccessful'}), 401
   else:
-    access_token = create_access_token(identity=account_list[0])
+    access_token = create_access_token(identity=account_list[0], expires_delta=timedelta(days=2))
     return jsonify({'message': 'Login Successful', 'access_token': access_token})
 
 @app.route('/api/signup', methods=['POST'])

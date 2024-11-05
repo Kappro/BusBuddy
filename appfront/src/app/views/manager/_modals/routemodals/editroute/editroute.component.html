@@ -47,7 +47,7 @@
                     <div class="d-grid mb-3">
                       <c-row>
                         <c-col class="d-grid mb-3" [xs]>
-                          <button cButton color="danger" variant="outline" [cModalToggle]="staticBackdropModal2.id">Cancel</button>
+                          <button cButton color="danger" variant="outline" [cModalToggle]="staticBackdropModal2edit.id">Cancel</button>
                         </c-col>
                         <c-col class="d-grid mb-3" [xs]>
                           <button cButton color="primary"
@@ -83,27 +83,27 @@
         <textarea disabled cFormControl style="border-style:none; border-color:transparent; overflow:auto; background-color:transparent;" [value]="currentStops"></textarea>
     </c-modal-body>
     <c-modal-footer>
-      <button [cModalToggle]="staticBackdropModal.id" (click)="onConfirm()"
+      <button [cModalToggle]="staticBackdropModaledit.id" (click)="onConfirm()"
               cButton color="primary" variant="outline">Confirm</button>
     </c-modal-footer>
   </c-modal>
 
-  <c-modal #staticBackdropModal backdrop="static" id="staticBackdropModal">
+  <c-modal #staticBackdropModaledit backdrop="static" id="staticBackdropModaledit">
     <c-modal-header>
       <h5 cModalTitle>Edit Route</h5>
     </c-modal-header>
     <c-modal-body>Edit Route successful.</c-modal-body>
     <c-modal-footer>
-      <button [cModalToggle]="staticBackdropModal.id" cButton color="success" variant="outline" (click)="clickClose()">Close</button>
+      <button [cModalToggle]="staticBackdropModaledit.id" cButton color="success" variant="outline" (click)="clickClose()">Close</button>
     </c-modal-footer>
   </c-modal>
 
-  <c-modal #staticBackdropModal2 backdrop="static" id="staticBackdropModal2">
+  <c-modal #staticBackdropModal2edit backdrop="static" id="staticBackdropModal2edit">
     <c-modal-header>
       <h5 cModalTitle>Edit Route cancelled</h5>
     </c-modal-header>
     <c-modal-body>Route remains unchanged.</c-modal-body>
     <c-modal-footer>
-      <button [cModalToggle]="staticBackdropModal2.id" cButton color="danger" variant="outline" (click)="clickClose()">Close</button>
+      <button [cModalToggle]="staticBackdropModal2edit.id" cButton color="danger" variant="outline" (click)="clickClose()">Close</button>
     </c-modal-footer>
   </c-modal>
