@@ -198,3 +198,6 @@ $ compodoc --port 12065 -s
 ```
 
 The documentation will then be served locally at port 12065. This can be changed by changing the port number above.
+
+The initial page should show the README file of the frontend. Then, respective components and items can be viewed using the sidebar.
+![img.png](../readmeimages/frontenddocs.png)

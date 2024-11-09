@@ -115,4 +115,5 @@ $ sudo systemctl status busbuddyapi
 
 The full API documentation can be found on http://localhost:8080/apidocs when the server is up and running.
 The API documentation is powered by [Flasgger](https://github.com/flasgger/flasgger), a Flask-configured Swagger
-documentation Python library. Some screenshots can be observed below as to how the API documentation should look like.
+documentation Python library. A screenshot can be observed below as to how the API documentation should look like.
+![img.png](../readmeimages/backendapidoc.png)
