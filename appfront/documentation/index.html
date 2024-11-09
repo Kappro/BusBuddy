@@ -1,0 +1,485 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>BusBuddy Frontend Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	   <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="./" class="navbar-brand">BusBuddy Frontend Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content getting-started">
+                   <div class="content-data">
+
+<h1>BusBuddy Frontend</h1>
+<p>This project was generated with <a href="https://github.com/angular/angular-cli">Angular CLI</a> version 18.2.6.</p>
+<h1>Table of Contents</h1>
+<ul>
+<li><a href="#tech-stuff">Technical Stuff</a><ul>
+<li><a href="#important-constraints">Important Constraints</a></li>
+<li><a href="#frontend-top-level-folder-architecture">Frontend Top-Level Folders</a><ul>
+<li><a href="#frontend-source-code-folder-architecture">Frontend Source Code Folders</a></li>
+<li><a href="#frontend-application-folder-architecture">Frontend Application Folders</a></li>
+<li><a href="#frontend-views-folder-architecture">Frontend Views Folders</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#setup-instructions">Setup Instructions</a><ul>
+<li><a href="#deploying-as-service">Deploying as Service</a></li>
+<li><a href="#pre-configured-users">Pre-configured Users</a></li>
+</ul>
+</li>
+<li>Other README Directories<ul>
+<li><a href="../README.md">Main</a></li>
+<li><a href="../app/README.md">Backend</a></li>
+<li><a href="../ads/README.md">Automated Deployment System</a></li>
+</ul>
+</li>
+</ul>
+<h1>Tech Stuff</h1>
+<h2>Important Constraints</h2>
+<ul>
+<li>The backend HAS to be fully deployed and setup on local port 8080. If not, there will be unauthorised errors on requests.</li>
+</ul>
+<h2>Frontend Top-Level Folder Architecture</h2>
+<ul>
+<li><code>📁 src</code> - Contains the entire frontend source codes.</li>
+<li><code>🚫 .gitignore</code> - Tells Git to ignore IDE-specific and computer-specific folders.</li>
+<li><code>🛢 busbuddydumpv3.sql</code> - Contains the DDLs and pre-configured figures for the database. Uses MySQLDump to configure.</li>
+<li><code>{} package.json</code> - Contains all the necessary frontend packages. To be NPM installed.</li>
+<li><code>{} angular.json</code> - Contains necessary configuration for Angular.</li>
+<li><code>{} tsconfig.json</code> - Contains necessary configuration for TypeScript.</li>
+</ul>
+<h3>Frontend Source Code Folder Architecture</h3>
+<p>Below paths are under <code>BusBuddy/appfront/src</code>.</p>
+<ul>
+<li><code>📁 app</code> - Contains all files of the Angular application.</li>
+<li><code>📁 assets</code> - Contains necessary images to be loaded in the website.</li>
+<li><code>📁 scss</code> - Contains app-wide shared style variables and definitions to ensure consistency in styling.</li>
+<li><code>&lt;&gt; index.html</code> - Entry point for the application.</li>
+<li><code>💡 main.ts</code> - Contains logic for entry point of application.</li>
+</ul>
+<h3>Frontend Application Folder Architecture</h3>
+<p>Below paths are under <code>BusBuddy/appfront/src/app</code>. For the sake of the number of components, EVERY component
+will contain <code>*.component.ts</code> (component logic), <code>*.component.html</code> (component template) and <code>*.component.scss</code> (component styles).</p>
+<ul>
+<li><code>📁 _models</code> - Contains models based on the backend emulated to TypeScript.<ul>
+<li><code>account.ts</code> - Account model based on backend.</li>
+</ul>
+</li>
+<li><code>📁 icons</code> - Necessary definitions used for CoreUI icons.<ul>
+<li>The files within are used for the above description.</li>
+</ul>
+</li>
+<li><code>📁 layout</code> - Files required for overlay.<ul>
+<li><code>📁 default-layout</code> - Contains files required for overlay for all pages.<ul>
+<li><code>📁 default-footer</code> - Contains footer of overlay for all pages.</li>
+<li><code>📁 default-header</code> - Contains header of overlay for all pages.</li>
+</ul>
+</li>
+<li><code>💡 _nav.ts</code> - Contains the available navigation routes to the user. Used in sidebar.</li>
+<li><code>💡 index.ts</code> - Necessary to make these layouts exportable.</li>
+</ul>
+</li>
+<li><code>💡 index.ts</code> - Necessary to make all above files exportable.</li>
+<li><code>📁 services</code> - Contains services shared among all views.<ul>
+<li><code>💡 api.service.ts</code> - Contains API service that holds URL to query backend from.</li>
+<li><code>💡 auth.guard.service.ts</code> - Contains injectable guard service to direct the correct access type to its respective view.</li>
+<li><code>💡 auth.interceptor.ts</code> - Contains injectable HTTP client service to include JSON Web Token as a header for every HTTP request.</li>
+<li><code>💡 auth.service.ts</code> - Contains authentication service with functions to login, register etc.</li>
+<li><code>💡 logout.component.ts</code> - Logout component called when logout button is clicked.</li>
+</ul>
+</li>
+<li><code>📁 views</code> - Contains all the views that the user can see.</li>
+<li><code>🧩 app.component.*</code> - Contains first component that is used to load every subsequent component.</li>
+<li><code>🔀 app.routes.ts</code> - Contains routes to login, manager, or driver pages.</li>
+</ul>
+<h3>Frontend Views Folder Architecture</h3>
+<p>Below paths are under <code>BusBuddy/appfront/src/app/views</code>. For the sake fo the number of components, EVERY component
+will contain <code>*.component.ts</code> (component logic), <code>*.component.html</code> (component template) and <code>*.component.scss</code> (component styles).</p>
+<ul>
+<li><code>📁 driver</code> - Contains views for drivers.<ul>
+<li><code>📁 _modals</code> - Contains shared pop-up modal components for driver views.<ul>
+<li><code>📁 cancelleddeployment</code> - Contains cancelled deployment notification pop-up.<ul>
+<li><code>🧩 cancelleddeployment.component</code></li>
+</ul>
+</li>
+<li><code>📁 newdeployment</code> - Contains new deployment notification pop-up.<ul>
+<li><code>🧩 newdeployment.component</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>📁 dashboard</code> - Contains driver&#39;s dashboard view.<ul>
+<li><code>🧩 dashboard.component</code></li>
+</ul>
+</li>
+<li><code>📁 drivinghistory</code> - Contains driver&#39;s driving history view.<ul>
+<li><code>🧩 drivinghistory.component</code></li>
+</ul>
+</li>
+<li><code>📁 overview</code> - Contains driver&#39;s overview, i.e. driver&#39;s current deployment view.<ul>
+<li><code>🧩 overview.component</code></li>
+</ul>
+</li>
+<li><code>🔀 routes.ts</code> - Contains routes available to driver.</li>
+</ul>
+</li>
+<li><code>📁 manager</code> - Contains views for manager.<ul>
+<li><code>📁 _modals</code> - Contains shared pop-up modal components for manager views.<ul>
+<li><code>📁 changedrivermodal</code> - Contains pop-up for manager to change deployment&#39;s driver.<ul>
+<li><code>🧩 changedrivermodal.component</code></li>
+</ul>
+</li>
+<li><code>📁 confirmcanceldeployment</code> - Contains pop-up for manager to confirm cancellation of a deployment.<ul>
+<li><code>🧩 confirmcanceldeployment.component</code></li>
+</ul>
+</li>
+<li><code>📁 driverhistorymodal</code> - Contains pop-up for manager to view selected driver&#39;s history.<ul>
+<li><code>🧩 driverhistorymodal.component</code></li>
+</ul>
+</li>
+<li><code>📁 routemodals</code> - Contains modals for bus routes/services.<ul>
+<li><code>📁 addroute</code> - Contains pop-up for manager to add a new route.<ul>
+<li><code>🧩 addroute.component</code></li>
+</ul>
+</li>
+<li><code>📁 deleteroute</code> - Contains pop-up for manager to delete a route.<ul>
+<li><code>🧩 deleteroute.component</code></li>
+</ul>
+</li>
+<li><code>📁 editroute</code> - Contains pop-up for manager to edit an existing route.<ul>
+<li><code>🧩 editroute.component</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>📁 stopmodals</code> - Contains modals for bus stops.<ul>
+<li><code>📁 addstop</code> - Contains pop-up for manager to add a new bus stop.<ul>
+<li><code>🧩 addstop.component</code></li>
+</ul>
+</li>
+<li><code>📁 deletestop</code> - Contains pop-up for manager to delete a bus stop.<ul>
+<li><code>🧩 deletestop.component</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>📁 busdrivers</code> - Contains manager&#39;s bus driver management view.<ul>
+<li><code>🧩 dashboard.component</code></li>
+</ul>
+</li>
+<li><code>📁 busroute</code> - Contains manager&#39;s bus routes and bus stops management view.<ul>
+<li><code>🧩 busroute.component</code></li>
+</ul>
+</li>
+<li><code>📁 deployment</code> - Contains manager&#39;s deployment management view.<ul>
+<li><code>🧩 deployment.component</code></li>
+</ul>
+</li>
+<li><code>📁 register</code> - Contains manager&#39;s bus driver registration view.<ul>
+<li><code>🧩 register.component</code></li>
+</ul>
+</li>
+<li><code>📁 request</code> - Contains manager&#39;s new requests management view.<ul>
+<li><code>🧩 request.component</code></li>
+</ul>
+</li>
+<li><code>🔀 routes.ts</code> - Contains routes available to manager.</li>
+</ul>
+</li>
+<li><code>📁 page404</code> - Contains shared view if 404 error is returned.<ul>
+<li><code>🧩 page404.component</code></li>
+</ul>
+</li>
+<li><code>📁 page500</code> - Contains shared view if 500 error is returned.<ul>
+<li><code>🧩 page500.component</code></li>
+</ul>
+</li>
+</ul>
+<h1>Setup Instructions</h1>
+<p>These instructions assume that you have cloned the Git repo, and into <code>/var/www</code>.</p>
+<ul>
+<li>First, ensure you are in frontend directory.</li>
+</ul>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">$ cd /var/www/BusBuddy/appfront</code></pre></div><ul>
+<li>Install necessary packages.</li>
+</ul>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">$ sudo npm install</code></pre></div><ul>
+<li>Now, the frontend is ready. It can be deployed on <a href="http://localhost:4200">http://localhost:4200</a> using</li>
+</ul>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">$ sudo ng serve -host 0.0.0.0</code></pre></div><h2>Deploying as Service</h2>
+<ul>
+<li>To use <code>nginx</code> for deployment, we shall first configure the frontend to query the correct port of backend.</li>
+</ul>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">$ sudo nano /var/www/BusBuddy/appfront/src/app/services/api.service.ts</code></pre></div><ul>
+<li>You should see an attribute in the <code>ApiService</code> class, <code>HOST</code>. Replace the <code>localhost</code> string to the correct
+IP address of your virtual machine.</li>
+<li>Then, build the frontend. The default output should be <code>~/BusBuddy/appfront/dist</code>.</li>
+</ul>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">$ sudo ng build</code></pre></div><ul>
+<li>Install <code>nginx</code> into the virtual machine.</li>
+</ul>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">$ sudo apt install nginx</code></pre></div><ul>
+<li>In <code>/etc/nginx/sites-available</code>, access the default available sites.</li>
+</ul>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">$ sudo nano /etc/nginx/sites-available/default</code></pre></div><ul>
+<li>Assuming the built output is indeed in <code>~/BusBuddy/appfront/dist</code>, change the following.<ul>
+<li>Comment out <code>listen [::]:80 default_server</code>. This line might cause issues with deployment.</li>
+<li>Change the <code>root</code> to <code>/var/www/BusBuddy/appfront/dist/appfront/browser</code>.</li>
+<li>You can change the <code>server_name</code> to whatever you like.</li>
+</ul>
+</li>
+<li>Then, run <code>nginx</code>.</li>
+</ul>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">$ sudo systemctl start nginx
+$ sudo systemctl enable nginx
+$ sudo systemctl status nginx</code></pre></div><ul>
+<li>After the above, the terminal should that the service is running. It should be running on port 80.</li>
+</ul>
+<p><img src="../readmeimages/nginx.png" alt="img.png" class="img-responsive"></p>
+<h2>Pre-configured Users</h2>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Email</th>
+<th>Password</th>
+<th>Access</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="mailto:test@gmail.com">test@gmail.com</a></td>
+<td>12345</td>
+<td>Manager</td>
+<td>Test</td>
+</tr>
+<tr>
+<td><a href="mailto:1@driver.com">1@driver.com</a></td>
+<td>111</td>
+<td>Driver</td>
+<td>Driver 1</td>
+</tr>
+<tr>
+<td><a href="mailto:2@driver.com">2@driver.com</a></td>
+<td>222</td>
+<td>Driver</td>
+<td>Driver 2</td>
+</tr>
+<tr>
+<td><a href="mailto:3@driver.com">3@driver.com</a></td>
+<td>333</td>
+<td>Driver</td>
+<td>Driver 3</td>
+</tr>
+<tr>
+<td><a href="mailto:4@driver.com">4@driver.com</a></td>
+<td>444</td>
+<td>Driver</td>
+<td>Driver 4</td>
+</tr>
+<tr>
+<td><a href="mailto:5@driver.com">5@driver.com</a></td>
+<td>555</td>
+<td>Driver</td>
+<td>Driver 5</td>
+</tr>
+<tr>
+<td><a href="mailto:6@driver.com">6@driver.com</a></td>
+<td>666</td>
+<td>Driver</td>
+<td>Driver 6</td>
+</tr>
+<tr>
+<td><a href="mailto:7@driver.com">7@driver.com</a></td>
+<td>777</td>
+<td>Driver</td>
+<td>Driver 7</td>
+</tr>
+<tr>
+<td><a href="mailto:8@driver.com">8@driver.com</a></td>
+<td>888</td>
+<td>Driver</td>
+<td>Driver 8</td>
+</tr>
+<tr>
+<td><a href="mailto:9@driver.com">9@driver.com</a></td>
+<td>999</td>
+<td>Driver</td>
+<td>Driver 9</td>
+</tr>
+<tr>
+<td><a href="mailto:10@driver.com">10@driver.com</a></td>
+<td>101010</td>
+<td>Driver</td>
+<td>Driver 10</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
+            var COMPODOC_CURRENT_PAGE_URL = 'index.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="./js/libs/custom-elements.min.js"></script>
+       <script src="./js/libs/lit-html.js"></script>
+
+       <script src="./js/menu-wc.js" defer></script>
+       <script nomodule src="./js/menu-wc_es5.js" defer></script>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/clipboard.min.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+          <script src="./js/search/search.js"></script>
+          <script src="./js/search/lunr.min.js"></script>
+          <script src="./js/search/search-lunr.js"></script>
+          <script src="./js/search/search_index.js"></script>
+       <script src="./js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

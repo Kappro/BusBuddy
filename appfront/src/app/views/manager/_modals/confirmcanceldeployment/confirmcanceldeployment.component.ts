@@ -27,6 +27,9 @@ import {EventEmitter} from "@angular/core";
 import {NgIf} from "@angular/common";
 import {Router} from "@angular/router";
 
+/**
+ * Pop-up modal for manager to confirm cancellation of deployment.
+ */
 @Component({
   selector: 'app-confirmcanceldeploymentmodal',
   standalone: true,
@@ -58,28 +61,52 @@ import {Router} from "@angular/router";
   styleUrl: './confirmcanceldeployment.component.scss'
 })
 export class ConfirmCancelDeploymentModalComponent implements OnInit {
+  /**
+   * @ignore
+   */
   public visible = false;
+  /**
+   * @ignore
+   */
   public deployment_uid!: number;
 
+  /**
+   * @ignore
+   */
   @Output() closedModal = new EventEmitter<void>();
 
+  /**
+   * @ignore
+   */
   constructor(private router: Router,
               private http: HttpClient,
               private api: ApiService) {
   }
 
+  /**
+   * @ignore
+   */
   ngOnInit() {
 
   }
 
+  /**
+   * Toggles visibility of modal.
+   */
   toggleVisibility() {
     this.visible = !this.visible;
   }
 
+  /**
+   * @ignore
+   */
   handleVisibilityChange(event: any) {
     this.visible = event;
   }
 
+  /**
+   * Sends request to backend API to cancel the given deployment.
+   */
   cancel() {
     this.http.post<any>(this.api.API_URL + "/deployments/cancel", {deployment_uid: this.deployment_uid}).subscribe({
       next: (message) => {
@@ -93,6 +120,9 @@ export class ConfirmCancelDeploymentModalComponent implements OnInit {
     })
   }
 
+  /**
+   * Closes the modal. Emits an event for parent component to pick up.
+   */
   close() {
     this.visible = false;
     this.closedModal.emit();

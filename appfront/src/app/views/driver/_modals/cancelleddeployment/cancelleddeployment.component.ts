@@ -27,6 +27,9 @@ import {EventEmitter} from "@angular/core";
 import {NgIf} from "@angular/common";
 import {Router} from "@angular/router";
 
+/**
+ * Pop-up component to inform driver that their current deployment has been cancelled.
+ */
 @Component({
   selector: 'app-cancelleddeploymentmodal',
   standalone: true,
@@ -58,25 +61,46 @@ import {Router} from "@angular/router";
   styleUrl: './cancelleddeployment.component.scss'
 })
 export class CancelledDeploymentModalComponent implements OnInit {
+  /**
+   * @ignore
+   */
   public visible = false;
 
+  /**
+   * @ignore
+   */
   @Output() closedModal = new EventEmitter<void>();
 
+  /**
+   * @ignore
+   */
   constructor(private router: Router) {
   }
 
+  /**
+   * @ignore
+   */
   ngOnInit() {
 
   }
 
+  /**
+   * Toggles visibility of modal.
+   */
   toggleVisibility() {
     this.visible = !this.visible;
   }
 
+  /**
+   * @ignore
+   */
   handleVisibilityChange(event: any) {
     this.visible = event;
   }
 
+  /**
+   * Closes modal and emits an event that is picked up by parent component.
+   */
   close() {
     this.visible = false;
     this.closedModal.emit();

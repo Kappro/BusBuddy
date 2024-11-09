@@ -31,6 +31,9 @@ import { IconDirective } from '@coreui/icons-angular';
 import {AuthService} from "../../../services/auth.service";
 import {Access} from "../../../_models/account";
 
+/**
+ * The common header component for all logged-in users.
+ */
 @Component({
   selector: 'app-default-header',
   templateUrl: './default-header.component.html',
@@ -42,28 +45,51 @@ import {Access} from "../../../_models/account";
     ProgressComponent, NgStyle, ColComponent, AlignDirective]
 })
 export class DefaultHeaderComponent extends HeaderComponent implements OnInit {
-
+  /**
+   * @ignore
+   */
   readonly #colorModeService = inject(ColorModeService);
+  /**
+   * @ignore
+   */
   readonly colorMode = this.#colorModeService.colorMode;
 
+  /**
+   * @ignore
+   */
   readonly colorModes = [
     { name: 'light', text: 'Light', icon: 'cilSun' },
     { name: 'dark', text: 'Dark', icon: 'cilMoon' },
     { name: 'auto', text: 'Auto', icon: 'cilContrast' }
   ];
 
+  /**
+   * @ignore
+   */
   readonly icons = computed(() => {
     const currentMode = this.colorMode();
     return this.colorModes.find(mode => mode.name === currentMode)?.icon ?? 'cilSun';
   });
 
+  /**
+   * @ignore
+   */
   public user: any;
+  /**
+   * @ignore
+   */
   public access: any = "Bad";
 
+  /**
+   * @ignore
+   */
   constructor(private auth: AuthService) {
     super();
   }
 
+  /**
+   * @ignore
+   */
   ngOnInit() {
     this.auth.retrieveIdentity().then(account => {
       this.user = account;
@@ -76,8 +102,14 @@ export class DefaultHeaderComponent extends HeaderComponent implements OnInit {
     });
   }
 
+  /**
+   * @ignore
+   */
   sidebarId = input('sidebar1');
 
+  /**
+   * @ignore
+   */
   public newMessages = [
     {
       id: 0,
@@ -131,6 +163,9 @@ export class DefaultHeaderComponent extends HeaderComponent implements OnInit {
     }
   ];
 
+  /**
+   * @ignore
+   */
   public newNotifications = [
     { id: 0, title: 'New user registered', icon: 'cilUserFollow', color: 'success' },
     { id: 1, title: 'User deleted', icon: 'cilUserUnfollow', color: 'danger' },
@@ -139,12 +174,18 @@ export class DefaultHeaderComponent extends HeaderComponent implements OnInit {
     { id: 4, title: 'Server overloaded', icon: 'cilSpeedometer', color: 'warning' }
   ];
 
+  /**
+   * @ignore
+   */
   public newStatus = [
     { id: 0, title: 'CPU Usage', value: 25, color: 'info', details: '348 Processes. 1/4 Cores.' },
     { id: 1, title: 'Memory Usage', value: 70, color: 'warning', details: '11444GB/16384MB' },
     { id: 2, title: 'SSD 1 Usage', value: 90, color: 'danger', details: '243GB/256GB' }
   ];
 
+  /**
+   * @ignore
+   */
   public newTasks = [
     { id: 0, title: 'Upgrade NPM', value: 0, color: 'info' },
     { id: 1, title: 'ReactJS Version', value: 25, color: 'danger' },

@@ -1,0 +1,838 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>BusBuddy Frontend Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">BusBuddy Frontend Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  ChangeDriverModalComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/views/manager/_modals/changedrivermodal/changedrivermodal.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Pop-up modal for manager to change driver of a new deployment before approving or during Buffer Time.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-changedrivermodal</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>ButtonDirective</code>
+                            <code>FormControlDirective</code>
+                            <code>IconDirective</code>
+                            <code>InputGroupComponent</code>
+                            <code>InputGroupTextDirective</code>
+                            <code>ModalBodyComponent</code>
+                            <code>ModalComponent</code>
+                            <code>ModalContentComponent</code>
+                            <code>ModalDialogComponent</code>
+                            <code>ModalHeaderComponent</code>
+                            <code>ReactiveFormsModule</code>
+                            <code>ModalTitleDirective</code>
+                            <code>ButtonCloseDirective</code>
+                            <code>ModalFooterComponent</code>
+                            <code>ContainerComponent</code>
+                            <code>CardComponent</code>
+                            <code>CardBodyComponent</code>
+                            <code>CardTitleDirective</code>
+                            <code>CardTextDirective</code>
+                            <code>CardGroupComponent</code>
+                            <code>NgIf</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./changedrivermodal.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./changedrivermodal.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#changeDriver" >changeDriver</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#search" >search</a>
+                            </li>
+                            <li>
+                                <a href="#toggleVisibility" >toggleVisibility</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="changeDriver"></a>
+                    <span class="name">
+                        <span ><b>changeDriver</b></span>
+                        <a href="#changeDriver"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>changeDriver(deployment_uid: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, driver_uid: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="148"
+                                    class="link-to-prism">src/app/views/manager/_modals/changedrivermodal/changedrivermodal.component.ts:148</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Sends request to backend API to change driver for the provided deployment.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>deployment_uid</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>UID of deployment to change driver for.</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>driver_uid</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>UID of new driver to change to.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="102"
+                                    class="link-to-prism">src/app/views/manager/_modals/changedrivermodal/changedrivermodal.component.ts:102</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Loads in all drivers on init.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="search"></a>
+                    <span class="name">
+                        <span ><b>search</b></span>
+                        <a href="#search"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>search(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="138"
+                                    class="link-to-prism">src/app/views/manager/_modals/changedrivermodal/changedrivermodal.component.ts:138</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Searches on every keyboard button press.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggleVisibility"></a>
+                    <span class="name">
+                        <span ><b>toggleVisibility</b></span>
+                        <a href="#toggleVisibility"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toggleVisibility()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="121"
+                                    class="link-to-prism">src/app/views/manager/_modals/changedrivermodal/changedrivermodal.component.ts:121</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Toggles visibility of modal.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, Injectable, OnInit, Output} from &#x27;@angular/core&#x27;;
+import {HttpClient} from &quot;@angular/common/http&quot;;
+import {ApiService} from &quot;../../../../services/api.service&quot;;
+import {
+  ButtonCloseDirective,
+  ButtonDirective,
+  CardBodyComponent,
+  CardComponent,
+  CardGroupComponent,
+  CardTextDirective,
+  CardTitleDirective,
+  ContainerComponent,
+  FormControlDirective,
+  InputGroupComponent,
+  InputGroupTextDirective,
+  ModalBodyComponent,
+  ModalComponent,
+  ModalContentComponent,
+  ModalDialogComponent,
+  ModalFooterComponent,
+  ModalHeaderComponent,
+  ModalTitleDirective
+} from &quot;@coreui/angular&quot;;
+import {IconDirective} from &quot;@coreui/icons-angular&quot;;
+import {FormBuilder, FormGroup, ReactiveFormsModule} from &quot;@angular/forms&quot;;
+import {EventEmitter} from &quot;@angular/core&quot;;
+import {NgIf} from &quot;@angular/common&quot;;
+
+/**
+ * Pop-up modal for manager to change driver of a new deployment before approving or during Buffer Time.
+ */
+@Component({
+  selector: &#x27;app-changedrivermodal&#x27;,
+  standalone: true,
+  imports: [
+    ButtonDirective,
+    FormControlDirective,
+    IconDirective,
+    InputGroupComponent,
+    InputGroupTextDirective,
+    ModalBodyComponent,
+    ModalComponent,
+    ModalContentComponent,
+    ModalDialogComponent,
+    ModalHeaderComponent,
+    ReactiveFormsModule,
+    ModalTitleDirective,
+    ButtonCloseDirective,
+    ModalFooterComponent,
+    ContainerComponent,
+    CardComponent,
+    CardBodyComponent,
+    CardTitleDirective,
+    CardTextDirective,
+    CardGroupComponent,
+    NgIf
+  ],
+  templateUrl: &#x27;./changedrivermodal.component.html&#x27;,
+  styleUrl: &#x27;./changedrivermodal.component.scss&#x27;
+})
+export class ChangeDriverModalComponent implements OnInit {
+  /**
+   * @ignore
+   */
+  public visible &#x3D; false;
+  /**
+   * @ignore
+   */
+  // @ts-ignore
+  public users: any[];
+  /**
+   * @ignore
+   */
+  // @ts-ignore
+  public filteredDrivers: any[];
+  /**
+   * @ignore
+   */
+  public deployment: any &#x3D; {};
+  /**
+   * @ignore
+   */
+  // @ts-ignore
+  public searchDriver: FormGroup;
+
+  /**
+   * @ignore
+   */
+  @Output() closedModal &#x3D; new EventEmitter&lt;void&gt;();
+
+  /**
+   * @ignore
+   */
+  constructor(private http: HttpClient,
+              private api: ApiService,
+              private formbuilder: FormBuilder) {
+  }
+
+  /**
+   * Loads in all drivers on init.
+   */
+  ngOnInit() {
+    this.http.get&lt;any&gt;(this.api.API_URL + &quot;/drivers/get_all&quot;).subscribe({
+      next: (message) &#x3D;&gt; {
+        this.users &#x3D; message;
+        console.log(this.users);
+        this.filteredDrivers &#x3D; this.users;
+      },
+      error: (e) &#x3D;&gt; {
+        this.users &#x3D; [];
+      }
+    });
+    this.searchDriver &#x3D; this.formbuilder.group({
+      searchInput: [&#x27;&#x27;]
+    })
+  }
+
+  /**
+   * Toggles visibility of modal.
+   */
+  toggleVisibility() {
+    this.visible &#x3D; !this.visible;
+    if (!this.visible) {
+      this.filteredDrivers &#x3D; this.users;
+    }
+  }
+
+  /**
+   * @ignore
+   */
+  handleVisibilityChange(event: any) {
+    this.visible &#x3D; event;
+  }
+
+  /**
+   * Searches on every keyboard button press.
+   */
+  search(event: any) {
+    const keyword &#x3D; this.searchDriver.get(&#x27;searchInput&#x27;)?.value.toLowerCase();
+    this.filteredDrivers &#x3D; this.users.filter(item &#x3D;&gt; item.name.toLowerCase().includes(keyword));
+  }
+
+  /**
+   * Sends request to backend API to change driver for the provided deployment.
+   * @param {number} deployment_uid UID of deployment to change driver for.
+   * @param {number} driver_uid UID of new driver to change to.
+   */
+  changeDriver(deployment_uid: number, driver_uid: number) {
+    console.log(deployment_uid)
+    this.http.post&lt;any&gt;(this.api.API_URL + &quot;/deployments/change_driver&quot;,
+      {&quot;deployment_uid&quot;: String(deployment_uid),
+        &quot;driver_uid&quot;: String(driver_uid)}).subscribe({
+      next: (message) &#x3D;&gt; {
+        console.log(message);
+        this.visible &#x3D; false;
+        this.closedModal.emit();
+      },
+      error: (e) &#x3D;&gt; {
+        console.log(e);
+      }
+    });
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;c-modal size&#x3D;&quot;xl&quot; id&#x3D;&quot;changeDriverModal&quot; [visible]&#x3D;&quot;visible&quot; (visibleChange)&#x3D;&quot;handleVisibilityChange($event)&quot;&gt;
+  &lt;c-modal-content&gt;
+    &lt;c-modal-header&gt;
+      &lt;h5 cModalTitle&gt;Change Driver&lt;/h5&gt;
+      &lt;button cButtonClose&gt;&lt;/button&gt;
+    &lt;/c-modal-header&gt;
+    &lt;c-modal-body&gt;
+      &lt;h6&gt;Current Driver: {{deployment.driver_name}}&lt;/h6&gt;
+      &lt;h6&gt;Search New Driver:&lt;/h6&gt;
+      &lt;form [formGroup]&#x3D;&quot;searchDriver&quot;&gt;
+        &lt;c-input-group class&#x3D;&quot;mb-3&quot;&gt;
+          &lt;span cInputGroupText&gt;
+            &lt;svg cIcon name&#x3D;&quot;cilUser&quot;&gt;&lt;/svg&gt;
+          &lt;/span&gt;
+          &lt;input cFormControl formControlName&#x3D;&quot;searchInput&quot;
+                 placeholder&#x3D;&quot;Enter driver name&quot;
+                 name&#x3D;&quot;searchInput&quot; required (input)&#x3D;&quot;search($event)&quot;/&gt;
+        &lt;/c-input-group&gt;
+      &lt;/form&gt;
+      @for (user of filteredDrivers; track user.uid; let i &#x3D; $index;) {
+        &lt;c-card&gt;
+          &lt;c-card-body&gt;
+            &lt;h6 cCardTitle&gt;Driver {{user.name}}&lt;/h6&gt;
+            &lt;p cCardText&gt;Current Status: {{user.current_state}}&lt;/p&gt;
+            &lt;button cButton
+                    *ngIf&#x3D;&quot;deployment.driver_uid&#x3D;&#x3D;user.uid&quot;
+                    disabled&gt;Currently Driving This Deployment!&lt;/button&gt;
+            @if (deployment.driver_uid!&#x3D;user.uid){
+              &lt;button cButton
+                      *ngIf&#x3D;&quot;user.current_state!&#x3D;&#x27;On Break&#x27;&quot;
+                      disabled&gt;Choose Driver&lt;/button&gt;
+              &lt;button cButton
+                      *ngIf&#x3D;&quot;user.current_state&#x3D;&#x3D;&#x27;On Break&#x27;&quot;
+                      (click)&#x3D;&quot;changeDriver(deployment.deployment_uid, user.uid)&quot;&gt;Choose Driver&lt;/button&gt;
+            }
+          &lt;/c-card-body&gt;
+        &lt;/c-card&gt;
+      }
+    &lt;/c-modal-body&gt;
+    &lt;c-modal-footer&gt;
+    &lt;/c-modal-footer&gt;
+  &lt;/c-modal-content&gt;
+&lt;/c-modal&gt;
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><c-modal size="xl" id="changeDriverModal" [visible]="visible" (visibleChange)="handleVisibilityChange($event)">  <c-modal-content>    <c-modal-header>      <h5 cModalTitle>Change Driver</h5>      <button cButtonClose></button>    </c-modal-header>    <c-modal-body>      <h6>Current Driver: {{deployment.driver_name}}</h6>      <h6>Search New Driver:</h6>      <form [formGroup]="searchDriver">        <c-input-group class="mb-3">          <span cInputGroupText>            <svg cIcon name="cilUser"></svg>          </span>          <input cFormControl formControlName="searchInput"                 placeholder="Enter driver name"                 name="searchInput" required (input)="search($event)"/>        </c-input-group>      </form>      @for (user of filteredDrivers; track user.uid; let i = $index;) {        <c-card>          <c-card-body>            <h6 cCardTitle>Driver {{user.name}}</h6>            <p cCardText>Current Status: {{user.current_state}}</p>            <button cButton                    *ngIf="deployment.driver_uid==user.uid"                    disabled>Currently Driving This Deployment!</button>            @if (deployment.driver_uid!=user.uid){              <button cButton                      *ngIf="user.current_state!=\'On Break\'"                      disabled>Choose Driver</button>              <button cButton                      *ngIf="user.current_state==\'On Break\'"                      (click)="changeDriver(deployment.deployment_uid, user.uid)">Choose Driver</button>            }          </c-card-body>        </c-card>      }    </c-modal-body>    <c-modal-footer>    </c-modal-footer>  </c-modal-content></c-modal></div>'
+    var COMPONENTS = [{'name': 'AddRouteModalComponent', 'selector': 'app-addroutemodal'},{'name': 'AddStopModalComponent', 'selector': 'app-addstopmodal'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'BusdriversComponent', 'selector': 'app-busdrivers'},{'name': 'BusRoutesComponent', 'selector': 'app-busroutes'},{'name': 'CancelledDeploymentModalComponent', 'selector': 'app-cancelleddeploymentmodal'},{'name': 'ChangeDriverModalComponent', 'selector': 'app-changedrivermodal'},{'name': 'ConfirmCancelDeploymentModalComponent', 'selector': 'app-confirmcanceldeploymentmodal'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DefaultDriverLayoutComponent', 'selector': 'app-dashboard-driver'},{'name': 'DefaultFooterComponent', 'selector': 'app-default-footer'},{'name': 'DefaultHeaderComponent', 'selector': 'app-default-header'},{'name': 'DefaultManagerLayoutComponent', 'selector': 'app-manager-dashboard'},{'name': 'DeleteRouteModalComponent', 'selector': 'app-deleteroutemodal'},{'name': 'DeleteStopModalComponent', 'selector': 'app-deletestopmodal'},{'name': 'DeploymentComponent', 'selector': 'app-deployment'},{'name': 'DriverHistoryModalComponent', 'selector': 'app-driverhistorymodal'},{'name': 'DrivingHistoryComponent', 'selector': 'app-drivinghistory'},{'name': 'EditRouteModalComponent', 'selector': 'app-editroutemodal'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LogoutComponent', 'selector': 'app-logout'},{'name': 'NewDeploymentModalComponent', 'selector': 'app-newdeploymentmodal'},{'name': 'OverviewComponent', 'selector': 'app-overview'},{'name': 'Page404Component', 'selector': 'app-page404'},{'name': 'Page500Component', 'selector': 'app-page500'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RequestComponent', 'selector': 'app-request'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'ChangeDriverModalComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ChangeDriverModalComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

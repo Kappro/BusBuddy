@@ -1,0 +1,1167 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>BusBuddy Frontend Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">BusBuddy Frontend Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  DeploymentComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/views/manager/deployment/deployment.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>View component for manager to manage unstarted deployments, and view past deployments.</p>
+
+    </p>
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-deployment</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>TabPanelComponent</code>
+                            <code>TabDirective</code>
+                            <code>BadgeModule</code>
+                            <code>TabsComponent</code>
+                            <code>TabsContentComponent</code>
+                            <code>TabsListComponent</code>
+                            <code>BorderDirective</code>
+                            <code>CardHeaderComponent</code>
+                            <code>ContainerComponent</code>
+                            <code>RowComponent</code>
+                            <code>ColComponent</code>
+                            <code>TextColorDirective</code>
+                            <code>CardComponent</code>
+                            <code>CardBodyComponent</code>
+                            <code>FormDirective</code>
+                            <code>InputGroupComponent</code>
+                            <code>InputGroupTextDirective</code>
+                            <code>IconDirective</code>
+                            <code>FormControlDirective</code>
+                            <code>ButtonDirective</code>
+                            <code>CardTitleDirective</code>
+                            <code>CardSubtitleDirective</code>
+                            <code>CardTextDirective</code>
+                            <code>NgTemplateOutlet</code>
+                                <code><a href="../components/ChangeDriverModalComponent.html" target="_self" >ChangeDriverModalComponent</a></code>
+                                <code><a href="../components/ConfirmCancelDeploymentModalComponent.html" target="_self" >ConfirmCancelDeploymentModalComponent</a></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./deployment.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./deployment.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#cancelDeploymentModal" >cancelDeploymentModal</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#changeDriverModal" >changeDriverModal</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#handleActiveItemChange" >handleActiveItemChange</a>
+                            </li>
+                            <li>
+                                <a href="#openCancelConfirmation" >openCancelConfirmation</a>
+                            </li>
+                            <li>
+                                <a href="#openChangeDriver" >openChangeDriver</a>
+                            </li>
+                            <li>
+                                <a href="#refresh" >refresh</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(http: HttpClient, api: <a href="../injectables/ApiService.html" target="_self">ApiService</a>, router: Router)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="75" class="link-to-prism">src/app/views/manager/deployment/deployment.component.ts:75</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>View sends backend API request to retrieve all deployments on construct.</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>http</td>
+                                                  
+                                                        <td>
+                                                                    <code>HttpClient</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>api</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ApiService.html" target="_self" >ApiService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleActiveItemChange"></a>
+                    <span class="name">
+                        <span ><b>handleActiveItemChange</b></span>
+                        <a href="#handleActiveItemChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>handleActiveItemChange(value: string | number | undefined)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="110"
+                                    class="link-to-prism">src/app/views/manager/deployment/deployment.component.ts:110</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>For redirecting between tabs.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>value</td>
+                                            <td>
+                                                        <code>string | number | undefined</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openCancelConfirmation"></a>
+                    <span class="name">
+                        <span ><b>openCancelConfirmation</b></span>
+                        <a href="#openCancelConfirmation"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openCancelConfirmation(deployment_uid: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="151"
+                                    class="link-to-prism">src/app/views/manager/deployment/deployment.component.ts:151</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Opens deployment cancellation confirmation modal, loading in UID of deployment to be cancelled.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>deployment_uid</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>UID of deployment to be cancelled.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openChangeDriver"></a>
+                    <span class="name">
+                        <span ><b>openChangeDriver</b></span>
+                        <a href="#openChangeDriver"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openChangeDriver(deployment_uid: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="129"
+                                    class="link-to-prism">src/app/views/manager/deployment/deployment.component.ts:129</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Opens change driver modal, loading in UID of deployment to change driver.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>deployment_uid</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>UID of deployment to change driver for.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="refresh"></a>
+                    <span class="name">
+                        <span ><b>refresh</b></span>
+                        <a href="#refresh"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>refresh()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="117"
+                                    class="link-to-prism">src/app/views/manager/deployment/deployment.component.ts:117</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Refreshes this component without needing to reload.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cancelDeploymentModal"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>cancelDeploymentModal</b></span>
+                        <a href="#cancelDeploymentModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/ConfirmCancelDeploymentModalComponent.html" target="_self" >ConfirmCancelDeploymentModalComponent</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(ConfirmCancelDeploymentModalComponent)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="75" class="link-to-prism">src/app/views/manager/deployment/deployment.component.ts:75</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>View can use cancel deployment confirmation modal.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="changeDriverModal"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>changeDriverModal</b></span>
+                        <a href="#changeDriverModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/ChangeDriverModalComponent.html" target="_self" >ChangeDriverModalComponent</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(ChangeDriverModalComponent)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">src/app/views/manager/deployment/deployment.component.ts:71</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>View can use change driver modal.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, Input, signal, ViewChild} from &#x27;@angular/core&#x27;;
+import { IconDirective } from &#x27;@coreui/icons-angular&#x27;;
+import {
+  BorderDirective,
+  CardHeaderComponent,
+  ContainerComponent,
+  RowComponent,
+  ColComponent,
+  TextColorDirective,
+  CardComponent,
+  CardBodyComponent,
+  FormDirective,
+  InputGroupComponent,
+  InputGroupTextDirective,
+  FormControlDirective,
+  ButtonDirective,
+  TabDirective,
+  TabPanelComponent,
+  TabsComponent,
+  TabsContentComponent,
+  TabsListComponent,
+  BadgeModule,
+  CardTitleDirective, CardSubtitleDirective, CardTextDirective
+} from &#x27;@coreui/angular&#x27;;
+import {ApiService} from &quot;../../../services/api.service&quot;;
+import {HttpClient} from &quot;@angular/common/http&quot;;
+import {Router} from &quot;@angular/router&quot;;
+import {NgTemplateOutlet} from &quot;@angular/common&quot;;
+import {ChangeDriverModalComponent} from &quot;../_modals/changedrivermodal/changedrivermodal.component&quot;;
+import {
+  ConfirmCancelDeploymentModalComponent
+} from &quot;../_modals/confirmcanceldeployment/confirmcanceldeployment.component&quot;;
+
+/**
+ * @ignore
+ */
+interface IRequest {
+  requestId: number,
+  serviceNo: string,
+  driverId: string,
+  driverName: string,
+  busLicensePlate: string,
+  dateTimeStart: string,
+  currentStatus: string, // for now
+  dateTimeEnd: string
+}
+
+/**
+ * View component for manager to manage unstarted deployments, and view past deployments.
+ */
+@Component({
+    selector: &#x27;app-deployment&#x27;,
+    templateUrl: &#x27;./deployment.component.html&#x27;,
+    styleUrls: [&#x27;./deployment.component.scss&#x27;],
+    standalone: true,
+  imports: [TabPanelComponent, TabDirective, BadgeModule,
+    TabsComponent,
+    TabsContentComponent,
+    TabsListComponent, BorderDirective, CardHeaderComponent, ContainerComponent, RowComponent, ColComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent, InputGroupTextDirective, IconDirective, FormControlDirective, ButtonDirective, CardTitleDirective, CardSubtitleDirective, CardTextDirective, NgTemplateOutlet, ChangeDriverModalComponent, ConfirmCancelDeploymentModalComponent]
+})
+export class DeploymentComponent {
+
+  /**
+   * @ignore
+   */
+  public deployments: any[] &#x3D; [];
+
+  /**
+   * View can use change driver modal.
+   */
+  @ViewChild(ChangeDriverModalComponent) changeDriverModal!: ChangeDriverModalComponent;
+  /**
+   * View can use cancel deployment confirmation modal.
+   */
+  @ViewChild(ConfirmCancelDeploymentModalComponent) cancelDeploymentModal!: ConfirmCancelDeploymentModalComponent;
+
+  // &#x27;driver_id&#x27;: self._driver_id,
+  // &#x27;bus_license_plate&#x27;: self._bus_license_plate,
+  // &#x27;datetime_start&#x27;: self._datetime_start,
+  // &#x27;datetime_end&#x27;: self._datetime_end,
+  // &#x27;current_status&#x27;: self._current_status.value,
+  // &#x27;uid&#x27;: self._uid,
+  // &#x27;service_number&#x27;
+
+  /**
+   * View sends backend API request to retrieve all deployments on construct.
+   */
+  constructor(private http: HttpClient,
+              private api: ApiService,
+              private router: Router) {
+    this.http.get&lt;any&gt;(this.api.API_URL + &quot;/deployments/get_all&quot;).subscribe({
+      next: (message) &#x3D;&gt; {
+        this.deployments &#x3D; message;
+        console.log(this.deployments);
+      },
+      error: (e) &#x3D;&gt; {
+        console.log(e);
+      }
+    })
+  }
+
+  /**
+   * @ignore
+   */
+  activeItem &#x3D; signal(0);
+
+  /**
+   * For redirecting between tabs.
+   */
+  handleActiveItemChange(value: string | number | undefined) {
+    this.activeItem.set(&lt;number&gt;value);
+  }
+
+  /**
+   * Refreshes this component without needing to reload.
+   */
+  refresh() {
+    this.router.navigateByUrl(&#x27;/&#x27;,{skipLocationChange:true}).then(()&#x3D;&gt;{
+      this.router.navigate([this.router.url]).then(()&#x3D;&gt;{
+        console.log(&#x60;Refreshing ${this.router.url}&#x60;)
+      })
+    })
+  }
+
+  /**
+   * Opens change driver modal, loading in UID of deployment to change driver.
+   * @param deployment_uid UID of deployment to change driver for.
+   */
+  openChangeDriver(deployment_uid: number) {
+    if(this.changeDriverModal) {
+      this.http.post&lt;any&gt;(this.api.API_URL + &quot;/deployments/get_by_uid&quot;, {&#x27;deployment_uid&#x27;: String(deployment_uid)}).subscribe({
+        next: (message) &#x3D;&gt; {
+          this.changeDriverModal.deployment &#x3D; message;
+          console.log(this.changeDriverModal.deployment);
+          this.changeDriverModal.toggleVisibility();
+          console.log(this.changeDriverModal.visible);
+        },
+        error: (e) &#x3D;&gt; {
+          console.log(e);
+        }
+      });
+    } else {
+      console.error(&quot;Modal component is not initialised&quot;);
+    }
+  }
+
+  /**
+   * Opens deployment cancellation confirmation modal, loading in UID of deployment to be cancelled.
+   * @param deployment_uid UID of deployment to be cancelled.
+   */
+  openCancelConfirmation(deployment_uid: number) {
+    if(this.cancelDeploymentModal) {
+      this.cancelDeploymentModal.deployment_uid &#x3D; deployment_uid;
+      this.cancelDeploymentModal.toggleVisibility();
+    }
+  }
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;c-card class&#x3D;&quot;mb-3&quot;&gt;
+    &lt;c-card-header ngPreserveWhitespaces&gt;
+      &lt;strong&gt;Deployments&lt;/strong&gt; &lt;small&gt;| all deployments&lt;/small&gt;
+    &lt;/c-card-header&gt;
+    &lt;c-card-body&gt;
+      &lt;c-tabs [activeItemKey]&#x3D;&quot;0&quot; (activeItemKeyChange)&#x3D;&quot;handleActiveItemChange($event)&quot;&gt;
+        &lt;c-tabs-list variant&#x3D;&quot;underline-border&quot;&gt;
+          &lt;button cTab [itemKey]&#x3D;&quot;0&quot;&gt;
+            &lt;svg cIcon class&#x3D;&quot;me-2&quot; name&#x3D;&quot;cilBusAlt&quot;&gt;&lt;/svg&gt;
+            All Deployments
+          &lt;/button&gt;
+          &lt;button cTab [itemKey]&#x3D;&quot;1&quot;&gt;
+            &lt;svg cIcon class&#x3D;&quot;me-2&quot; name&#x3D;&quot;cilCheckAlt&quot;&gt;&lt;/svg&gt;
+            Approved
+          &lt;/button&gt;
+          &lt;button cTab [itemKey]&#x3D;&quot;2&quot;&gt;
+            &lt;svg cIcon class&#x3D;&quot;me-2&quot; name&#x3D;&quot;cilX&quot;&gt;&lt;/svg&gt;
+            Rejected
+          &lt;/button&gt;
+        &lt;/c-tabs-list&gt;
+        &lt;c-tabs-content&gt;
+          &lt;c-tab-panel class&#x3D;&quot;p-3&quot; [itemKey]&#x3D;&quot;0&quot;&gt;
+            @for (dep of deployments; track dep.uid; let i &#x3D; $index;) {
+              @switch (dep.current_status) {
+                @case (&quot;Buffer Time&quot;) {
+                  &lt;ng-container [ngTemplateOutlet]&#x3D;&quot;BufferTimeCard&quot;
+                  [ngTemplateOutletContext]&#x3D;&quot;{dep: dep}&quot;&gt;&lt;/ng-container&gt;
+                }
+                @case (&quot;Ongoing&quot;) {
+                  &lt;ng-container [ngTemplateOutlet]&#x3D;&quot;OngoingCard&quot;
+                  [ngTemplateOutletContext]&#x3D;&quot;{dep: dep}&quot;&gt;&lt;/ng-container&gt;
+                }
+                @case (&quot;Completed&quot;) {
+                  &lt;ng-container [ngTemplateOutlet]&#x3D;&quot;CompletedCard&quot;
+                  [ngTemplateOutletContext]&#x3D;&quot;{dep: dep}&quot;&gt;&lt;/ng-container&gt;
+                }
+                @case (&quot;Cancelled&quot;) {
+                  &lt;ng-container [ngTemplateOutlet]&#x3D;&quot;CancelledCard&quot;
+                  [ngTemplateOutletContext]&#x3D;&quot;{dep: dep}&quot;&gt;&lt;/ng-container&gt;
+                }
+              }
+            }
+          &lt;/c-tab-panel&gt;
+          &lt;c-tab-panel class&#x3D;&quot;p-3&quot; [itemKey]&#x3D;&quot;1&quot;&gt;
+            @for (dep of deployments; track dep.uid; let i &#x3D; $index;) {
+              @switch (dep.current_status) {
+                @case (&quot;Buffer Time&quot;) {
+                  &lt;ng-container *ngTemplateOutlet&#x3D;&quot;BufferTimeCard; context: {dep: dep}&quot;&gt;&lt;/ng-container&gt;
+                }
+                @case (&quot;Ongoing&quot;) {
+                  &lt;ng-container *ngTemplateOutlet&#x3D;&quot;OngoingCard; context: {dep: dep}&quot;&gt;&lt;/ng-container&gt;
+                }
+                @case (&quot;Completed&quot;) {
+                  &lt;ng-container *ngTemplateOutlet&#x3D;&quot;CompletedCard; context: {dep: dep}&quot;&gt;&lt;/ng-container&gt;
+                }
+              }
+            }
+          &lt;/c-tab-panel&gt;
+          &lt;c-tab-panel class&#x3D;&quot;p-3&quot; [itemKey]&#x3D;&quot;2&quot;&gt;
+            @for (dep of deployments; track dep.uid; let i &#x3D; $index;) {
+              @switch (dep.current_status) {
+                @case (&quot;Cancelled&quot;) {
+                  &lt;ng-container *ngTemplateOutlet&#x3D;&quot;CancelledCard; context: {dep: dep}&quot;&gt;&lt;/ng-container&gt;
+                }
+              }
+            }
+          &lt;/c-tab-panel&gt;
+        &lt;/c-tabs-content&gt;
+      &lt;/c-tabs&gt;
+    &lt;/c-card-body&gt;
+&lt;/c-card&gt;
+
+&lt;ng-template #BufferTimeCard let-dep&#x3D;&quot;dep&quot;&gt;
+  &lt;c-card [cBorder]&#x3D;&quot;{top: {color: &#x27;secondary&#x27;, width: 5}}&quot;&gt;
+      &lt;c-card-body&gt;
+          &lt;c-row&gt;
+              &lt;c-col&gt;
+                  &lt;h5 cCardTitle&gt;Deployment #{{ dep.uid }} &lt;c-badge color&#x3D;&quot;secondary&quot;&gt;{{ dep.current_status }}&lt;/c-badge&gt;&lt;/h5&gt;
+                  &lt;h6 cCardSubtitle class&#x3D;&quot;mb-2 text-medium-emphasis&quot;&gt;
+                      Bus Service: {{ dep.service_number }}
+                  &lt;/h6&gt;
+                  &lt;p cCardText&gt;
+                      Assigned Driver: {{ dep.driver_name }} &lt;br&gt;
+                      Deployment will Start at: {{ dep.datetime_start }}
+                  &lt;/p&gt;
+              &lt;/c-col&gt;
+              &lt;c-col class&#x3D;&quot;align-self-end&quot;&gt;
+                  &lt;div class&#x3D;&quot;d-grid gap-2 d-md-flex justify-content-md-end&quot;&gt;
+                      &lt;button cButton color&#x3D;&quot;primary&quot; variant&#x3D;&quot;outline&quot;
+                      (click)&#x3D;&quot;openChangeDriver(dep.uid)&quot;&gt;Change Driver&lt;/button&gt;
+                  &lt;/div&gt;
+                  &lt;div class&#x3D;&quot;d-grid gap-2 d-md-flex justify-content-md-end&quot;&gt;
+                      &lt;button cButton color&#x3D;&quot;danger&quot; variant&#x3D;&quot;outline&quot;
+                      (click)&#x3D;&quot;openCancelConfirmation(dep.uid)&quot;&gt;Cancel&lt;/button&gt;
+                  &lt;/div&gt;
+              &lt;/c-col&gt;
+          &lt;/c-row&gt;
+      &lt;/c-card-body&gt;
+  &lt;/c-card&gt;
+  &lt;div class&#x3D;&quot;p-2&quot;&gt;&lt;/div&gt;
+&lt;/ng-template&gt;
+
+&lt;ng-template #OngoingCard let-dep&#x3D;&quot;dep&quot;&gt;
+    &lt;c-card [cBorder]&#x3D;&quot;{top: {color: &#x27;warning&#x27;, width: 5}}&quot;&gt;
+        &lt;c-card-body&gt;
+            &lt;c-row&gt;
+                &lt;c-col&gt;
+                    &lt;h5 cCardTitle&gt;Deployment #{{ dep.uid }} &lt;c-badge color&#x3D;&quot;secondary&quot;&gt;{{ dep.current_status }}&lt;/c-badge&gt;&lt;/h5&gt;
+                    &lt;h6 cCardSubtitle class&#x3D;&quot;mb-2 text-medium-emphasis&quot;&gt;
+                        Bus Service: {{ dep.service_number }}
+                    &lt;/h6&gt;
+                    &lt;p cCardText&gt;
+                        Assigned Driver: {{ dep.driver_name }} &lt;br&gt;
+                        Deployment Started at: {{ dep.datetime_start }}
+                    &lt;/p&gt;
+                &lt;/c-col&gt;
+            &lt;/c-row&gt;
+        &lt;/c-card-body&gt;
+    &lt;/c-card&gt;
+  &lt;div class&#x3D;&quot;p-2&quot;&gt;&lt;/div&gt;
+&lt;/ng-template&gt;
+
+&lt;ng-template #CompletedCard let-dep&#x3D;&quot;dep&quot;&gt;
+    &lt;c-card [cBorder]&#x3D;&quot;{top: {color: &#x27;success&#x27;, width: 5}}&quot;&gt;
+        &lt;c-card-body&gt;
+            &lt;c-row&gt;
+                &lt;c-col&gt;
+                    &lt;h5 cCardTitle&gt;Deployment #{{ dep.uid }} &lt;c-badge color&#x3D;&quot;secondary&quot;&gt;{{ dep.current_status }}&lt;/c-badge&gt;&lt;/h5&gt;
+                    &lt;h6 cCardSubtitle class&#x3D;&quot;mb-2 text-medium-emphasis&quot;&gt;
+                        Bus Service: {{ dep.service_number }}
+                    &lt;/h6&gt;
+                    &lt;p cCardText&gt;
+                        Assigned Driver: {{ dep.driver_name }} &lt;br&gt;
+                        Deployment Started at: {{ dep.datetime_start }} &lt;br&gt;
+                        Deployment Completed at: {{ dep.datetime_end }}
+                    &lt;/p&gt;
+                &lt;/c-col&gt;
+            &lt;/c-row&gt;
+        &lt;/c-card-body&gt;
+    &lt;/c-card&gt;
+  &lt;div class&#x3D;&quot;p-2&quot;&gt;&lt;/div&gt;
+&lt;/ng-template&gt;
+
+&lt;ng-template #CancelledCard let-dep&#x3D;&quot;dep&quot;&gt;
+    &lt;c-card [cBorder]&#x3D;&quot;{top: {color: &#x27;danger&#x27;, width: 5}}&quot;&gt;
+        &lt;c-card-body&gt;
+            &lt;c-row&gt;
+                &lt;c-col&gt;
+                    &lt;h5 cCardTitle&gt;Deployment #{{ dep.uid }} &lt;c-badge color&#x3D;&quot;secondary&quot;&gt;{{ dep.current_status }}&lt;/c-badge&gt;&lt;/h5&gt;
+                    &lt;h6 cCardSubtitle class&#x3D;&quot;mb-2 text-medium-emphasis&quot;&gt;
+                        Bus Service: {{ dep.service_number }}
+                    &lt;/h6&gt;
+                    &lt;p cCardText&gt;
+                        Assigned Driver: {{ dep.driver_name }} &lt;br&gt;
+                        Deployment Started at: {{ dep.datetime_start }} &lt;br&gt;
+                        Deployment Cancelled as at: {{ dep.datetime_end }}
+                    &lt;/p&gt;
+                &lt;/c-col&gt;
+            &lt;/c-row&gt;
+        &lt;/c-card-body&gt;
+    &lt;/c-card&gt;
+  &lt;div class&#x3D;&quot;p-2&quot;&gt;&lt;/div&gt;
+&lt;/ng-template&gt;
+
+&lt;app-changedrivermodal (closedModal)&#x3D;&quot;refresh()&quot;&gt;&lt;/app-changedrivermodal&gt;
+&lt;app-confirmcanceldeploymentmodal (closedModal)&#x3D;&quot;refresh()&quot;&gt;&lt;/app-confirmcanceldeploymentmodal&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./deployment.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss"></code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><c-card class="mb-3">    <c-card-header ngPreserveWhitespaces>      <strong>Deployments</strong> <small>| all deployments</small>    </c-card-header>    <c-card-body>      <c-tabs [activeItemKey]="0" (activeItemKeyChange)="handleActiveItemChange($event)">        <c-tabs-list variant="underline-border">          <button cTab [itemKey]="0">            <svg cIcon class="me-2" name="cilBusAlt"></svg>            All Deployments          </button>          <button cTab [itemKey]="1">            <svg cIcon class="me-2" name="cilCheckAlt"></svg>            Approved          </button>          <button cTab [itemKey]="2">            <svg cIcon class="me-2" name="cilX"></svg>            Rejected          </button>        </c-tabs-list>        <c-tabs-content>          <c-tab-panel class="p-3" [itemKey]="0">            @for (dep of deployments; track dep.uid; let i = $index;) {              @switch (dep.current_status) {                @case ("Buffer Time") {                  <ng-container [ngTemplateOutlet]="BufferTimeCard"                  [ngTemplateOutletContext]="{dep: dep}"></ng-container>                }                @case ("Ongoing") {                  <ng-container [ngTemplateOutlet]="OngoingCard"                  [ngTemplateOutletContext]="{dep: dep}"></ng-container>                }                @case ("Completed") {                  <ng-container [ngTemplateOutlet]="CompletedCard"                  [ngTemplateOutletContext]="{dep: dep}"></ng-container>                }                @case ("Cancelled") {                  <ng-container [ngTemplateOutlet]="CancelledCard"                  [ngTemplateOutletContext]="{dep: dep}"></ng-container>                }              }            }          </c-tab-panel>          <c-tab-panel class="p-3" [itemKey]="1">            @for (dep of deployments; track dep.uid; let i = $index;) {              @switch (dep.current_status) {                @case ("Buffer Time") {                  <ng-container *ngTemplateOutlet="BufferTimeCard; context: {dep: dep}"></ng-container>                }                @case ("Ongoing") {                  <ng-container *ngTemplateOutlet="OngoingCard; context: {dep: dep}"></ng-container>                }                @case ("Completed") {                  <ng-container *ngTemplateOutlet="CompletedCard; context: {dep: dep}"></ng-container>                }              }            }          </c-tab-panel>          <c-tab-panel class="p-3" [itemKey]="2">            @for (dep of deployments; track dep.uid; let i = $index;) {              @switch (dep.current_status) {                @case ("Cancelled") {                  <ng-container *ngTemplateOutlet="CancelledCard; context: {dep: dep}"></ng-container>                }              }            }          </c-tab-panel>        </c-tabs-content>      </c-tabs>    </c-card-body></c-card><ng-template #BufferTimeCard let-dep="dep">  <c-card [cBorder]="{top: {color: \'secondary\', width: 5}}">      <c-card-body>          <c-row>              <c-col>                  <h5 cCardTitle>Deployment #{{ dep.uid }} <c-badge color="secondary">{{ dep.current_status }}</c-badge></h5>                  <h6 cCardSubtitle class="mb-2 text-medium-emphasis">                      Bus Service: {{ dep.service_number }}                  </h6>                  <p cCardText>                      Assigned Driver: {{ dep.driver_name }} <br>                      Deployment will Start at: {{ dep.datetime_start }}                  </p>              </c-col>              <c-col class="align-self-end">                  <div class="d-grid gap-2 d-md-flex justify-content-md-end">                      <button cButton color="primary" variant="outline"                      (click)="openChangeDriver(dep.uid)">Change Driver</button>                  </div>                  <div class="d-grid gap-2 d-md-flex justify-content-md-end">                      <button cButton color="danger" variant="outline"                      (click)="openCancelConfirmation(dep.uid)">Cancel</button>                  </div>              </c-col>          </c-row>      </c-card-body>  </c-card>  <div class="p-2"></div></ng-template><ng-template #OngoingCard let-dep="dep">    <c-card [cBorder]="{top: {color: \'warning\', width: 5}}">        <c-card-body>            <c-row>                <c-col>                    <h5 cCardTitle>Deployment #{{ dep.uid }} <c-badge color="secondary">{{ dep.current_status }}</c-badge></h5>                    <h6 cCardSubtitle class="mb-2 text-medium-emphasis">                        Bus Service: {{ dep.service_number }}                    </h6>                    <p cCardText>                        Assigned Driver: {{ dep.driver_name }} <br>                        Deployment Started at: {{ dep.datetime_start }}                    </p>                </c-col>            </c-row>        </c-card-body>    </c-card>  <div class="p-2"></div></ng-template><ng-template #CompletedCard let-dep="dep">    <c-card [cBorder]="{top: {color: \'success\', width: 5}}">        <c-card-body>            <c-row>                <c-col>                    <h5 cCardTitle>Deployment #{{ dep.uid }} <c-badge color="secondary">{{ dep.current_status }}</c-badge></h5>                    <h6 cCardSubtitle class="mb-2 text-medium-emphasis">                        Bus Service: {{ dep.service_number }}                    </h6>                    <p cCardText>                        Assigned Driver: {{ dep.driver_name }} <br>                        Deployment Started at: {{ dep.datetime_start }} <br>                        Deployment Completed at: {{ dep.datetime_end }}                    </p>                </c-col>            </c-row>        </c-card-body>    </c-card>  <div class="p-2"></div></ng-template><ng-template #CancelledCard let-dep="dep">    <c-card [cBorder]="{top: {color: \'danger\', width: 5}}">        <c-card-body>            <c-row>                <c-col>                    <h5 cCardTitle>Deployment #{{ dep.uid }} <c-badge color="secondary">{{ dep.current_status }}</c-badge></h5>                    <h6 cCardSubtitle class="mb-2 text-medium-emphasis">                        Bus Service: {{ dep.service_number }}                    </h6>                    <p cCardText>                        Assigned Driver: {{ dep.driver_name }} <br>                        Deployment Started at: {{ dep.datetime_start }} <br>                        Deployment Cancelled as at: {{ dep.datetime_end }}                    </p>                </c-col>            </c-row>        </c-card-body>    </c-card>  <div class="p-2"></div></ng-template><app-changedrivermodal (closedModal)="refresh()"></app-changedrivermodal><app-confirmcanceldeploymentmodal (closedModal)="refresh()"></app-confirmcanceldeploymentmodal></div>'
+    var COMPONENTS = [{'name': 'AddRouteModalComponent', 'selector': 'app-addroutemodal'},{'name': 'AddStopModalComponent', 'selector': 'app-addstopmodal'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'BusdriversComponent', 'selector': 'app-busdrivers'},{'name': 'BusRoutesComponent', 'selector': 'app-busroutes'},{'name': 'CancelledDeploymentModalComponent', 'selector': 'app-cancelleddeploymentmodal'},{'name': 'ChangeDriverModalComponent', 'selector': 'app-changedrivermodal'},{'name': 'ConfirmCancelDeploymentModalComponent', 'selector': 'app-confirmcanceldeploymentmodal'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DefaultDriverLayoutComponent', 'selector': 'app-dashboard-driver'},{'name': 'DefaultFooterComponent', 'selector': 'app-default-footer'},{'name': 'DefaultHeaderComponent', 'selector': 'app-default-header'},{'name': 'DefaultManagerLayoutComponent', 'selector': 'app-manager-dashboard'},{'name': 'DeleteRouteModalComponent', 'selector': 'app-deleteroutemodal'},{'name': 'DeleteStopModalComponent', 'selector': 'app-deletestopmodal'},{'name': 'DeploymentComponent', 'selector': 'app-deployment'},{'name': 'DriverHistoryModalComponent', 'selector': 'app-driverhistorymodal'},{'name': 'DrivingHistoryComponent', 'selector': 'app-drivinghistory'},{'name': 'EditRouteModalComponent', 'selector': 'app-editroutemodal'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LogoutComponent', 'selector': 'app-logout'},{'name': 'NewDeploymentModalComponent', 'selector': 'app-newdeploymentmodal'},{'name': 'OverviewComponent', 'selector': 'app-overview'},{'name': 'Page404Component', 'selector': 'app-page404'},{'name': 'Page500Component', 'selector': 'app-page500'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RequestComponent', 'selector': 'app-request'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'DeploymentComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'DeploymentComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -18,11 +18,17 @@ import * as L from 'leaflet';
 import {HttpClient} from "@angular/common/http";
 import {ApiService} from "../../../../../services/api.service";
 
+/**
+ * @ignore
+ */
 interface IBusStop {
   long: number;
   lat: number;
 }
 
+/**
+ * @ignore
+ */
 interface IRoute {
   routeId: number,
   serviceNumber: string
@@ -44,6 +50,9 @@ const iconDefault = L.icon({
 });
 L.Marker.prototype.options.icon = iconDefault;
 
+/**
+ * Pop-up modal for manager to delete an existing route.
+ */
 @Component({
     selector: 'app-deleteroutemodal',
     templateUrl: './deleteroute.component.html',
@@ -62,17 +71,47 @@ L.Marker.prototype.options.icon = iconDefault;
 })
 export class DeleteRouteModalComponent implements AfterViewInit {
 
+  /**
+   * @ignore
+   */
   private map!: L.Map;
 
+  /**
+   * @ignore
+   */
   public serviceNumber: string = "";
+  /**
+   * @ignore
+   */
   display: boolean = false;
+  /**
+   * @ignore
+   */
   public visible: boolean = false;
+  /**
+   * @ignore
+   */
   public availableStops: any[] = [];
+  /**
+   * @ignore
+   */
   public stops: any[] = [];
+  /**
+   * @ignore
+   */
   @Output() closedModal = new EventEmitter<void>();
+  /**
+   * @ignore
+   */
   private markersLayer = new L.LayerGroup();
+  /**
+   * @ignore
+   */
   public deleteRouteForm: FormGroup;
 
+  /**
+   * Initialises map using Open Street Map tiles.
+   */
   public initMap(): void {
     this.map = L.map('mapdel', {
       center: [ 1.344365, 103.694433 ],
@@ -92,6 +131,9 @@ export class DeleteRouteModalComponent implements AfterViewInit {
     }, 500);
   }
 
+  /**
+   * @ignore
+   */
   constructor(private http: HttpClient,
               private api: ApiService,
               private formbuilder: FormBuilder,
@@ -101,10 +143,18 @@ export class DeleteRouteModalComponent implements AfterViewInit {
     })
   }
 
+  /**
+   * @ignore
+   */
   ngAfterViewInit(): void {
 
   }
 
+  /**
+   * Updates map with new given stops.
+   * @param stops List of bus stop objects with latitude and longitude to be plotted.
+   * @private
+   */
   private updateStopsMapWithList(stops: any[]): void {
     this.markersLayer.clearLayers();
 
@@ -118,6 +168,9 @@ export class DeleteRouteModalComponent implements AfterViewInit {
     this.markersLayer.addTo(this.map);
   }
 
+  /**
+   * @ignore
+   */
   handleVisibilityChange(event: any) {
     this.visible = event;
     // setTimeout(() => {
@@ -142,6 +195,10 @@ export class DeleteRouteModalComponent implements AfterViewInit {
 
   }
 
+  /**
+   * Toggles visibility of modal.
+   * @param stopsList Optional. If opening modal and this is provided, will update the map with these markers.
+   */
   toggleVisibility(stopsList?: any[]) {
     if(!this.visible) {
       try {this.initMap();}
@@ -153,6 +210,9 @@ export class DeleteRouteModalComponent implements AfterViewInit {
     this.visible = !this.visible;
   }
 
+  /**
+   * Closes the modal. Emits an event for parent component to pick up.
+   */
   clickClose() {
     this.map.off();
     this.map.remove();
@@ -161,6 +221,9 @@ export class DeleteRouteModalComponent implements AfterViewInit {
     this.closedModal.emit();
   }
 
+  /**
+   * Confirms deletion of service. Sends request to backend API to complete the deletion.
+   */
   onConfirm() {
     this.http.post<any>(this.api.API_URL + "/services/delete", {'service_number': this.serviceNumber}).subscribe({
         next: (message) => {

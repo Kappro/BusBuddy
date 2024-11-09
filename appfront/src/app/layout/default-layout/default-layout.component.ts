@@ -28,6 +28,9 @@ import {
   CancelledDeploymentModalComponent
 } from "../../views/driver/_modals/cancelleddeployment/cancelleddeployment.component";
 
+/**
+ * @ignore
+ */
 function isOverflown(element: HTMLElement) {
   return (
     element.scrollHeight > element.clientHeight ||
@@ -35,6 +38,9 @@ function isOverflown(element: HTMLElement) {
   );
 }
 
+/**
+ * Manager's sidebar loading.
+ */
 @Component({
   selector: 'app-manager-dashboard',
   templateUrl: './default-layout.component.html',
@@ -61,15 +67,27 @@ function isOverflown(element: HTMLElement) {
   ]
 })
 export class DefaultManagerLayoutComponent implements OnInit {
+  /**
+   * @ignore
+   */
   public navItems = navItemsManager;
+  /**
+   * @ignore
+   */
   public new = false;
 
+  /**
+   * Component uses HttpClient, ApiService, ChangeDetectorRef and Router injectables.
+   */
   constructor(private http: HttpClient,
               private api: ApiService,
               private cdr: ChangeDetectorRef,
               private router: Router) {
   }
 
+  /**
+   * Component starts a clock to constantly query the backend if there are new deployments every 500ms.
+   */
   ngOnInit() {
     const mgrInt = setInterval(() => {
       if (this.router.url==='/login') {
@@ -100,11 +118,16 @@ export class DefaultManagerLayoutComponent implements OnInit {
       })
     }, 1000);
   }
-
+  /**
+   * @ignore
+   */
   startInterval() {
 
   }
 
+  /**
+   * @ignore
+   */
   onScrollbarUpdate($event: any) {
     // if ($event.verticalUsed) {
     // console.log('verticalUsed', $event.verticalUsed);
@@ -112,6 +135,9 @@ export class DefaultManagerLayoutComponent implements OnInit {
   }
 }
 
+/**
+ * Driver's sidebar loading.
+ */
 @Component({
   selector: 'app-dashboard-driver',
   templateUrl: './default-layout.component.html',
@@ -139,11 +165,23 @@ export class DefaultManagerLayoutComponent implements OnInit {
 })
 export class DefaultDriverLayoutComponent implements AfterViewInit {
 
+  /**
+   * For support of pop-up notification regardless of which page driver is at.
+   */
   @ViewChild(NewDeploymentModalComponent) newDeploymentNotif!: NewDeploymentModalComponent;
+  /**
+   * For support of pop-up notification regardless of which page driver is at.
+   */
   @ViewChild(CancelledDeploymentModalComponent) cancelledDeploymentNotif!: CancelledDeploymentModalComponent;
 
+  /**
+   * @ignore
+   */
   public navItems = navItemsDriver;
 
+  /**
+   * Component uses HttpClient, ApiService, ChangeDetectorRef and Router injectables.
+   */
   constructor(private http: HttpClient,
               private api: ApiService,
               private cdr: ChangeDetectorRef,
@@ -154,6 +192,9 @@ export class DefaultDriverLayoutComponent implements AfterViewInit {
     }
   }
 
+  /**
+   * Starts a clock to constantly query the backend to check if there are any new deployments for the driver every 500ms.
+   */
   startInterval() {
     const dvrInt = setInterval(() => {
       if (this.router.url==='/login') {
@@ -189,10 +230,16 @@ export class DefaultDriverLayoutComponent implements AfterViewInit {
     }, 1000);
   }
 
+  /**
+   * @ignore
+   */
   ngAfterViewInit() {
     this.startInterval();
   }
 
+  /**
+   * @ignore
+   */
   onScrollbarUpdate($event: any) {
     // if ($event.verticalUsed) {
     // console.log('verticalUsed', $event.verticalUsed);

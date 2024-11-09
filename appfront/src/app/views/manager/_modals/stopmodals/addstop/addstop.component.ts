@@ -28,6 +28,9 @@ import {NgIf} from "@angular/common";
 import {Access} from "../../../../../_models/account";
 import {firstValueFrom} from "rxjs";
 
+/**
+ * Pop-up modal for manager to add bus stops.
+ */
 @Component({
   selector: 'app-addstopmodal',
   standalone: true,
@@ -59,15 +62,33 @@ import {firstValueFrom} from "rxjs";
   styleUrl: './addstop.component.scss'
 })
 export class AddStopModalComponent implements OnInit {
+  /**
+   * @ignore
+   */
   public visible = false;
+  /**
+   * @ignore
+   */
   // @ts-ignore
   public existingStops: any[] = [];
+  /**
+   * @ignore
+   */
   public deployment: any = {};
+  /**
+   * @ignore
+   */
   // @ts-ignore
   public addStopForm: FormGroup;
 
+  /**
+   * @ignore
+   */
   public valid: boolean = false;
 
+  /**
+   * @ignore
+   */
   public validities = {
     codeNumber: true,
     codeNotEmpty: false,
@@ -77,14 +98,23 @@ export class AddStopModalComponent implements OnInit {
     long: false
   }
 
+  /**
+   * @ignore
+   */
   @Output() closedModal = new EventEmitter<void>();
 
+  /**
+   * @ignore
+   */
   constructor(private http: HttpClient,
               private api: ApiService,
               private formbuilder: FormBuilder,
               ) {
   }
 
+  /**
+   * Obtains list of all bus stops on init.
+   */
   ngOnInit() {
     this.http.get<any>(this.api.API_URL + "/stops/get_all").subscribe({
       next: (message) => {
@@ -104,14 +134,23 @@ export class AddStopModalComponent implements OnInit {
     })
   }
 
+  /**
+   * Toggles visiblity of modal.
+   */
   toggleVisibility() {
     this.visible = !this.visible;
   }
 
+  /**
+   * @ignore
+   */
   handleVisibilityChange(event: any) {
     this.visible = event;
   }
 
+  /**
+   * @ignore
+   */
   refreshValidity() {
     let temp = true;
     Object.entries(this.validities).forEach(
@@ -123,6 +162,9 @@ export class AddStopModalComponent implements OnInit {
     this.valid = temp;
   }
 
+  /**
+   * Validity check for stop code. Fails if either code field is empty or duplicate.
+   */
   validateStopCode(event: any) {
     const stopCode = this.addStopForm.get("stopCode")?.value;
     this.validities['codeNotEmpty'] = (stopCode.length > 0);
@@ -142,12 +184,18 @@ export class AddStopModalComponent implements OnInit {
     this.refreshValidity();
   }
 
+  /**
+   * Validity check for stop name. Fails if name field is empty.
+   */
   validateStopName(event: any) {
     const stopName = this.addStopForm.get("stopName")?.value;
     this.validities['name'] = (stopName.length > 0);
     this.refreshValidity();
   }
 
+  /**
+   * Validity check for latitude. Fails if latitude field does not meet regex requirements.
+   */
   validateLatitude(event: any) {
     const latitude = this.addStopForm.get("latitude")?.value;
     const reg = new RegExp("^-?([0-8]?[0-9]|90)(\\.[0-9]{1,10})?$");
@@ -160,6 +208,9 @@ export class AddStopModalComponent implements OnInit {
     this.refreshValidity();
   }
 
+  /**
+   * Validity check for longitude. Fails if longitude field does not meet regex requirements.
+   */
   validateLongitude(event: any) {
     const longitude = this.addStopForm.get("longitude")?.value;
     const reg = new RegExp("^-?([0-9]{1,2}|1[0-7][0-9]|180)(\\.[0-9]{1,10})?$");
@@ -172,6 +223,9 @@ export class AddStopModalComponent implements OnInit {
     this.refreshValidity();
   }
 
+  /**
+   * Submits request to backend API with given stop code, name, latitude and longitude to complete creation of new bus stop.
+   */
   onSubmit() {
     const stop_details = {
         stop_code: this.addStopForm.get("stopCode")?.value,

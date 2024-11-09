@@ -12,6 +12,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - [Setup Instructions](#setup-instructions)
   - [Deploying as Service](#deploying-as-service)
   - [Pre-configured Users](#pre-configured-users)
+- [Documentation](#documentation)
 - Other README Directories
   - [Main](../README.md)
   - [Backend](../app/README.md)
@@ -176,3 +177,24 @@ $ sudo systemctl status nginx
 | 8@driver.com   | 888      | Driver  | Driver 8  |
 | 9@driver.com   | 999      | Driver  | Driver 9  |
 | 10@driver.com  | 101010   | Driver  | Driver 10 |
+
+# Documentation
+This frontend's documentation is powered by Compodoc, an NPM library that allows a nice display of Angular application
+documentation. In order to view the documents, it has to be set-up.
+
+Start by installing Compodoc globally.
+```
+$ npm install -g @compodoc/compodoc
+```
+
+Then we can make sure we are currently in the main appfront directory.
+```
+$ cd /var/www/BusBuddy/appfront
+```
+
+Finally, the documentation can be served.
+```
+$ compodoc --port 12065 -s
+```
+
+The documentation will then be served locally at port 12065. This can be changed by changing the port number above.

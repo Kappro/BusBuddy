@@ -1,10 +1,12 @@
-import { Routes } from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {AppComponent} from "./app.component";
 import {LoginComponent} from "./views/login/login.component";
 import {LoginGuardService, RoleGuardService} from "./services/auth.guard.service";
 import {Access} from "./_models/account";
 import {DefaultDriverLayoutComponent, DefaultManagerLayoutComponent} from "./layout";
 import {LogoutComponent} from "./services/logout.component";
+import {DriverRoutes} from "./views/driver/routes";
+import {ManagerRoutes} from "./views/manager/routes";
 
 export const appRoutes: Routes = [
   {
@@ -25,7 +27,7 @@ export const appRoutes: Routes = [
       expectedRoles: [Access.MANAGER]
     },
     canActivate: [RoleGuardService],
-    loadChildren: () => import("./views/manager/routes")
+    children: ManagerRoutes
   },
   {
     path: 'driver',
@@ -35,7 +37,7 @@ export const appRoutes: Routes = [
       expectedRoles: [Access.DRIVER]
     },
     canActivate: [RoleGuardService],
-    loadChildren: () => import("./views/driver/routes")
+    children: DriverRoutes
   },
   {
     path: 'logout',
@@ -45,3 +47,5 @@ export const appRoutes: Routes = [
     }
   }
 ];
+
+RouterModule.forRoot(appRoutes);

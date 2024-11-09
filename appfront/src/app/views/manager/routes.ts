@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 
-export default [
+export const ManagerRoutes: Routes = [
   {
     path: '',
     redirectTo: 'request',
@@ -41,4 +41,4 @@ export default [
       title: 'Deployment'
     }
   }
-] satisfies Routes;
+]

@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { IconDirective } from '@coreui/icons-angular';
 import { ContainerComponent, RowComponent, ColComponent, InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective } from '@coreui/angular';
 
+/**
+ * Default page for 404 errors.
+ */
 @Component({
     selector: 'app-page404',
     templateUrl: './page404.component.html',
@@ -11,6 +14,9 @@ import { ContainerComponent, RowComponent, ColComponent, InputGroupComponent, In
 })
 export class Page404Component {
 
+  /**
+   * @ignore
+   */
   constructor() { }
 
 }

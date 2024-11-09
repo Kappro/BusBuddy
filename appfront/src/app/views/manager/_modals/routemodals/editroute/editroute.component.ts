@@ -17,6 +17,9 @@ import * as L from 'leaflet';
 import {HttpClient} from "@angular/common/http";
 import {ApiService} from "../../../../../services/api.service";
 
+/**
+ * @ignore
+ */
 interface IRoute {
   routeId: number,
   serviceNumber: string
@@ -37,6 +40,9 @@ const iconDefault = L.icon({
 });
 L.Marker.prototype.options.icon = iconDefault;
 
+/**
+ * Pop-up component for manager to edit a service.
+ */
 @Component({
     selector: 'app-editroutemodal',
     templateUrl: './editroute.component.html',
@@ -55,22 +61,61 @@ L.Marker.prototype.options.icon = iconDefault;
 })
 export class EditRouteModalComponent implements AfterViewInit {
 
+  /**
+   * @ignore
+   */
   private map!: L.Map;
 
+  /**
+   * @ignore
+   */
   public serviceNumber: string = "";
+  /**
+   * @ignore
+   */
   public visible: boolean = false;
+  /**
+   * @ignore
+   */
   public currentStops: any[] = [];
+  /**
+   * @ignore
+   */
   public oldStops: any[] = [];
+  /**
+   * @ignore
+   */
   public availableStops: any[] = [];
+  /**
+   * @ignore
+   */
   public valid: boolean = false;
+  /**
+   * @ignore
+   */
   public editRouteForm: FormGroup;
+  /**
+   * @ignore
+   */
   public invalid: any[] = [];
 
+  /**
+   * @ignore
+   */
   display: boolean = false;
+  /**
+   * @ignore
+   */
   @Output() closedModal = new EventEmitter<void>();
 
+  /**
+   * @ignore
+   */
   private markersLayer = new L.LayerGroup();
 
+  /**
+   * Initialises map using Open Street Map tiles.
+   */
   public initMap(): void {
     this.map = L.map('mapedit', {
       center: [ 1.344365, 103.694433 ],
@@ -90,6 +135,9 @@ export class EditRouteModalComponent implements AfterViewInit {
     }, 500);
   }
 
+  /**
+   * @ignore
+   */
   constructor(private http: HttpClient,
               private api: ApiService,
               private formbuilder: FormBuilder,
@@ -99,10 +147,18 @@ export class EditRouteModalComponent implements AfterViewInit {
     })
   }
 
+  /**
+   * @ignore
+   */
   ngAfterViewInit() {
 
   }
 
+  /**
+   * Updates map with new given stops.
+   * @param stops List of bus stop objects with latitude and longitude to be plotted.
+   * @private
+   */
   private updateStopsMapWithList(stops: any[]): void {
     this.markersLayer.clearLayers();
 
@@ -116,6 +172,9 @@ export class EditRouteModalComponent implements AfterViewInit {
     this.markersLayer.addTo(this.map);
   }
 
+  /**
+   * @ignore
+   */
   public inputStopsMap(event?: any):void {
 
     let array = this.editRouteForm.get('inputBusStops')?.value.split(',');
@@ -132,7 +191,9 @@ export class EditRouteModalComponent implements AfterViewInit {
     this.markersLayer.addTo(this.map);
   }
 
-
+  /**
+   * Check if stops currently exist. Fails if any stops do not exist in database.
+   */
   public checkStops(event: any) {
     this.invalid = [];
     let input = this.editRouteForm.get('inputBusStops')?.value;
@@ -150,11 +211,16 @@ export class EditRouteModalComponent implements AfterViewInit {
     this.valid = (this.invalid.length == 0);
   }
 
+  /**
+   * Loads in the new stops. Switches to confirmation modal.
+   */
   onSubmit() {
     this.currentStops = this.editRouteForm.get('inputBusStops')?.value.split(',');
-
   }
 
+  /**
+   * On confirmation at confirmation modal. Sends request to backend API to complete edit.
+   */
   onConfirm() {
     let service = this.serviceNumber;
     let stops = this.currentStops;
@@ -173,6 +239,9 @@ export class EditRouteModalComponent implements AfterViewInit {
       })
   }
 
+  /**
+   * @ignore
+   */
   handleVisibilityChange(event: any) {
     this.visible = event;
     // setTimeout(() => {
@@ -198,6 +267,10 @@ export class EditRouteModalComponent implements AfterViewInit {
 
   }
 
+  /**
+   * Toggles visibility of modal.
+   * @param stopsList Optional. If opening modal and this is provided, will update the map with these markers.
+   */
   toggleVisibility(stopsList?: any[]) {
     if(!this.visible) {
       try {this.initMap();}
@@ -210,6 +283,9 @@ export class EditRouteModalComponent implements AfterViewInit {
     this.visible = !this.visible;
   }
 
+  /**
+   * Closes the modal. Emits an event for parent component to pick up.
+   */
   clickClose() {
     this.map.off();
     this.map.remove();

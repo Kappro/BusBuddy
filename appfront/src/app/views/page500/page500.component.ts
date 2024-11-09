@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { IconDirective } from '@coreui/icons-angular';
 import { ContainerComponent, RowComponent, ColComponent, InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective } from '@coreui/angular';
 
+/**
+ * Default page for 500 errors.
+ */
 @Component({
     selector: 'app-page500',
     templateUrl: './page500.component.html',
@@ -11,6 +14,9 @@ import { ContainerComponent, RowComponent, ColComponent, InputGroupComponent, In
 })
 export class Page500Component {
 
+  /**
+   * @ignore
+   */
   constructor() { }
 
 }

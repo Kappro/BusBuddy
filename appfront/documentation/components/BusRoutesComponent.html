@@ -1,0 +1,1603 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>BusBuddy Frontend Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">BusBuddy Frontend Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  BusRoutesComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/views/manager/busroute/busroutes.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>View component for manager to manage bus services and bus stops.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>AfterViewInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-busroutes</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>RouterLink</code>
+                            <code>TabPanelComponent</code>
+                            <code>TabDirective</code>
+                            <code>BadgeModule</code>
+                            <code>TabsComponent</code>
+                            <code>TabsContentComponent</code>
+                            <code>TabsListComponent</code>
+                            <code>BorderDirective</code>
+                            <code>CardHeaderComponent</code>
+                            <code>ContainerComponent</code>
+                            <code>RowComponent</code>
+                            <code>ColComponent</code>
+                            <code>TextColorDirective</code>
+                            <code>CardComponent</code>
+                            <code>CardBodyComponent</code>
+                            <code>FormDirective</code>
+                            <code>InputGroupComponent</code>
+                            <code>InputGroupTextDirective</code>
+                            <code>IconDirective</code>
+                            <code>FormControlDirective</code>
+                            <code>ButtonDirective</code>
+                            <code>CardTitleDirective</code>
+                            <code>CardSubtitleDirective</code>
+                            <code>CardTextDirective</code>
+                                <code><a href="../components/AddRouteModalComponent.html" target="_self" >AddRouteModalComponent</a></code>
+                                <code><a href="../components/EditRouteModalComponent.html" target="_self" >EditRouteModalComponent</a></code>
+                                <code><a href="../components/DeleteRouteModalComponent.html" target="_self" >DeleteRouteModalComponent</a></code>
+                                <code><a href="../components/AddStopModalComponent.html" target="_self" >AddStopModalComponent</a></code>
+                                <code><a href="../components/DeleteStopModalComponent.html" target="_self" >DeleteStopModalComponent</a></code>
+                            <code>ReactiveFormsModule</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./busroutes.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./busroutes.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#addRouteModal" >addRouteModal</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#addStopModal" >addStopModal</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#deleteRouteModal" >deleteRouteModal</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#deleteStopModal" >deleteStopModal</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#editRouteModal" >editRouteModal</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#handleActiveItemChange" >handleActiveItemChange</a>
+                            </li>
+                            <li>
+                                <a href="#refresh" >refresh</a>
+                            </li>
+                            <li>
+                                <a href="#search" >search</a>
+                            </li>
+                            <li>
+                                <a href="#viewAddRouteModal" >viewAddRouteModal</a>
+                            </li>
+                            <li>
+                                <a href="#viewAddStopModal" >viewAddStopModal</a>
+                            </li>
+                            <li>
+                                <a href="#viewDeleteRouteModal" >viewDeleteRouteModal</a>
+                            </li>
+                            <li>
+                                <a href="#viewDeleteStopModal" >viewDeleteStopModal</a>
+                            </li>
+                            <li>
+                                <a href="#viewEditRouteModal" >viewEditRouteModal</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(http: HttpClient, api: <a href="../injectables/ApiService.html" target="_self">ApiService</a>, router: Router, formbuilder: FormBuilder)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="99" class="link-to-prism">src/app/views/manager/busroute/busroutes.component.ts:99</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Loads in all stops and services existing on database on construct.</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>http</td>
+                                                  
+                                                        <td>
+                                                                    <code>HttpClient</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>api</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ApiService.html" target="_self" >ApiService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>formbuilder</td>
+                                                  
+                                                        <td>
+                                                                    <code>FormBuilder</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleActiveItemChange"></a>
+                    <span class="name">
+                        <span ><b>handleActiveItemChange</b></span>
+                        <a href="#handleActiveItemChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>handleActiveItemChange(value: string | number | undefined)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="97"
+                                    class="link-to-prism">src/app/views/manager/busroute/busroutes.component.ts:97</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>For redirecting between tabs.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>value</td>
+                                            <td>
+                                                        <code>string | number | undefined</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="refresh"></a>
+                    <span class="name">
+                        <span ><b>refresh</b></span>
+                        <a href="#refresh"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>refresh()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="227"
+                                    class="link-to-prism">src/app/views/manager/busroute/busroutes.component.ts:227</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Refreshes component without needing to reload.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="search"></a>
+                    <span class="name">
+                        <span ><b>search</b></span>
+                        <a href="#search"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>search(event?: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="258"
+                                    class="link-to-prism">src/app/views/manager/busroute/busroutes.component.ts:258</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Filters stops based on stop code or stop name.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="viewAddRouteModal"></a>
+                    <span class="name">
+                        <span ><b>viewAddRouteModal</b></span>
+                        <a href="#viewAddRouteModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>viewAddRouteModal()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="142"
+                                    class="link-to-prism">src/app/views/manager/busroute/busroutes.component.ts:142</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Opens add route modal, loading in all bus stops and services.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="viewAddStopModal"></a>
+                    <span class="name">
+                        <span ><b>viewAddStopModal</b></span>
+                        <a href="#viewAddStopModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>viewAddStopModal()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="202"
+                                    class="link-to-prism">src/app/views/manager/busroute/busroutes.component.ts:202</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Opens add bus stop modal.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="viewDeleteRouteModal"></a>
+                    <span class="name">
+                        <span ><b>viewDeleteRouteModal</b></span>
+                        <a href="#viewDeleteRouteModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>viewDeleteRouteModal(service: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="179"
+                                    class="link-to-prism">src/app/views/manager/busroute/busroutes.component.ts:179</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Opens delete route modal, loading in all bus stops and given service to delete.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>service</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Service number of service to be deleted.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="viewDeleteStopModal"></a>
+                    <span class="name">
+                        <span ><b>viewDeleteStopModal</b></span>
+                        <a href="#viewDeleteStopModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>viewDeleteStopModal(stop_code: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="210"
+                                    class="link-to-prism">src/app/views/manager/busroute/busroutes.component.ts:210</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Opens delete bus stop modal, loading in bus stop code of bus stop to be deleted.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>stop_code</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Bus stop code of bus stop to be deleted.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="viewEditRouteModal"></a>
+                    <span class="name">
+                        <span ><b>viewEditRouteModal</b></span>
+                        <a href="#viewEditRouteModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>viewEditRouteModal(service: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="153"
+                                    class="link-to-prism">src/app/views/manager/busroute/busroutes.component.ts:153</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Opens edit route modal, loading in all bus stops and given service to edit route for.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>service</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Service number of service with route to be edited.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addRouteModal"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>addRouteModal</b></span>
+                        <a href="#addRouteModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/AddRouteModalComponent.html" target="_self" >AddRouteModalComponent</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(AddRouteModalComponent)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/views/manager/busroute/busroutes.component.ts:58</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>View can employ add route modal.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addStopModal"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>addStopModal</b></span>
+                        <a href="#addStopModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/AddStopModalComponent.html" target="_self" >AddStopModalComponent</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(AddStopModalComponent)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">src/app/views/manager/busroute/busroutes.component.ts:70</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>View can employ add bus stop modal.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteRouteModal"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>deleteRouteModal</b></span>
+                        <a href="#deleteRouteModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/DeleteRouteModalComponent.html" target="_self" >DeleteRouteModalComponent</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(DeleteRouteModalComponent)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">src/app/views/manager/busroute/busroutes.component.ts:66</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>View can employ delete route modal.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteStopModal"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>deleteStopModal</b></span>
+                        <a href="#deleteStopModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/DeleteStopModalComponent.html" target="_self" >DeleteStopModalComponent</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(DeleteStopModalComponent)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">src/app/views/manager/busroute/busroutes.component.ts:74</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>View can employ delete bus stop modal.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editRouteModal"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>editRouteModal</b></span>
+                        <a href="#editRouteModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/EditRouteModalComponent.html" target="_self" >EditRouteModalComponent</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(EditRouteModalComponent)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">src/app/views/manager/busroute/busroutes.component.ts:62</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>View can employ edit route modal.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, AfterViewInit, signal, OnInit, ViewChild} from &#x27;@angular/core&#x27;;
+import { IconDirective } from &#x27;@coreui/icons-angular&#x27;;
+import {Router, RouterLink} from &#x27;@angular/router&#x27;;
+import {
+  BorderDirective,
+  CardHeaderComponent,
+  ContainerComponent,
+  RowComponent,
+  ColComponent,
+  TextColorDirective,
+  CardComponent,
+  CardBodyComponent,
+  FormDirective,
+  InputGroupComponent,
+  InputGroupTextDirective,
+  FormControlDirective,
+  ButtonDirective,
+  TabDirective,
+  TabPanelComponent,
+  TabsComponent,
+  TabsContentComponent,
+  TabsListComponent,
+  BadgeModule,
+  CardTitleDirective, CardSubtitleDirective, CardTextDirective
+} from &#x27;@coreui/angular&#x27;;
+import {HttpClient} from &quot;@angular/common/http&quot;;
+import {ApiService} from &quot;../../../services/api.service&quot;;
+import {DriverHistoryModalComponent} from &quot;../_modals/driverhistorymodal/driverhistorymodal.component&quot;;
+import {AddRouteModalComponent} from &quot;../_modals/routemodals/addroute/addroute.component&quot;;
+import {EditRouteModalComponent} from &quot;../_modals/routemodals/editroute/editroute.component&quot;;
+import {DeleteRouteModalComponent} from &quot;../_modals/routemodals/deleteroute/deleteroute.component&quot;;
+import {FormBuilder, FormGroup, ReactiveFormsModule} from &quot;@angular/forms&quot;;
+import {AddStopModalComponent} from &quot;../_modals/stopmodals/addstop/addstop.component&quot;;
+import {DeleteStopModalComponent} from &quot;../_modals/stopmodals/deletestop/deletestop.component&quot;;
+
+/**
+ * View component for manager to manage bus services and bus stops.
+ */
+@Component({
+    selector: &#x27;app-busroutes&#x27;,
+    templateUrl: &#x27;./busroutes.component.html&#x27;,
+    styleUrls: [&#x27;./busroutes.component.scss&#x27;],
+    standalone: true,
+  imports: [RouterLink, TabPanelComponent, TabDirective, BadgeModule,
+    TabsComponent,
+    TabsContentComponent,
+    TabsListComponent, BorderDirective, CardHeaderComponent, ContainerComponent, RowComponent, ColComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent, InputGroupTextDirective, IconDirective, FormControlDirective, ButtonDirective, CardTitleDirective, CardSubtitleDirective, CardTextDirective, AddRouteModalComponent, EditRouteModalComponent, DeleteRouteModalComponent, AddStopModalComponent, DeleteStopModalComponent, ReactiveFormsModule]
+})
+export class BusRoutesComponent implements AfterViewInit {
+
+  /**
+   * @ignore
+   */
+  public services: any[] &#x3D; [];
+  /**
+   * View can employ add route modal.
+   */
+  @ViewChild(AddRouteModalComponent) addRouteModal!: AddRouteModalComponent;
+  /**
+   * View can employ edit route modal.
+   */
+  @ViewChild(EditRouteModalComponent) editRouteModal!: EditRouteModalComponent;
+  /**
+   * View can employ delete route modal.
+   */
+  @ViewChild(DeleteRouteModalComponent) deleteRouteModal!: DeleteRouteModalComponent;
+  /**
+   * View can employ add bus stop modal.
+   */
+  @ViewChild(AddStopModalComponent) addStopModal!: AddStopModalComponent;
+  /**
+   * View can employ delete bus stop modal.
+   */
+  @ViewChild(DeleteStopModalComponent) deleteStopModal!: DeleteStopModalComponent;
+  /**
+   * @ignore
+   */
+  public stops: any[] &#x3D; [];
+  /**
+   * @ignore
+   */
+  public filteredStops: any[] &#x3D; [];
+
+  /**
+   * @ignore
+   */
+  public searchStop: FormGroup;
+
+  /**
+   * @ignore
+   */
+  activeItem &#x3D; signal(0);
+
+  /**
+   * For redirecting between tabs.
+   */
+  handleActiveItemChange(value: string | number | undefined) {
+    this.activeItem.set(&lt;number&gt;value);
+  }
+
+  /**
+   * Loads in all stops and services existing on database on construct.
+   */
+  constructor(private http: HttpClient,
+              private api: ApiService,
+              private router: Router,
+              private formbuilder: FormBuilder) {
+    this.http.get&lt;any&gt;(this.api.API_URL + &quot;/stops/get_all&quot;).subscribe({
+        next: (message) &#x3D;&gt; {
+          // @ts-ignore
+          this.stops &#x3D; message;
+          this.filteredStops &#x3D; this.stops;
+        },
+        error: (e) &#x3D;&gt; {
+          console.log(e);
+        }
+      })
+    this.http.get&lt;any&gt;(this.api.API_URL + &quot;/services/get_all&quot;).subscribe({
+        next: (message) &#x3D;&gt; {
+          // @ts-ignore
+          this.services &#x3D; message;
+        },
+        error: (e) &#x3D;&gt; {
+          console.log(e);
+        }
+      })
+    this.searchStop &#x3D; this.formbuilder.group({
+      searchInput: [&#x27;&#x27;],
+    })
+  }
+
+  /**
+   * @ignore
+   */
+  ngAfterViewInit(): void {
+
+  }
+
+  /**
+   * Opens add route modal, loading in all bus stops and services.
+   */
+  viewAddRouteModal() {
+    this.addRouteModal.busStops &#x3D; this.stops;
+    this.addRouteModal.services &#x3D; this.services;
+    console.log(this.addRouteModal.busStops);
+    this.addRouteModal.toggleVisibility();
+  }
+
+  /**
+   * Opens edit route modal, loading in all bus stops and given service to edit route for.
+   * @param service Service number of service with route to be edited.
+   */
+  viewEditRouteModal(service: string) {
+    this.editRouteModal.serviceNumber &#x3D; service;
+    this.editRouteModal.availableStops &#x3D; this.stops;
+    this.http.post&lt;any&gt;(this.api.API_URL + &quot;/stops/get_by_service&quot;, {&#x27;service_number&#x27;: service}).subscribe({
+        next: (message) &#x3D;&gt; {
+          // @ts-ignore
+          const stopsList &#x3D; message.map(stop &#x3D;&gt; stop.stop_code)
+          this.editRouteModal.oldStops &#x3D; stopsList;
+          this.editRouteModal.currentStops &#x3D; stopsList;
+          const formbuilder &#x3D; new FormBuilder();
+          this.editRouteModal.editRouteForm &#x3D; formbuilder.group({
+            inputBusStops: [this.editRouteModal.oldStops]
+          })
+          this.editRouteModal.toggleVisibility(stopsList);
+        },
+        error: (e) &#x3D;&gt; {
+          console.log(e);
+        }
+      });
+
+  }
+
+  /**
+   * Opens delete route modal, loading in all bus stops and given service to delete.
+   * @param service Service number of service to be deleted.
+   */
+  viewDeleteRouteModal(service: string) {
+    this.deleteRouteModal.serviceNumber &#x3D; service;
+    this.deleteRouteModal.availableStops &#x3D; this.stops;
+    this.http.post&lt;any&gt;(this.api.API_URL + &quot;/stops/get_by_service&quot;, {&#x27;service_number&#x27;: service}).subscribe({
+        next: (message) &#x3D;&gt; {
+          // @ts-ignore
+          const stopsList &#x3D; message.map(stop &#x3D;&gt; stop.stop_code)
+          this.deleteRouteModal.stops &#x3D; stopsList;
+          const formbuilder &#x3D; new FormBuilder();
+          this.deleteRouteModal.deleteRouteForm &#x3D; formbuilder.group({
+            inputBusStops: {value: this.deleteRouteModal.stops, disabled: true}
+          })
+          this.deleteRouteModal.toggleVisibility(stopsList);
+        },
+        error: (e) &#x3D;&gt; {
+          console.log(e);
+        }
+      });
+  }
+
+  /**
+   * Opens add bus stop modal.
+   */
+  viewAddStopModal() {
+    this.addStopModal.toggleVisibility();
+  }
+
+  /**
+   * Opens delete bus stop modal, loading in bus stop code of bus stop to be deleted.
+   * @param stop_code Bus stop code of bus stop to be deleted.
+   */
+  viewDeleteStopModal(stop_code: string) {
+    const params &#x3D; {stop_code: stop_code};
+    this.http.post&lt;any&gt;(this.api.API_URL + &quot;/stops/get_stop_details&quot;, params).subscribe({
+      next: (message) &#x3D;&gt; {
+        console.log(message);
+        this.deleteStopModal.stop &#x3D; message;
+        this.deleteStopModal.toggleVisibility();
+      },
+      error: (e) &#x3D;&gt; {
+        console.log(e)
+      }
+    })
+  }
+
+  /**
+   * Refreshes component without needing to reload.
+   */
+  refresh() {
+    setTimeout(() &#x3D;&gt; {
+      this.http.get&lt;any&gt;(this.api.API_URL + &quot;/stops/get_all&quot;).subscribe({
+        next: (message) &#x3D;&gt; {
+          // @ts-ignore
+          this.stops &#x3D; message;
+          this.http.get&lt;any&gt;(this.api.API_URL + &quot;/services/get_all&quot;).subscribe({
+            next: (message) &#x3D;&gt; {
+              // @ts-ignore
+              this.services &#x3D; message;
+              this.router.navigateByUrl(&#x27;/&#x27;, {skipLocationChange: true}).then(() &#x3D;&gt; {
+                this.router.navigate([this.router.url.split(&quot;#&quot;)[0]]).then(() &#x3D;&gt; {
+                  console.log(&#x60;Refreshing ${this.router.url}&#x60;)
+                })
+              })
+            },
+            error: (e) &#x3D;&gt; {
+              console.log(e);
+            }
+          })
+        },
+        error: (e) &#x3D;&gt; {
+          console.log(e);
+        }
+      })
+    }, 1000);
+  }
+
+  /**
+   * Filters stops based on stop code or stop name.
+   */
+  search(event?: any) {
+    const keyword &#x3D; this.searchStop.get(&#x27;searchInput&#x27;)?.value.toLowerCase();
+    if(keyword.length &#x3D;&#x3D; 0) {
+      this.filteredStops &#x3D; this.stops;
+    }
+    else{
+      this.filteredStops &#x3D; this.stops.filter(stop &#x3D;&gt; ([stop.stop_code, stop.stop_name.toLowerCase()].join()).includes(keyword));
+    }
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;c-card class&#x3D;&quot;mx-4 mb-3&quot;&gt;
+    &lt;c-card-header ngPreserveWhitespaces&gt;
+      &lt;strong&gt;Manage Bus Route&lt;/strong&gt;
+    &lt;/c-card-header&gt;
+    &lt;c-card-body class&#x3D;&quot;p-4&quot;&gt;
+      &lt;c-tabs [activeItemKey]&#x3D;&quot;0&quot; (activeItemKeyChange)&#x3D;&quot;handleActiveItemChange($event)&quot;&gt;
+        &lt;c-tabs-list variant&#x3D;&quot;underline-border&quot;&gt;
+          &lt;button cTab [itemKey]&#x3D;&quot;0&quot;&gt;
+            &lt;svg cIcon class&#x3D;&quot;me-2&quot; name&#x3D;&quot;cilBusAlt&quot;&gt;&lt;/svg&gt;
+            Bus Routes
+          &lt;/button&gt;
+          &lt;button cTab [itemKey]&#x3D;&quot;1&quot;&gt;
+            &lt;svg cIcon class&#x3D;&quot;me-2&quot; name&#x3D;&quot;cilBusAlt&quot;&gt;&lt;/svg&gt;
+            Bus Stops
+          &lt;/button&gt;
+        &lt;/c-tabs-list&gt;
+        &lt;c-tabs-content&gt;
+          &lt;c-tab-panel [itemKey]&#x3D;&quot;0&quot; class&#x3D;&quot;p-3&quot;&gt;
+            &lt;c-col&gt;&lt;/c-col&gt;
+            &lt;div class&#x3D;&quot;mb-2&quot;&gt;&lt;/div&gt;
+            &lt;div class&#x3D;&quot;d-grid gap-2 d-md-flex justify-content-md-end&quot;&gt;
+                &lt;a cButton (click)&#x3D;&quot;viewAddRouteModal()&quot; color&#x3D;&quot;primary&quot;&gt;Add Route&lt;/a&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;mb-3&quot;&gt;&lt;/div&gt;
+            @for (service of services; track service.service_number; let i &#x3D; $index;) {
+              &lt;c-card [cBorder]&#x3D;&quot;{top: {color: &#x27;secondary&#x27;, width: 3}}&quot;&gt;
+                &lt;c-card-header&gt;
+                  &lt;h5 cCardTitle&gt;Bus Service {{ service.service_number }}&lt;/h5&gt;
+                &lt;/c-card-header&gt;
+                  &lt;c-card-body&gt;
+                      &lt;c-row&gt;
+                          &lt;c-col&gt;
+                              &lt;h6 cCardSubtitle class&#x3D;&quot;mb-2 text-medium-emphasis&quot;&gt;
+                                  Number of stops: {{ service.number_of_stops }}
+                              &lt;/h6&gt;
+                              &lt;p cCardText&gt;
+                                  Starting Stop: {{ service.start_stop_name }}
+                              &lt;/p&gt;
+                          &lt;/c-col&gt;
+                          &lt;c-col class&#x3D;&quot;align-self-end&quot;&gt;
+                              &lt;div class&#x3D;&quot;d-grid gap-2 d-md-flex justify-content-md-end&quot;&gt;
+                                  &lt;a cButton color&#x3D;&quot;info&quot; variant&#x3D;&quot;outline&quot;
+                                  (click)&#x3D;&quot;viewEditRouteModal(service.service_number)&quot;&gt;Edit&lt;/a&gt;
+                                  &lt;a cButton color&#x3D;&quot;danger&quot; variant&#x3D;&quot;outline&quot;
+                                  (click)&#x3D;&quot;viewDeleteRouteModal(service.service_number)&quot;&gt;Delete&lt;/a&gt;
+                              &lt;/div&gt;
+                          &lt;/c-col&gt;
+                      &lt;/c-row&gt;
+                  &lt;/c-card-body&gt;
+              &lt;/c-card&gt;&lt;div class&#x3D;&quot;mb-2&quot;&gt;&lt;/div&gt;
+            }
+          &lt;/c-tab-panel&gt;
+          &lt;c-tab-panel [itemKey]&#x3D;&quot;1&quot; class&#x3D;&quot;p-3&quot;&gt;
+            &lt;c-col&gt;&lt;/c-col&gt;
+            &lt;div class&#x3D;&quot;d-grid gap-2 d-md-flex justify-content-md-end&quot;&gt;
+                &lt;a cButton (click)&#x3D;&quot;viewAddStopModal()&quot; color&#x3D;&quot;primary&quot;&gt;Add Stop&lt;/a&gt;
+            &lt;/div&gt;
+            &lt;form [formGroup]&#x3D;&quot;searchStop&quot;&gt;
+              &lt;h5&gt;Filter:&lt;/h5&gt;
+              &lt;c-input-group class&#x3D;&quot;mb-3&quot;&gt;
+                &lt;span cInputGroupText&gt;
+                  &lt;svg cIcon name&#x3D;&quot;cilClipboard&quot;&gt;&lt;/svg&gt;
+                &lt;/span&gt;
+                &lt;input cFormControl formControlName&#x3D;&quot;searchInput&quot;
+                       placeholder&#x3D;&quot;Enter stop code or name&quot;
+                       name&#x3D;&quot;searchInput&quot; required (input)&#x3D;&quot;search($event)&quot;/&gt;
+              &lt;/c-input-group&gt;
+            &lt;/form&gt;
+            @for (stop of filteredStops; track stop.stop_code; let i &#x3D; $index;) {
+              &lt;c-card [cBorder]&#x3D;&quot;{top: {color: &#x27;secondary&#x27;, width: 3}}&quot;&gt;
+                &lt;c-card-header&gt;
+                  &lt;h5 cCardTitle&gt;Stop {{ stop.stop_code }} - {{stop.stop_name}}&lt;/h5&gt;
+                &lt;/c-card-header&gt;
+                  &lt;c-card-body&gt;
+                    &lt;c-row&gt;
+                      &lt;c-col&gt;
+                        &lt;p cCardText&gt;Latitude: {{ stop.latitude }}&lt;/p&gt;
+                        &lt;p cCardText&gt;Longitude: {{ stop.longitude }} &lt;/p&gt;
+                      &lt;/c-col&gt;
+                      &lt;c-col class&#x3D;&quot;align-self-end&quot;&gt;
+                        &lt;div class&#x3D;&quot;d-grid gap-2 d-md-flex justify-content-md-end&quot;&gt;
+                        &lt;a cButton color&#x3D;&quot;danger&quot; variant&#x3D;&quot;outline&quot;
+                         (click)&#x3D;&quot;viewDeleteStopModal(stop.stop_code)&quot;&gt;Delete&lt;/a&gt;
+                        &lt;/div&gt;
+                      &lt;/c-col&gt;
+                    &lt;/c-row&gt;
+                  &lt;/c-card-body&gt;
+              &lt;/c-card&gt;&lt;div class&#x3D;&quot;mb-2&quot;&gt;&lt;/div&gt;
+            }
+          &lt;/c-tab-panel&gt;
+        &lt;/c-tabs-content&gt;
+      &lt;/c-tabs&gt;
+    &lt;/c-card-body&gt;
+&lt;/c-card&gt;
+
+&lt;app-addroutemodal (closedModal)&#x3D;&quot;refresh()&quot;&gt;&lt;/app-addroutemodal&gt;
+&lt;app-editroutemodal (closedModal)&#x3D;&quot;refresh()&quot;&gt;&lt;/app-editroutemodal&gt;
+&lt;app-deleteroutemodal (closedModal)&#x3D;&quot;refresh()&quot;&gt;&lt;/app-deleteroutemodal&gt;
+&lt;app-addstopmodal (closedModal)&#x3D;&quot;refresh()&quot;&gt;&lt;/app-addstopmodal&gt;
+&lt;app-deletestopmodal (closedModal)&#x3D;&quot;refresh()&quot;&gt;&lt;/app-deletestopmodal&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./busroutes.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss"></code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><c-card class="mx-4 mb-3">    <c-card-header ngPreserveWhitespaces>      <strong>Manage Bus Route</strong>    </c-card-header>    <c-card-body class="p-4">      <c-tabs [activeItemKey]="0" (activeItemKeyChange)="handleActiveItemChange($event)">        <c-tabs-list variant="underline-border">          <button cTab [itemKey]="0">            <svg cIcon class="me-2" name="cilBusAlt"></svg>            Bus Routes          </button>          <button cTab [itemKey]="1">            <svg cIcon class="me-2" name="cilBusAlt"></svg>            Bus Stops          </button>        </c-tabs-list>        <c-tabs-content>          <c-tab-panel [itemKey]="0" class="p-3">            <c-col></c-col>            <div class="mb-2"></div>            <div class="d-grid gap-2 d-md-flex justify-content-md-end">                <a cButton (click)="viewAddRouteModal()" color="primary">Add Route</a>            </div>            <div class="mb-3"></div>            @for (service of services; track service.service_number; let i = $index;) {              <c-card [cBorder]="{top: {color: \'secondary\', width: 3}}">                <c-card-header>                  <h5 cCardTitle>Bus Service {{ service.service_number }}</h5>                </c-card-header>                  <c-card-body>                      <c-row>                          <c-col>                              <h6 cCardSubtitle class="mb-2 text-medium-emphasis">                                  Number of stops: {{ service.number_of_stops }}                              </h6>                              <p cCardText>                                  Starting Stop: {{ service.start_stop_name }}                              </p>                          </c-col>                          <c-col class="align-self-end">                              <div class="d-grid gap-2 d-md-flex justify-content-md-end">                                  <a cButton color="info" variant="outline"                                  (click)="viewEditRouteModal(service.service_number)">Edit</a>                                  <a cButton color="danger" variant="outline"                                  (click)="viewDeleteRouteModal(service.service_number)">Delete</a>                              </div>                          </c-col>                      </c-row>                  </c-card-body>              </c-card><div class="mb-2"></div>            }          </c-tab-panel>          <c-tab-panel [itemKey]="1" class="p-3">            <c-col></c-col>            <div class="d-grid gap-2 d-md-flex justify-content-md-end">                <a cButton (click)="viewAddStopModal()" color="primary">Add Stop</a>            </div>            <form [formGroup]="searchStop">              <h5>Filter:</h5>              <c-input-group class="mb-3">                <span cInputGroupText>                  <svg cIcon name="cilClipboard"></svg>                </span>                <input cFormControl formControlName="searchInput"                       placeholder="Enter stop code or name"                       name="searchInput" required (input)="search($event)"/>              </c-input-group>            </form>            @for (stop of filteredStops; track stop.stop_code; let i = $index;) {              <c-card [cBorder]="{top: {color: \'secondary\', width: 3}}">                <c-card-header>                  <h5 cCardTitle>Stop {{ stop.stop_code }} - {{stop.stop_name}}</h5>                </c-card-header>                  <c-card-body>                    <c-row>                      <c-col>                        <p cCardText>Latitude: {{ stop.latitude }}</p>                        <p cCardText>Longitude: {{ stop.longitude }} </p>                      </c-col>                      <c-col class="align-self-end">                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">                        <a cButton color="danger" variant="outline"                         (click)="viewDeleteStopModal(stop.stop_code)">Delete</a>                        </div>                      </c-col>                    </c-row>                  </c-card-body>              </c-card><div class="mb-2"></div>            }          </c-tab-panel>        </c-tabs-content>      </c-tabs>    </c-card-body></c-card><app-addroutemodal (closedModal)="refresh()"></app-addroutemodal><app-editroutemodal (closedModal)="refresh()"></app-editroutemodal><app-deleteroutemodal (closedModal)="refresh()"></app-deleteroutemodal><app-addstopmodal (closedModal)="refresh()"></app-addstopmodal><app-deletestopmodal (closedModal)="refresh()"></app-deletestopmodal></div>'
+    var COMPONENTS = [{'name': 'AddRouteModalComponent', 'selector': 'app-addroutemodal'},{'name': 'AddStopModalComponent', 'selector': 'app-addstopmodal'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'BusdriversComponent', 'selector': 'app-busdrivers'},{'name': 'BusRoutesComponent', 'selector': 'app-busroutes'},{'name': 'CancelledDeploymentModalComponent', 'selector': 'app-cancelleddeploymentmodal'},{'name': 'ChangeDriverModalComponent', 'selector': 'app-changedrivermodal'},{'name': 'ConfirmCancelDeploymentModalComponent', 'selector': 'app-confirmcanceldeploymentmodal'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DefaultDriverLayoutComponent', 'selector': 'app-dashboard-driver'},{'name': 'DefaultFooterComponent', 'selector': 'app-default-footer'},{'name': 'DefaultHeaderComponent', 'selector': 'app-default-header'},{'name': 'DefaultManagerLayoutComponent', 'selector': 'app-manager-dashboard'},{'name': 'DeleteRouteModalComponent', 'selector': 'app-deleteroutemodal'},{'name': 'DeleteStopModalComponent', 'selector': 'app-deletestopmodal'},{'name': 'DeploymentComponent', 'selector': 'app-deployment'},{'name': 'DriverHistoryModalComponent', 'selector': 'app-driverhistorymodal'},{'name': 'DrivingHistoryComponent', 'selector': 'app-drivinghistory'},{'name': 'EditRouteModalComponent', 'selector': 'app-editroutemodal'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LogoutComponent', 'selector': 'app-logout'},{'name': 'NewDeploymentModalComponent', 'selector': 'app-newdeploymentmodal'},{'name': 'OverviewComponent', 'selector': 'app-overview'},{'name': 'Page404Component', 'selector': 'app-page404'},{'name': 'Page500Component', 'selector': 'app-page500'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RequestComponent', 'selector': 'app-request'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'BusRoutesComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'BusRoutesComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

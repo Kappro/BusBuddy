@@ -28,6 +28,9 @@ import {NgIf} from "@angular/common";
 import {Access} from "../../../../../_models/account";
 import {firstValueFrom} from "rxjs";
 
+/**
+ * Pop-up modal for manager to delete an existing bus stop.
+ */
 @Component({
   selector: 'app-deletestopmodal',
   standalone: true,
@@ -61,7 +64,13 @@ import {firstValueFrom} from "rxjs";
   styleUrl: './deletestop.component.scss'
 })
 export class DeleteStopModalComponent implements OnInit {
+  /**
+   * @ignore
+   */
   public visible = false;
+  /**
+   * @ignore
+   */
   public stop: any = {
     stop_code: "",
     stop_name: "",
@@ -70,25 +79,43 @@ export class DeleteStopModalComponent implements OnInit {
     services: []
   };
 
+  /**
+   * @ignore
+   */
   @Output() closedModal = new EventEmitter<void>();
 
+  /**
+   * @ignore
+   */
   constructor(private http: HttpClient,
               private api: ApiService
               ) {
   }
 
+  /**
+   * @ignore
+   */
   ngOnInit() {
 
   }
 
+  /**
+   * Toggles visibility of modal.
+   */
   toggleVisibility() {
     this.visible = !this.visible;
   }
 
+  /**
+   * @ignore
+   */
   handleVisibilityChange(event: any) {
     this.visible = event;
   }
 
+  /**
+   * On confirmation. Sends request to backend API to complete deletion of bus stop.
+   */
   onConfirm() {
     const params = {stop_code: this.stop.stop_code};
     this.http.post<any>(this.api.API_URL + "/stops/delete", params).subscribe({

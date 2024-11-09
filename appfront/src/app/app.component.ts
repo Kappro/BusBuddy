@@ -10,6 +10,9 @@ import {iconSubset} from "./icons/icon-subset";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {delay, filter, map, tap} from "rxjs";
 
+/**
+ * Entry point of Angular app.
+ */
 @Component({
   selector: 'app-root',
   template: '<router-outlet />',
@@ -19,16 +22,40 @@ import {delay, filter, map, tap} from "rxjs";
   ]
 })
 export class AppComponent implements OnInit {
+  /**
+   * Title of our app!
+   */
   title = 'BusBuddy';
 
+  /**
+   * @ignore
+   */
   readonly #destroyRef: DestroyRef = inject(DestroyRef);
+  /**
+   * @ignore
+   */
   readonly #activatedRoute: ActivatedRoute = inject(ActivatedRoute);
+  /**
+   * @ignore
+   */
   readonly #router = inject(Router);
+  /**
+   * @ignore
+   */
   readonly #titleService = inject(Title);
 
+  /**
+   * @ignore
+   */
   readonly #colorModeService = inject(ColorModeService);
+  /**
+   * @ignore
+   */
   readonly #iconSetService = inject(IconSetService);
 
+  /**
+   * @ignore
+   */
   constructor() {
     this.#titleService.setTitle(this.title);
     // iconSet singleton
@@ -37,6 +64,9 @@ export class AppComponent implements OnInit {
     this.#colorModeService.eventName.set('ColorSchemeChange');
   }
 
+  /**
+   * @ignore
+   */
   ngOnInit(): void {
 
     console.log(localStorage.getItem('AccessToken'))

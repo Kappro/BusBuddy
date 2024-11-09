@@ -8,6 +8,9 @@ import {FormsModule} from "@angular/forms";
 import {TextColorDirective} from "@coreui/angular";
 import {NgIf} from "@angular/common";
 
+/**
+ * Component that displays login page, the first page every user sees when entering the website.
+ */
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -20,11 +23,26 @@ import {NgIf} from "@angular/common";
   standalone: true
 })
 export class LoginComponent {
+  /**
+   * @ignore
+   */
   email: string = '';
+  /**
+   * @ignore
+   */
   password: string = '';
+  /**
+   * @ignore
+   */
   access: string = '';
+  /**
+   * @ignore
+   */
   failed: boolean = false;
 
+  /**
+   * @ignore
+   */
   constructor(private apiservice: ApiService,
               private http: HttpClient,
               private authservice: AuthService,
@@ -32,6 +50,9 @@ export class LoginComponent {
               private route: ActivatedRoute) {
   }
 
+  /**
+   * Uses email and password inputs to pass to AuthService to query backend for login. Shows error message if login failed, or redirects to respective page if successful.
+   */
   onSubmit() {
     let params = {
       email: this.email,

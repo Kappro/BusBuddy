@@ -1,0 +1,1135 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>BusBuddy Frontend Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">BusBuddy Frontend Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  AddStopModalComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/views/manager/_modals/stopmodals/addstop/addstop.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Pop-up modal for manager to add bus stops.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-addstopmodal</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>ButtonDirective</code>
+                            <code>FormControlDirective</code>
+                            <code>IconDirective</code>
+                            <code>InputGroupComponent</code>
+                            <code>InputGroupTextDirective</code>
+                            <code>ModalBodyComponent</code>
+                            <code>ModalComponent</code>
+                            <code>ModalContentComponent</code>
+                            <code>ModalDialogComponent</code>
+                            <code>ModalHeaderComponent</code>
+                            <code>ReactiveFormsModule</code>
+                            <code>ModalTitleDirective</code>
+                            <code>ButtonCloseDirective</code>
+                            <code>ModalFooterComponent</code>
+                            <code>ContainerComponent</code>
+                            <code>CardComponent</code>
+                            <code>CardBodyComponent</code>
+                            <code>CardTitleDirective</code>
+                            <code>CardTextDirective</code>
+                            <code>CardGroupComponent</code>
+                            <code>NgIf</code>
+                            <code>ModalToggleDirective</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./addstop.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./addstop.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onSubmit" >onSubmit</a>
+                            </li>
+                            <li>
+                                <a href="#toggleVisibility" >toggleVisibility</a>
+                            </li>
+                            <li>
+                                <a href="#validateLatitude" >validateLatitude</a>
+                            </li>
+                            <li>
+                                <a href="#validateLongitude" >validateLongitude</a>
+                            </li>
+                            <li>
+                                <a href="#validateStopCode" >validateStopCode</a>
+                            </li>
+                            <li>
+                                <a href="#validateStopName" >validateStopName</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="118"
+                                    class="link-to-prism">src/app/views/manager/_modals/stopmodals/addstop/addstop.component.ts:118</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Obtains list of all bus stops on init.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSubmit"></a>
+                    <span class="name">
+                        <span ><b>onSubmit</b></span>
+                        <a href="#onSubmit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onSubmit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="229"
+                                    class="link-to-prism">src/app/views/manager/_modals/stopmodals/addstop/addstop.component.ts:229</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Submits request to backend API with given stop code, name, latitude and longitude to complete creation of new bus stop.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggleVisibility"></a>
+                    <span class="name">
+                        <span ><b>toggleVisibility</b></span>
+                        <a href="#toggleVisibility"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toggleVisibility()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="140"
+                                    class="link-to-prism">src/app/views/manager/_modals/stopmodals/addstop/addstop.component.ts:140</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Toggles visiblity of modal.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="validateLatitude"></a>
+                    <span class="name">
+                        <span ><b>validateLatitude</b></span>
+                        <a href="#validateLatitude"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>validateLatitude(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="199"
+                                    class="link-to-prism">src/app/views/manager/_modals/stopmodals/addstop/addstop.component.ts:199</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Validity check for latitude. Fails if latitude field does not meet regex requirements.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="validateLongitude"></a>
+                    <span class="name">
+                        <span ><b>validateLongitude</b></span>
+                        <a href="#validateLongitude"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>validateLongitude(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="214"
+                                    class="link-to-prism">src/app/views/manager/_modals/stopmodals/addstop/addstop.component.ts:214</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Validity check for longitude. Fails if longitude field does not meet regex requirements.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="validateStopCode"></a>
+                    <span class="name">
+                        <span ><b>validateStopCode</b></span>
+                        <a href="#validateStopCode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>validateStopCode(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="168"
+                                    class="link-to-prism">src/app/views/manager/_modals/stopmodals/addstop/addstop.component.ts:168</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Validity check for stop code. Fails if either code field is empty or duplicate.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="validateStopName"></a>
+                    <span class="name">
+                        <span ><b>validateStopName</b></span>
+                        <a href="#validateStopName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>validateStopName(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="190"
+                                    class="link-to-prism">src/app/views/manager/_modals/stopmodals/addstop/addstop.component.ts:190</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Validity check for stop name. Fails if name field is empty.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, Injectable, OnInit, Output} from &#x27;@angular/core&#x27;;
+import {HttpClient} from &quot;@angular/common/http&quot;;
+import {ApiService} from &quot;../../../../../services/api.service&quot;;
+import {
+  ButtonCloseDirective,
+  ButtonDirective,
+  CardBodyComponent,
+  CardComponent,
+  CardGroupComponent,
+  CardTextDirective,
+  CardTitleDirective,
+  ContainerComponent,
+  FormControlDirective,
+  InputGroupComponent,
+  InputGroupTextDirective,
+  ModalBodyComponent,
+  ModalComponent,
+  ModalContentComponent,
+  ModalDialogComponent,
+  ModalFooterComponent,
+  ModalHeaderComponent,
+  ModalTitleDirective, ModalToggleDirective
+} from &quot;@coreui/angular&quot;;
+import {IconDirective} from &quot;@coreui/icons-angular&quot;;
+import {FormBuilder, FormGroup, ReactiveFormsModule} from &quot;@angular/forms&quot;;
+import {EventEmitter} from &quot;@angular/core&quot;;
+import {NgIf} from &quot;@angular/common&quot;;
+import {Access} from &quot;../../../../../_models/account&quot;;
+import {firstValueFrom} from &quot;rxjs&quot;;
+
+/**
+ * Pop-up modal for manager to add bus stops.
+ */
+@Component({
+  selector: &#x27;app-addstopmodal&#x27;,
+  standalone: true,
+  imports: [
+    ButtonDirective,
+    FormControlDirective,
+    IconDirective,
+    InputGroupComponent,
+    InputGroupTextDirective,
+    ModalBodyComponent,
+    ModalComponent,
+    ModalContentComponent,
+    ModalDialogComponent,
+    ModalHeaderComponent,
+    ReactiveFormsModule,
+    ModalTitleDirective,
+    ButtonCloseDirective,
+    ModalFooterComponent,
+    ContainerComponent,
+    CardComponent,
+    CardBodyComponent,
+    CardTitleDirective,
+    CardTextDirective,
+    CardGroupComponent,
+    NgIf,
+    ModalToggleDirective
+  ],
+  templateUrl: &#x27;./addstop.component.html&#x27;,
+  styleUrl: &#x27;./addstop.component.scss&#x27;
+})
+export class AddStopModalComponent implements OnInit {
+  /**
+   * @ignore
+   */
+  public visible &#x3D; false;
+  /**
+   * @ignore
+   */
+  // @ts-ignore
+  public existingStops: any[] &#x3D; [];
+  /**
+   * @ignore
+   */
+  public deployment: any &#x3D; {};
+  /**
+   * @ignore
+   */
+  // @ts-ignore
+  public addStopForm: FormGroup;
+
+  /**
+   * @ignore
+   */
+  public valid: boolean &#x3D; false;
+
+  /**
+   * @ignore
+   */
+  public validities &#x3D; {
+    codeNumber: true,
+    codeNotEmpty: false,
+    codeNotDuplicate: true,
+    name: false,
+    lat: false,
+    long: false
+  }
+
+  /**
+   * @ignore
+   */
+  @Output() closedModal &#x3D; new EventEmitter&lt;void&gt;();
+
+  /**
+   * @ignore
+   */
+  constructor(private http: HttpClient,
+              private api: ApiService,
+              private formbuilder: FormBuilder,
+              ) {
+  }
+
+  /**
+   * Obtains list of all bus stops on init.
+   */
+  ngOnInit() {
+    this.http.get&lt;any&gt;(this.api.API_URL + &quot;/stops/get_all&quot;).subscribe({
+      next: (message) &#x3D;&gt; {
+        // @ts-ignore
+        this.existingStops &#x3D; message.map(stop &#x3D;&gt; stop.stop_code);
+        console.log(this.existingStops);
+      },
+      error: (e) &#x3D;&gt; {
+        this.existingStops &#x3D; [];
+      }
+    });
+    this.addStopForm &#x3D; this.formbuilder.group({
+      stopCode: [&#x27;&#x27;],
+      stopName: [&#x27;&#x27;],
+      latitude: [&#x27;&#x27;],
+      longitude: [&#x27;&#x27;]
+    })
+  }
+
+  /**
+   * Toggles visiblity of modal.
+   */
+  toggleVisibility() {
+    this.visible &#x3D; !this.visible;
+  }
+
+  /**
+   * @ignore
+   */
+  handleVisibilityChange(event: any) {
+    this.visible &#x3D; event;
+  }
+
+  /**
+   * @ignore
+   */
+  refreshValidity() {
+    let temp &#x3D; true;
+    Object.entries(this.validities).forEach(
+      // @ts-ignore
+      ([key, value]) &#x3D;&gt; {
+        if(!value) {temp &#x3D; false;}
+      }
+    )
+    this.valid &#x3D; temp;
+  }
+
+  /**
+   * Validity check for stop code. Fails if either code field is empty or duplicate.
+   */
+  validateStopCode(event: any) {
+    const stopCode &#x3D; this.addStopForm.get(&quot;stopCode&quot;)?.value;
+    this.validities[&#x27;codeNotEmpty&#x27;] &#x3D; (stopCode.length &gt; 0);
+    if (this.validities[&#x27;codeNotEmpty&#x27;]) {
+      this.validities[&#x27;codeNumber&#x27;] &#x3D; !isNaN(+stopCode);
+      if (this.validities[&#x27;codeNumber&#x27;]) {
+        this.validities[&#x27;codeNotDuplicate&#x27;] &#x3D; (this.existingStops.indexOf(+stopCode) &#x3D;&#x3D; -1)
+      }
+      else {
+        this.validities[&#x27;codeNotDuplicate&#x27;] &#x3D; true;
+      }
+    }
+    else {
+      this.validities[&#x27;codeNumber&#x27;] &#x3D; true;
+      this.validities[&#x27;codeNotDuplicate&#x27;] &#x3D; true;
+    }
+    this.refreshValidity();
+  }
+
+  /**
+   * Validity check for stop name. Fails if name field is empty.
+   */
+  validateStopName(event: any) {
+    const stopName &#x3D; this.addStopForm.get(&quot;stopName&quot;)?.value;
+    this.validities[&#x27;name&#x27;] &#x3D; (stopName.length &gt; 0);
+    this.refreshValidity();
+  }
+
+  /**
+   * Validity check for latitude. Fails if latitude field does not meet regex requirements.
+   */
+  validateLatitude(event: any) {
+    const latitude &#x3D; this.addStopForm.get(&quot;latitude&quot;)?.value;
+    const reg &#x3D; new RegExp(&quot;^-?([0-8]?[0-9]|90)(\\.[0-9]{1,10})?$&quot;);
+    if(reg.exec(latitude)) {
+      this.validities[&#x27;lat&#x27;] &#x3D; true;
+    }
+    else {
+      this.validities[&#x27;lat&#x27;] &#x3D; false;
+    }
+    this.refreshValidity();
+  }
+
+  /**
+   * Validity check for longitude. Fails if longitude field does not meet regex requirements.
+   */
+  validateLongitude(event: any) {
+    const longitude &#x3D; this.addStopForm.get(&quot;longitude&quot;)?.value;
+    const reg &#x3D; new RegExp(&quot;^-?([0-9]{1,2}|1[0-7][0-9]|180)(\\.[0-9]{1,10})?$&quot;);
+    if(reg.exec(longitude)) {
+      this.validities[&#x27;long&#x27;] &#x3D; true;
+    }
+    else {
+      this.validities[&#x27;long&#x27;] &#x3D; false;
+    }
+    this.refreshValidity();
+  }
+
+  /**
+   * Submits request to backend API with given stop code, name, latitude and longitude to complete creation of new bus stop.
+   */
+  onSubmit() {
+    const stop_details &#x3D; {
+        stop_code: this.addStopForm.get(&quot;stopCode&quot;)?.value,
+        stop_name: this.addStopForm.get(&quot;stopName&quot;)?.value,
+        latitude: this.addStopForm.get(&quot;latitude&quot;)?.value,
+        longitude: this.addStopForm.get(&quot;longitude&quot;)?.value
+      }
+    this.http.post&lt;any&gt;(this.api.API_URL + &quot;/stops/create&quot;, stop_details).subscribe({
+      next: (message) &#x3D;&gt; {
+        console.log(message);
+      },
+      error: (e) &#x3D;&gt; {
+        console.log(e);
+      }
+    })
+    this.valid &#x3D; false;
+    this.addStopForm.reset()
+    this.validities &#x3D; {
+      codeNumber: true,
+      codeNotDuplicate: true,
+      codeNotEmpty: false,
+      name: false,
+      lat: false,
+      long: false
+    }
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;c-modal size&#x3D;&quot;xl&quot; id&#x3D;&quot;changeDriverModal&quot; [visible]&#x3D;&quot;visible&quot; (visibleChange)&#x3D;&quot;handleVisibilityChange($event)&quot;&gt;
+  &lt;c-modal-content&gt;
+    &lt;c-modal-header&gt;
+      &lt;h5 cModalTitle&gt;Add Stop&lt;/h5&gt;
+      &lt;button cButtonClose&gt;&lt;/button&gt;
+    &lt;/c-modal-header&gt;
+    &lt;c-modal-body&gt;
+      &lt;form [formGroup]&#x3D;&quot;addStopForm&quot;&gt;
+        &lt;c-input-group class&#x3D;&quot;mb-3&quot;&gt;
+          &lt;span cInputGroupText&gt;
+            &lt;svg cIcon name&#x3D;&quot;cilMagnifyingGlass&quot;&gt;&lt;/svg&gt;
+          &lt;/span&gt;
+          &lt;input cFormControl formControlName&#x3D;&quot;stopCode&quot;
+                 placeholder&#x3D;&quot;Stop Code&quot;
+                 name&#x3D;&quot;stopCode&quot;
+                 required
+          (input)&#x3D;&quot;validateStopCode($event)&quot;/&gt;
+        &lt;/c-input-group&gt;
+        &lt;p style&#x3D;&quot;color:red&quot; *ngIf&#x3D;&quot;!validities[&#x27;codeNotEmpty&#x27;]&quot;&gt;* Stop code is empty!&lt;/p&gt;
+        &lt;p style&#x3D;&quot;color:red&quot; *ngIf&#x3D;&quot;!validities[&#x27;codeNumber&#x27;]&quot;&gt;* Please input a valid number!&lt;/p&gt;
+        &lt;p style&#x3D;&quot;color:red&quot; *ngIf&#x3D;&quot;!validities[&#x27;codeNotDuplicate&#x27;]&quot;&gt;* Stop code already exists!&lt;/p&gt;
+        &lt;c-input-group class&#x3D;&quot;mb-3&quot;&gt;
+          &lt;span cInputGroupText&gt;
+            &lt;svg cIcon name&#x3D;&quot;cilClipboard&quot;&gt;&lt;/svg&gt;
+          &lt;/span&gt;
+          &lt;input cFormControl formControlName&#x3D;&quot;stopName&quot;
+                 placeholder&#x3D;&quot;Stop Name&quot;
+                 name&#x3D;&quot;stopName&quot;
+                 required
+          (input)&#x3D;&quot;validateStopName($event)&quot;/&gt;
+        &lt;/c-input-group&gt;
+        &lt;p style&#x3D;&quot;color:red&quot; *ngIf&#x3D;&quot;!validities[&#x27;name&#x27;]&quot;&gt;* Stop name is empty!&lt;/p&gt;
+        &lt;c-input-group class&#x3D;&quot;mb-3&quot;&gt;
+          &lt;span cInputGroupText&gt;
+            &lt;svg cIcon name&#x3D;&quot;cilLocationPin&quot;&gt;&lt;/svg&gt;
+          &lt;/span&gt;
+          &lt;input cFormControl formControlName&#x3D;&quot;latitude&quot;
+                 placeholder&#x3D;&quot;Latitude&quot;
+                 name&#x3D;&quot;latitude&quot;
+                 required
+          (input)&#x3D;&quot;validateLatitude($event)&quot;/&gt;
+        &lt;/c-input-group&gt;
+        &lt;p style&#x3D;&quot;color:red&quot; *ngIf&#x3D;&quot;!validities[&#x27;lat&#x27;]&quot;&gt;* Please input a valid latitude!&lt;/p&gt;
+        &lt;c-input-group class&#x3D;&quot;mb-3&quot;&gt;
+          &lt;span cInputGroupText&gt;
+            &lt;svg cIcon name&#x3D;&quot;cilLocationPin&quot;&gt;&lt;/svg&gt;
+          &lt;/span&gt;
+          &lt;input cFormControl formControlName&#x3D;&quot;longitude&quot;
+                 placeholder&#x3D;&quot;Longitude&quot;
+                 name&#x3D;&quot;longitude&quot;
+                 required
+          (input)&#x3D;&quot;validateLongitude($event)&quot;/&gt;
+        &lt;/c-input-group&gt;
+        &lt;p style&#x3D;&quot;color:red&quot; *ngIf&#x3D;&quot;!validities[&#x27;long&#x27;]&quot;&gt;* Please input a valid latitude!&lt;/p&gt;
+        &lt;div class&#x3D;&quot;d-grid&quot;&gt;
+          &lt;button cButton
+                  color&#x3D;&quot;danger&quot;
+                  *ngIf&#x3D;&quot;!valid&quot;
+                  disabled&gt;Create Stop&lt;/button&gt;
+          &lt;button cButton type&#x3D;&quot;submit&quot;
+                  color&#x3D;&quot;success&quot;
+                  *ngIf&#x3D;&quot;valid&quot;
+                  (click)&#x3D;&quot;onSubmit()&quot;
+                  [cModalToggle]&#x3D;&quot;staticBackdropModaladd.id&quot;&gt;Create Stop&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/form&gt;
+    &lt;/c-modal-body&gt;
+    &lt;c-modal-footer&gt;
+    &lt;/c-modal-footer&gt;
+  &lt;/c-modal-content&gt;
+&lt;/c-modal&gt;
+
+&lt;c-modal #staticBackdropModaladd backdrop&#x3D;&quot;static&quot; id&#x3D;&quot;staticBackdropModaladd&quot;&gt;
+  &lt;c-modal-header&gt;
+    &lt;h5 cModalTitle&gt;Add Stop&lt;/h5&gt;
+  &lt;/c-modal-header&gt;
+  &lt;c-modal-body&gt;Stop creation successful.&lt;/c-modal-body&gt;
+  &lt;c-modal-footer&gt;
+    &lt;button [cModalToggle]&#x3D;&quot;staticBackdropModaladd.id&quot; cButton color&#x3D;&quot;success&quot; variant&#x3D;&quot;outline&quot;
+    (click)&#x3D;&quot;this.closedModal.emit()&quot;&gt;Close&lt;/button&gt;
+  &lt;/c-modal-footer&gt;
+&lt;/c-modal&gt;
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><c-modal size="xl" id="changeDriverModal" [visible]="visible" (visibleChange)="handleVisibilityChange($event)">  <c-modal-content>    <c-modal-header>      <h5 cModalTitle>Add Stop</h5>      <button cButtonClose></button>    </c-modal-header>    <c-modal-body>      <form [formGroup]="addStopForm">        <c-input-group class="mb-3">          <span cInputGroupText>            <svg cIcon name="cilMagnifyingGlass"></svg>          </span>          <input cFormControl formControlName="stopCode"                 placeholder="Stop Code"                 name="stopCode"                 required          (input)="validateStopCode($event)"/>        </c-input-group>        <p style="color:red" *ngIf="!validities[\'codeNotEmpty\']">* Stop code is empty!</p>        <p style="color:red" *ngIf="!validities[\'codeNumber\']">* Please input a valid number!</p>        <p style="color:red" *ngIf="!validities[\'codeNotDuplicate\']">* Stop code already exists!</p>        <c-input-group class="mb-3">          <span cInputGroupText>            <svg cIcon name="cilClipboard"></svg>          </span>          <input cFormControl formControlName="stopName"                 placeholder="Stop Name"                 name="stopName"                 required          (input)="validateStopName($event)"/>        </c-input-group>        <p style="color:red" *ngIf="!validities[\'name\']">* Stop name is empty!</p>        <c-input-group class="mb-3">          <span cInputGroupText>            <svg cIcon name="cilLocationPin"></svg>          </span>          <input cFormControl formControlName="latitude"                 placeholder="Latitude"                 name="latitude"                 required          (input)="validateLatitude($event)"/>        </c-input-group>        <p style="color:red" *ngIf="!validities[\'lat\']">* Please input a valid latitude!</p>        <c-input-group class="mb-3">          <span cInputGroupText>            <svg cIcon name="cilLocationPin"></svg>          </span>          <input cFormControl formControlName="longitude"                 placeholder="Longitude"                 name="longitude"                 required          (input)="validateLongitude($event)"/>        </c-input-group>        <p style="color:red" *ngIf="!validities[\'long\']">* Please input a valid latitude!</p>        <div class="d-grid">          <button cButton                  color="danger"                  *ngIf="!valid"                  disabled>Create Stop</button>          <button cButton type="submit"                  color="success"                  *ngIf="valid"                  (click)="onSubmit()"                  [cModalToggle]="staticBackdropModaladd.id">Create Stop</button>        </div>      </form>    </c-modal-body>    <c-modal-footer>    </c-modal-footer>  </c-modal-content></c-modal><c-modal #staticBackdropModaladd backdrop="static" id="staticBackdropModaladd">  <c-modal-header>    <h5 cModalTitle>Add Stop</h5>  </c-modal-header>  <c-modal-body>Stop creation successful.</c-modal-body>  <c-modal-footer>    <button [cModalToggle]="staticBackdropModaladd.id" cButton color="success" variant="outline"    (click)="this.closedModal.emit()">Close</button>  </c-modal-footer></c-modal></div>'
+    var COMPONENTS = [{'name': 'AddRouteModalComponent', 'selector': 'app-addroutemodal'},{'name': 'AddStopModalComponent', 'selector': 'app-addstopmodal'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'BusdriversComponent', 'selector': 'app-busdrivers'},{'name': 'BusRoutesComponent', 'selector': 'app-busroutes'},{'name': 'CancelledDeploymentModalComponent', 'selector': 'app-cancelleddeploymentmodal'},{'name': 'ChangeDriverModalComponent', 'selector': 'app-changedrivermodal'},{'name': 'ConfirmCancelDeploymentModalComponent', 'selector': 'app-confirmcanceldeploymentmodal'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DefaultDriverLayoutComponent', 'selector': 'app-dashboard-driver'},{'name': 'DefaultFooterComponent', 'selector': 'app-default-footer'},{'name': 'DefaultHeaderComponent', 'selector': 'app-default-header'},{'name': 'DefaultManagerLayoutComponent', 'selector': 'app-manager-dashboard'},{'name': 'DeleteRouteModalComponent', 'selector': 'app-deleteroutemodal'},{'name': 'DeleteStopModalComponent', 'selector': 'app-deletestopmodal'},{'name': 'DeploymentComponent', 'selector': 'app-deployment'},{'name': 'DriverHistoryModalComponent', 'selector': 'app-driverhistorymodal'},{'name': 'DrivingHistoryComponent', 'selector': 'app-drivinghistory'},{'name': 'EditRouteModalComponent', 'selector': 'app-editroutemodal'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LogoutComponent', 'selector': 'app-logout'},{'name': 'NewDeploymentModalComponent', 'selector': 'app-newdeploymentmodal'},{'name': 'OverviewComponent', 'selector': 'app-overview'},{'name': 'Page404Component', 'selector': 'app-page404'},{'name': 'Page500Component', 'selector': 'app-page500'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RequestComponent', 'selector': 'app-request'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'AddStopModalComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'AddStopModalComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

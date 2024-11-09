@@ -1,0 +1,951 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>BusBuddy Frontend Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">BusBuddy Frontend Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  RegisterComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/views/manager/register/register.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>View component for manager to register new driver accounts.</p>
+
+    </p>
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-register</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>ContainerComponent</code>
+                            <code>RowComponent</code>
+                            <code>ColComponent</code>
+                            <code>TextColorDirective</code>
+                            <code>CardComponent</code>
+                            <code>CardBodyComponent</code>
+                            <code>FormDirective</code>
+                            <code>InputGroupComponent</code>
+                            <code>InputGroupTextDirective</code>
+                            <code>IconDirective</code>
+                            <code>FormControlDirective</code>
+                            <code>ButtonDirective</code>
+                            <code>FormsModule</code>
+                            <code>ReactiveFormsModule</code>
+                            <code>NgIf</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./register.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./register.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#onSubmit" >onSubmit</a>
+                            </li>
+                            <li>
+                                <a href="#validateContact" >validateContact</a>
+                            </li>
+                            <li>
+                                <a href="#validateEmail" >validateEmail</a>
+                            </li>
+                            <li>
+                                <a href="#validateRepeatPassword" >validateRepeatPassword</a>
+                            </li>
+                            <li>
+                                <a href="#validateUsername" >validateUsername</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSubmit"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>onSubmit</b></span>
+                        <a href="#onSubmit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onSubmit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="75"
+                                    class="link-to-prism">src/app/views/manager/register/register.component.ts:75</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Submits details from form to AuthService, which sends request to backend API to register this driver.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="validateContact"></a>
+                    <span class="name">
+                        <span ><b>validateContact</b></span>
+                        <a href="#validateContact"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>validateContact(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="128"
+                                    class="link-to-prism">src/app/views/manager/register/register.component.ts:128</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Validity check for contact number. Fails if contact number field is not a number.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="validateEmail"></a>
+                    <span class="name">
+                        <span ><b>validateEmail</b></span>
+                        <a href="#validateEmail"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>validateEmail(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="136"
+                                    class="link-to-prism">src/app/views/manager/register/register.component.ts:136</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Validity check for email. Fails if field does not contain &quot;@&quot; or &quot;.com&quot;/&quot;.net&quot;.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="validateRepeatPassword"></a>
+                    <span class="name">
+                        <span ><b>validateRepeatPassword</b></span>
+                        <a href="#validateRepeatPassword"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>validateRepeatPassword(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="146"
+                                    class="link-to-prism">src/app/views/manager/register/register.component.ts:146</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Validity check for repeat password. Fails if field does not match password field.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="validateUsername"></a>
+                    <span class="name">
+                        <span ><b>validateUsername</b></span>
+                        <a href="#validateUsername"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>validateUsername(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="120"
+                                    class="link-to-prism">src/app/views/manager/register/register.component.ts:120</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Validity check for username. Fails if username field is empty.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component } from &#x27;@angular/core&#x27;;
+import { IconDirective } from &#x27;@coreui/icons-angular&#x27;;
+import { ContainerComponent, RowComponent, ColComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective } from &#x27;@coreui/angular&#x27;;
+import {ApiService} from &quot;../../../services/api.service&quot;;
+import {HttpClient} from &quot;@angular/common/http&quot;;
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from &quot;@angular/forms&quot;;
+import {AuthService} from &quot;../../../services/auth.service&quot;;
+import {Access} from &quot;../../../_models/account&quot;;
+import {firstValueFrom} from &quot;rxjs&quot;;
+import {NgIf} from &quot;@angular/common&quot;;
+
+/**
+ * View component for manager to register new driver accounts.
+ */
+@Component({
+    selector: &#x27;app-register&#x27;,
+    templateUrl: &#x27;./register.component.html&#x27;,
+    styleUrls: [&#x27;./register.component.scss&#x27;],
+    standalone: true,
+  imports: [ContainerComponent, RowComponent, ColComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent, InputGroupTextDirective, IconDirective, FormControlDirective, ButtonDirective, FormsModule, ReactiveFormsModule, NgIf]
+})
+export class RegisterComponent {
+  /**
+   * @ignore
+   */
+  public repeat_password &#x3D; false;
+  /**
+   * @ignore
+   */
+  public validities &#x3D; {
+    &#x27;username&#x27;: false,
+    &#x27;email&#x27;: false,
+    &#x27;contact&#x27;: false,
+    &#x27;repeat_password&#x27;: false,
+    &#x27;empty_password&#x27;: false
+  }
+  /**
+   * @ignore
+   */
+  public valid &#x3D; false;
+  /**
+   * @ignore
+   */
+  public success &#x3D; false;
+  /**
+   * @ignore
+   */
+  public register: FormGroup;
+
+  /**
+   * @ignore
+   */
+  constructor(private auth: AuthService, private api: ApiService, private formbuilder: FormBuilder) {
+    this.validities &#x3D; {
+      &#x27;username&#x27;: false,
+      &#x27;email&#x27;: false,
+      &#x27;contact&#x27;: false,
+      &#x27;repeat_password&#x27;: false,
+      &#x27;empty_password&#x27;: false
+    }
+    this.valid &#x3D; false;
+    this.success &#x3D; false;
+    this.register &#x3D; this.formbuilder.group({
+      username: &#x27;&#x27;,
+      email: &#x27;&#x27;,
+      contact: &#x27;&#x27;,
+      password: &#x27;&#x27;,
+      confirm_password: &#x27;&#x27;
+    })
+  }
+
+  /**
+   * Submits details from form to AuthService, which sends request to backend API to register this driver.
+   */
+  async onSubmit() {
+    if(this.register.value.password !&#x3D; this.register.value.confirm_password) {
+      this.repeat_password &#x3D; true;
+      return;
+    }
+    else {
+      const user_details &#x3D; {
+        name: this.register.value.username,
+        email: this.register.value.email,
+        contact: this.register.value.contact,
+        password: this.register.value.password,
+        type: Access.DRIVER
+      }
+      await firstValueFrom(this.auth.register(user_details));
+      this.repeat_password &#x3D; false;
+      this.success &#x3D; true;
+      this.valid &#x3D; false;
+      this.register.reset()
+      this.validities &#x3D; {
+        &#x27;username&#x27;: false,
+        &#x27;email&#x27;: false,
+        &#x27;contact&#x27;: false,
+        &#x27;repeat_password&#x27;: false,
+        &#x27;empty_password&#x27;: false
+      }
+    }
+  }
+
+  /**
+   * @ignore
+   */
+  checkValidity() {
+    let temp &#x3D; true;
+    Object.entries(this.validities).forEach(
+      // @ts-ignore
+      ([key, value]) &#x3D;&gt; {
+        if(!value) {temp &#x3D; false;}
+      }
+    )
+    return temp;
+  }
+
+  /**
+   * Validity check for username. Fails if username field is empty.
+   */
+  validateUsername(event: any) {
+    this.validities[&#x27;username&#x27;] &#x3D; (this.register.get(&#x27;username&#x27;)?.value.length &gt; 0);
+    this.valid &#x3D; this.checkValidity();
+  }
+
+  /**
+   * Validity check for contact number. Fails if contact number field is not a number.
+   */
+  validateContact(event: any) {
+    this.validities[&#x27;contact&#x27;] &#x3D; !isNaN(+this.register.get(&#x27;contact&#x27;)?.value);
+    this.valid &#x3D; this.checkValidity();
+  }
+
+  /**
+   * Validity check for email. Fails if field does not contain &quot;@&quot; or &quot;.com&quot;/&quot;.net&quot;.
+   */
+  validateEmail(event: any) {
+    let input &#x3D; this.register.get(&#x27;email&#x27;)?.value;
+    this.validities[&#x27;email&#x27;] &#x3D; input.includes(&quot;@&quot;) &amp;&amp; (input.includes(&quot;.com&quot;) || input.includes(&quot;.net&quot;));
+    this.valid &#x3D; this.checkValidity();
+    console.log(this.valid)
+  }
+
+  /**
+   * Validity check for repeat password. Fails if field does not match password field.
+   */
+  validateRepeatPassword(event: any) {
+    this.validities[&#x27;repeat_password&#x27;] &#x3D; (this.register.get(&#x27;password&#x27;)?.value &#x3D;&#x3D; this.register.get(&#x27;confirm_password&#x27;)?.value);
+    this.validities[&#x27;empty_password&#x27;] &#x3D; (this.register.get(&#x27;password&#x27;)?.value.length &gt; 0);
+    this.valid &#x3D; this.checkValidity();
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;bg-light dark:bg-transparent d-flex flex-row align-items-center&quot;&gt;
+  &lt;c-container&gt;
+    &lt;c-row class&#x3D;&quot;justify-content-center&quot;&gt;
+      &lt;c-col lg&#x3D;&quot;7&quot; md&#x3D;&quot;9&quot; xl&#x3D;&quot;6&quot;&gt;
+        &lt;c-card class&#x3D;&quot;mx-4&quot;&gt;
+          &lt;c-card-body class&#x3D;&quot;p-4&quot;&gt;
+            &lt;form [formGroup]&#x3D;&quot;register&quot; (ngSubmit)&#x3D;&quot;onSubmit()&quot; ngNativeValidate&gt;
+              &lt;h1&gt;Register New Driver&lt;/h1&gt;
+              &lt;c-input-group class&#x3D;&quot;mb-3&quot;&gt;
+                &lt;span cInputGroupText&gt;
+                  &lt;svg cIcon name&#x3D;&quot;cilUser&quot;&gt;&lt;/svg&gt;
+                &lt;/span&gt;
+                &lt;input cFormControl formControlName&#x3D;&quot;username&quot;
+                       placeholder&#x3D;&quot;Username&quot;
+                       name&#x3D;&quot;username&quot;
+                       required
+                (input)&#x3D;&quot;validateUsername($event)&quot;/&gt;
+              &lt;/c-input-group&gt;
+              &lt;p style&#x3D;&quot;color:red&quot;
+                  *ngIf&#x3D;&quot;!validities[&#x27;username&#x27;]&quot;&gt;* Username is blank!&lt;/p&gt;
+              &lt;c-input-group class&#x3D;&quot;mb-3&quot;&gt;
+                &lt;span cInputGroupText&gt;&amp;#64;&lt;/span&gt;
+                &lt;input cFormControl formControlName&#x3D;&quot;email&quot;
+                       placeholder&#x3D;&quot;Email&quot;
+                       name&#x3D;&quot;email&quot;
+                       required
+                       (input)&#x3D;&quot;validateEmail($event)&quot;/&gt;
+              &lt;/c-input-group&gt;
+              &lt;p style&#x3D;&quot;color:red&quot;
+                  *ngIf&#x3D;&quot;!validities[&#x27;email&#x27;]&quot;&gt;* Invalid email address!&lt;/p&gt;
+              &lt;c-input-group class&#x3D;&quot;mb-3&quot;&gt;
+                &lt;span cInputGroupText&gt;
+                  &lt;svg cIcon name&#x3D;&quot;cilPhone&quot;&gt;&lt;/svg&gt;
+                &lt;/span&gt;
+                &lt;input cFormControl formControlName&#x3D;&quot;contact&quot;
+                       placeholder&#x3D;&quot;Contact Number&quot;
+                       name&#x3D;&quot;contact&quot;
+                       required
+                       (input)&#x3D;&quot;validateContact($event)&quot;/&gt;
+              &lt;/c-input-group&gt;
+              &lt;p style&#x3D;&quot;color:red&quot;
+                  *ngIf&#x3D;&quot;!validities[&#x27;contact&#x27;]&quot;&gt;* Invalid contact number!&lt;/p&gt;
+              &lt;c-input-group class&#x3D;&quot;mb-3&quot;&gt;
+                &lt;span cInputGroupText&gt;
+                  &lt;svg cIcon name&#x3D;&quot;cilLockLocked&quot;&gt;&lt;/svg&gt;
+                &lt;/span&gt;
+                &lt;input cFormControl formControlName&#x3D;&quot;password&quot;
+                       placeholder&#x3D;&quot;Password&quot;
+                       type&#x3D;&quot;password&quot;
+                       name&#x3D;&quot;password&quot;
+                       required
+                       (input)&#x3D;&quot;validateRepeatPassword($event)&quot;/&gt;
+              &lt;/c-input-group&gt;
+              &lt;p style&#x3D;&quot;color:red&quot;
+                  *ngIf&#x3D;&quot;!validities[&#x27;empty_password&#x27;]&quot;&gt;* Please enter a password!&lt;/p&gt;
+              &lt;c-input-group class&#x3D;&quot;mb-4&quot;&gt;
+                &lt;span cInputGroupText&gt;
+                  &lt;svg cIcon name&#x3D;&quot;cilLockLocked&quot;&gt;&lt;/svg&gt;
+                &lt;/span&gt;
+                &lt;input cFormControl formControlName&#x3D;&quot;confirm_password&quot;
+                       placeholder&#x3D;&quot;Repeat password&quot;
+                       type&#x3D;&quot;password&quot;
+                       name&#x3D;&quot;confirm_password&quot;
+                       required
+                       (input)&#x3D;&quot;validateRepeatPassword($event)&quot;/&gt;
+              &lt;/c-input-group&gt;
+              &lt;p style&#x3D;&quot;color:red&quot;
+                  *ngIf&#x3D;&quot;!validities[&#x27;repeat_password&#x27;]&quot;&gt;* Password does not match!&lt;/p&gt;
+              &lt;div class&#x3D;&quot;d-grid&quot;&gt;
+                &lt;button cButton
+                        color&#x3D;&quot;danger&quot;
+                        *ngIf&#x3D;&quot;!valid&quot;
+                        disabled&gt;Create Account&lt;/button&gt;
+                &lt;button cButton type&#x3D;&quot;submit&quot;
+                        color&#x3D;&quot;success&quot;
+                        *ngIf&#x3D;&quot;valid&quot;&gt;Create Account&lt;/button&gt;
+                &lt;p style&#x3D;&quot;color:forestgreen&quot;
+                  *ngIf&#x3D;&quot;success&quot;&gt;Account has been successfully added!&lt;/p&gt;
+              &lt;/div&gt;
+            &lt;/form&gt;
+          &lt;/c-card-body&gt;
+        &lt;/c-card&gt;
+      &lt;/c-col&gt;
+    &lt;/c-row&gt;
+  &lt;/c-container&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./register.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss"></code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="bg-light dark:bg-transparent d-flex flex-row align-items-center">  <c-container>    <c-row class="justify-content-center">      <c-col lg="7" md="9" xl="6">        <c-card class="mx-4">          <c-card-body class="p-4">            <form [formGroup]="register" (ngSubmit)="onSubmit()" ngNativeValidate>              <h1>Register New Driver</h1>              <c-input-group class="mb-3">                <span cInputGroupText>                  <svg cIcon name="cilUser"></svg>                </span>                <input cFormControl formControlName="username"                       placeholder="Username"                       name="username"                       required                (input)="validateUsername($event)"/>              </c-input-group>              <p style="color:red"                  *ngIf="!validities[\'username\']">* Username is blank!</p>              <c-input-group class="mb-3">                <span cInputGroupText>&#64;</span>                <input cFormControl formControlName="email"                       placeholder="Email"                       name="email"                       required                       (input)="validateEmail($event)"/>              </c-input-group>              <p style="color:red"                  *ngIf="!validities[\'email\']">* Invalid email address!</p>              <c-input-group class="mb-3">                <span cInputGroupText>                  <svg cIcon name="cilPhone"></svg>                </span>                <input cFormControl formControlName="contact"                       placeholder="Contact Number"                       name="contact"                       required                       (input)="validateContact($event)"/>              </c-input-group>              <p style="color:red"                  *ngIf="!validities[\'contact\']">* Invalid contact number!</p>              <c-input-group class="mb-3">                <span cInputGroupText>                  <svg cIcon name="cilLockLocked"></svg>                </span>                <input cFormControl formControlName="password"                       placeholder="Password"                       type="password"                       name="password"                       required                       (input)="validateRepeatPassword($event)"/>              </c-input-group>              <p style="color:red"                  *ngIf="!validities[\'empty_password\']">* Please enter a password!</p>              <c-input-group class="mb-4">                <span cInputGroupText>                  <svg cIcon name="cilLockLocked"></svg>                </span>                <input cFormControl formControlName="confirm_password"                       placeholder="Repeat password"                       type="password"                       name="confirm_password"                       required                       (input)="validateRepeatPassword($event)"/>              </c-input-group>              <p style="color:red"                  *ngIf="!validities[\'repeat_password\']">* Password does not match!</p>              <div class="d-grid">                <button cButton                        color="danger"                        *ngIf="!valid"                        disabled>Create Account</button>                <button cButton type="submit"                        color="success"                        *ngIf="valid">Create Account</button>                <p style="color:forestgreen"                  *ngIf="success">Account has been successfully added!</p>              </div>            </form>          </c-card-body>        </c-card>      </c-col>    </c-row>  </c-container></div></div>'
+    var COMPONENTS = [{'name': 'AddRouteModalComponent', 'selector': 'app-addroutemodal'},{'name': 'AddStopModalComponent', 'selector': 'app-addstopmodal'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'BusdriversComponent', 'selector': 'app-busdrivers'},{'name': 'BusRoutesComponent', 'selector': 'app-busroutes'},{'name': 'CancelledDeploymentModalComponent', 'selector': 'app-cancelleddeploymentmodal'},{'name': 'ChangeDriverModalComponent', 'selector': 'app-changedrivermodal'},{'name': 'ConfirmCancelDeploymentModalComponent', 'selector': 'app-confirmcanceldeploymentmodal'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DefaultDriverLayoutComponent', 'selector': 'app-dashboard-driver'},{'name': 'DefaultFooterComponent', 'selector': 'app-default-footer'},{'name': 'DefaultHeaderComponent', 'selector': 'app-default-header'},{'name': 'DefaultManagerLayoutComponent', 'selector': 'app-manager-dashboard'},{'name': 'DeleteRouteModalComponent', 'selector': 'app-deleteroutemodal'},{'name': 'DeleteStopModalComponent', 'selector': 'app-deletestopmodal'},{'name': 'DeploymentComponent', 'selector': 'app-deployment'},{'name': 'DriverHistoryModalComponent', 'selector': 'app-driverhistorymodal'},{'name': 'DrivingHistoryComponent', 'selector': 'app-drivinghistory'},{'name': 'EditRouteModalComponent', 'selector': 'app-editroutemodal'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LogoutComponent', 'selector': 'app-logout'},{'name': 'NewDeploymentModalComponent', 'selector': 'app-newdeploymentmodal'},{'name': 'OverviewComponent', 'selector': 'app-overview'},{'name': 'Page404Component', 'selector': 'app-page404'},{'name': 'Page500Component', 'selector': 'app-page500'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RequestComponent', 'selector': 'app-request'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'RegisterComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'RegisterComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

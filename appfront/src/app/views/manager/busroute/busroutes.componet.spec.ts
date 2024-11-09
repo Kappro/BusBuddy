@@ -3,16 +3,16 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { IconSetService } from '@coreui/icons-angular';
 import { iconSubset } from '../../../icons/icon-subset';
-import { BusroutesComponent } from './busroutes.component';
+import { BusRoutesComponent } from './busroutes.component';
 
 describe('TabsComponent', () => {
-  let component: BusroutesComponent;
-  let fixture: ComponentFixture<BusroutesComponent>;
+  let component: BusRoutesComponent;
+  let fixture: ComponentFixture<BusRoutesComponent>;
   let iconSetService: IconSetService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BusroutesComponent, NoopAnimationsModule],
+      imports: [BusRoutesComponent, NoopAnimationsModule],
       providers: [IconSetService],
       teardown: { destroyAfterEach: false }   // <- add this line for Error: NG0205: Injector has already been destroyed.
     }).compileComponents();
@@ -22,7 +22,7 @@ describe('TabsComponent', () => {
     iconSetService = TestBed.inject(IconSetService);
     iconSetService.icons = { ...iconSubset };
 
-    fixture = TestBed.createComponent(BusroutesComponent);
+    fixture = TestBed.createComponent(BusRoutesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

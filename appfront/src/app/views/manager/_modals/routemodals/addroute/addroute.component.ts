@@ -32,6 +32,9 @@ const iconDefault = L.icon({
 });
 L.Marker.prototype.options.icon = iconDefault;
 
+/**
+ * Pop-up modal that allows manager to add a new service.
+ */
 @Component({
     selector: 'app-addroutemodal',
     templateUrl: './addroute.component.html',
@@ -50,19 +53,55 @@ L.Marker.prototype.options.icon = iconDefault;
 })
 export class AddRouteModalComponent implements AfterViewInit {
 
+  /**
+   * @ignore
+   */
   private map!: L.Map;
+  /**
+   * @ignore
+   */
   public visible: boolean = false;
+  /**
+   * @ignore
+   */
   private markersLayer = new L.LayerGroup();
+  /**
+   * @ignore
+   */
   public busStops: any[] = [];
+  /**
+   * @ignore
+   */
   public services: any[] = [];
+  /**
+   * @ignore
+   */
   public addRouteForm: FormGroup;
+  /**
+   * @ignore
+   */
   public valid: boolean = false;
+  /**
+   * @ignore
+   */
   public duplicate: boolean = false;
+  /**
+   * @ignore
+   */
   public empty: boolean = true;
+  /**
+   * @ignore
+   */
   public invalid: any[] = [];
 
+  /**
+   * @ignore
+   */
   @Output() closedModal = new EventEmitter<void>();
 
+  /**
+   * Initialises map with Open Street Map tiles.
+   */
   public initMap(): void {
     this.map = L.map('map', {
       center: [ 1.344365, 103.694433 ],
@@ -82,6 +121,9 @@ export class AddRouteModalComponent implements AfterViewInit {
     }, 500);
   }
 
+  /**
+   * @ignore
+   */
   constructor(private http: HttpClient,
               private api: ApiService,
               private formbuilder: FormBuilder,
@@ -92,16 +134,25 @@ export class AddRouteModalComponent implements AfterViewInit {
     })
   }
 
+  /**
+   * @ignore
+   */
   ngAfterViewInit(): void {
 
   }
 
+  /**
+   * Validity check for service number field. Fails if it currently exists.
+   */
   public checkServiceNumber(event: any) {
     let input = this.addRouteForm.get('inputBusService')?.value;
     this.empty = (input.length === 0);
     this.duplicate = (this.services.find((service) => ((service.service_number.toString()) === input)) != undefined);
   }
 
+  /**
+   * Validity check for bus stops field. Fails if any stop currently does not exist.
+   */
   public checkStops(event: any) {
     this.invalid = [];
     let input = this.addRouteForm.get('inputBusStops')?.value;
@@ -119,6 +170,9 @@ export class AddRouteModalComponent implements AfterViewInit {
     this.valid = (this.invalid.length == 0);
   }
 
+  /**
+   * Takes in comma-separated list of bus stop objects with latitude and longitude to plot on the map.
+   */
   public inputStopsMap(event: any):void {
 
     let array = this.addRouteForm.get('inputBusStops')?.value.split(',');
@@ -135,10 +189,16 @@ export class AddRouteModalComponent implements AfterViewInit {
     this.markersLayer.addTo(this.map);
   }
 
+  /**
+   * @ignore
+   */
   handleVisibilityChange(event: any) {
     this.visible = event;
   }
 
+  /**
+   * Submits request to backend API based on form inputs to create a new service.
+   */
   onSubmit() {
     let service = this.addRouteForm.get('inputBusService')?.value;
     let stops = this.addRouteForm.get('inputBusStops')?.value.split(',');
@@ -157,6 +217,9 @@ export class AddRouteModalComponent implements AfterViewInit {
       })
   }
 
+  /**
+   * Toggles visibility of modal.
+   */
   toggleVisibility() {
     if(!this.visible) {
       try {this.initMap();}
@@ -174,6 +237,9 @@ export class AddRouteModalComponent implements AfterViewInit {
     // }, 1000)
   }
 
+  /**
+   * Closes the modal. Emits an event for parent component to pick up.
+   */
   clickClose() {
     this.map.off();
     this.map.remove();

@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "compodoc:build": "compodoc -p tsconfig.json --port 12065",
+    "compodoc:serve": "compodoc -p tsconfig.json --port 12065 -s"
   },
   "private": true,
   "dependencies": {
@@ -29,12 +31,13 @@
     "@coreui/icons-angular": "~5.2.16",
     "@coreui/utils": "^2.0.2",
     "chart.js": "^4.4.4",
+    "compodoc": "^0.0.41",
+    "leaflet": "^1.9.4",
     "lodash-es": "^4.17.21",
     "ngx-scrollbar": "^13.0.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.14.10",
-    "leaflet": "^1.9.4"
+    "zone.js": "~0.14.10"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.2.9",
@@ -42,9 +45,9 @@
     "@angular/compiler-cli": "^18.0.0",
     "@angular/localize": "^18.2.1",
     "@types/jasmine": "~5.1.0",
+    "@types/leaflet": "^1.9.14",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^20.16.1",
-    "@types/leaflet": "^1.9.14",
     "jasmine-core": "~5.2.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",

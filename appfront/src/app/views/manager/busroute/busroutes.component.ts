@@ -33,6 +33,9 @@ import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {AddStopModalComponent} from "../_modals/stopmodals/addstop/addstop.component";
 import {DeleteStopModalComponent} from "../_modals/stopmodals/deletestop/deletestop.component";
 
+/**
+ * View component for manager to manage bus services and bus stops.
+ */
 @Component({
     selector: 'app-busroutes',
     templateUrl: './busroutes.component.html',
@@ -45,23 +48,59 @@ import {DeleteStopModalComponent} from "../_modals/stopmodals/deletestop/deletes
 })
 export class BusRoutesComponent implements AfterViewInit {
 
+  /**
+   * @ignore
+   */
   public services: any[] = [];
+  /**
+   * View can employ add route modal.
+   */
   @ViewChild(AddRouteModalComponent) addRouteModal!: AddRouteModalComponent;
+  /**
+   * View can employ edit route modal.
+   */
   @ViewChild(EditRouteModalComponent) editRouteModal!: EditRouteModalComponent;
+  /**
+   * View can employ delete route modal.
+   */
   @ViewChild(DeleteRouteModalComponent) deleteRouteModal!: DeleteRouteModalComponent;
+  /**
+   * View can employ add bus stop modal.
+   */
   @ViewChild(AddStopModalComponent) addStopModal!: AddStopModalComponent;
+  /**
+   * View can employ delete bus stop modal.
+   */
   @ViewChild(DeleteStopModalComponent) deleteStopModal!: DeleteStopModalComponent;
+  /**
+   * @ignore
+   */
   public stops: any[] = [];
+  /**
+   * @ignore
+   */
   public filteredStops: any[] = [];
 
+  /**
+   * @ignore
+   */
   public searchStop: FormGroup;
 
+  /**
+   * @ignore
+   */
   activeItem = signal(0);
 
+  /**
+   * For redirecting between tabs.
+   */
   handleActiveItemChange(value: string | number | undefined) {
     this.activeItem.set(<number>value);
   }
 
+  /**
+   * Loads in all stops and services existing on database on construct.
+   */
   constructor(private http: HttpClient,
               private api: ApiService,
               private router: Router,
@@ -90,10 +129,16 @@ export class BusRoutesComponent implements AfterViewInit {
     })
   }
 
+  /**
+   * @ignore
+   */
   ngAfterViewInit(): void {
 
   }
 
+  /**
+   * Opens add route modal, loading in all bus stops and services.
+   */
   viewAddRouteModal() {
     this.addRouteModal.busStops = this.stops;
     this.addRouteModal.services = this.services;
@@ -101,6 +146,10 @@ export class BusRoutesComponent implements AfterViewInit {
     this.addRouteModal.toggleVisibility();
   }
 
+  /**
+   * Opens edit route modal, loading in all bus stops and given service to edit route for.
+   * @param service Service number of service with route to be edited.
+   */
   viewEditRouteModal(service: string) {
     this.editRouteModal.serviceNumber = service;
     this.editRouteModal.availableStops = this.stops;
@@ -123,6 +172,10 @@ export class BusRoutesComponent implements AfterViewInit {
 
   }
 
+  /**
+   * Opens delete route modal, loading in all bus stops and given service to delete.
+   * @param service Service number of service to be deleted.
+   */
   viewDeleteRouteModal(service: string) {
     this.deleteRouteModal.serviceNumber = service;
     this.deleteRouteModal.availableStops = this.stops;
@@ -143,10 +196,17 @@ export class BusRoutesComponent implements AfterViewInit {
       });
   }
 
+  /**
+   * Opens add bus stop modal.
+   */
   viewAddStopModal() {
     this.addStopModal.toggleVisibility();
   }
 
+  /**
+   * Opens delete bus stop modal, loading in bus stop code of bus stop to be deleted.
+   * @param stop_code Bus stop code of bus stop to be deleted.
+   */
   viewDeleteStopModal(stop_code: string) {
     const params = {stop_code: stop_code};
     this.http.post<any>(this.api.API_URL + "/stops/get_stop_details", params).subscribe({
@@ -161,6 +221,9 @@ export class BusRoutesComponent implements AfterViewInit {
     })
   }
 
+  /**
+   * Refreshes component without needing to reload.
+   */
   refresh() {
     setTimeout(() => {
       this.http.get<any>(this.api.API_URL + "/stops/get_all").subscribe({
@@ -189,6 +252,9 @@ export class BusRoutesComponent implements AfterViewInit {
     }, 1000);
   }
 
+  /**
+   * Filters stops based on stop code or stop name.
+   */
   search(event?: any) {
     const keyword = this.searchStop.get('searchInput')?.value.toLowerCase();
     if(keyword.length == 0) {

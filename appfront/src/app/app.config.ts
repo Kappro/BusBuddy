@@ -16,6 +16,9 @@ import {provideHttpClient, withInterceptors} from "@angular/common/http";
 import {JwtInterceptor} from "./services/auth.interceptor";
 import {JWT_OPTIONS, JwtHelperService} from "@auth0/angular-jwt";
 
+/**
+ * @ignore
+ */
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(appRoutes,

@@ -46,7 +46,9 @@ import {HttpClient} from "@angular/common/http";
 import {ApiService} from "../../../services/api.service";
 import {ChangeDriverModalComponent} from "../_modals/changedrivermodal/changedrivermodal.component";
 import {DriverHistoryModalComponent} from "../_modals/driverhistorymodal/driverhistorymodal.component";
-
+/**
+ * @ignore
+ */
 interface IUser {
   name: string;
   current_state: string;
@@ -58,6 +60,9 @@ interface IUser {
   contact: string;
 }
 
+/**
+ * View component for manager to see bus drivers' details and their deployment histories.
+ */
 @Component({
     selector: 'app-busdrivers',
     templateUrl: './busdrivers.component.html',
@@ -83,11 +88,19 @@ interface IUser {
   ]
 })
 export class BusdriversComponent implements AfterViewInit {
-
+  /**
+   * @ignore
+   */
   // @ts-ignore
   public users: any[];
+  /**
+   * View can employ view driver history pop-up.
+   */
   @ViewChild(DriverHistoryModalComponent) driverHistoryModal!: DriverHistoryModalComponent;
 
+  /**
+   * Loads in all drivers on construct.
+   */
   constructor(private http: HttpClient, private api: ApiService) {
     this.http.get<any>(this.api.API_URL+"/drivers/get_all").subscribe({
       next: (message) => {
@@ -100,12 +113,20 @@ export class BusdriversComponent implements AfterViewInit {
     });
   }
 
+  /**
+   * @ignore
+   */
   ngAfterViewInit() {
     if(this.driverHistoryModal) {
       console.log('Modal component is available.')
     }
   }
 
+  /**
+   * Opens view driver history modal, loading in clicked driver's UID and name.
+   * @param driver_uid UID of driver whose history is to be viewed.
+   * @param driver_name Name of driver whose history is to be viewed.
+   */
   openViewHistory(driver_uid: number, driver_name: string) {
     if(this.driverHistoryModal) {
       this.http.post<any>(this.api.API_URL + "/drivers/get_history_by_uid", {'driver_uid': String(driver_uid)}).subscribe({

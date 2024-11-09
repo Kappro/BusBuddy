@@ -4,6 +4,9 @@ import { inject } from "@angular/core";
 import {Observable, of} from "rxjs";
 import {Access} from "../_models/account";
 
+/**
+ * @ignore
+ */
 export const AuthGuardService: CanActivateFn = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
@@ -16,6 +19,9 @@ export const AuthGuardService: CanActivateFn = (
       : inject(Router).createUrlTree(['/login']);
 };
 
+/**
+ * Guard service function that prevents the wrong access type from accessing the stipulated role for the path.
+ */
 export const RoleGuardService: CanActivateFn = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
@@ -41,6 +47,9 @@ export const RoleGuardService: CanActivateFn = (
   else return inject(Router).navigate(['login']);
 }
 
+/**
+ * Guard service function that redirects the user according to the access type.
+ */
 export const LoginGuardService: CanActivateFn = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot

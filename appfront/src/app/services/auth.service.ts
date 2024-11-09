@@ -5,12 +5,21 @@ import { Injectable } from "@angular/core";
 import {Access, Account} from "../_models/account";
 import {JwtHelperService} from "@auth0/angular-jwt";
 
+/**
+ * Authentication injectable service that can be serves several authentication-related functions.
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  /**
+   * @ignore
+   */
   isLoggedIn: boolean = false;
 
+  /**
+   * Service uses HttpClient, ApiService and JwtHelperService injectables.
+   */
   constructor(private http: HttpClient, private api: ApiService, private jwthelper: JwtHelperService) {
     if(localStorage.getItem("access_token")) {
       if(!this.jwthelper.isTokenExpired(localStorage.getItem("access_token"))) {
@@ -19,6 +28,11 @@ export class AuthService {
     }
   }
 
+  /**
+   * Allows login at login page. Stores JSON Web Token in local storage if successful and redirects to the correct page
+   * based on access, or rejects if unsuccessful.
+   * @param {{string, string}} userDetails Dictionary-style with two parameters - email, password.
+   */
   login(userDetails: { email: string; password: string }): Observable<string> {
     return this.http.post<any>(`${this.api.API_URL}/login`, userDetails)
       .pipe(
@@ -35,6 +49,10 @@ export class AuthService {
       );
   }
 
+  /**
+   * Registers a user with the backend.
+   * @param {{string, string, number, Access}} userDetails
+   */
   register(userDetails: {name: string,
     password: string,
     email: string,
@@ -52,15 +70,24 @@ export class AuthService {
         );
   }
 
+  /**
+   * Logs the current user out by destroying JSON Web Token.
+   */
   logout(): void {
     localStorage.removeItem('access_token');
     this.isLoggedIn = false;
   }
 
+  /**
+   * Checks if current user is logged in.
+   */
   isAuthenticated(): boolean {
     return this.isLoggedIn;
   }
 
+  /**
+   * Retrieves identity through backend by providing JSON Web Token.
+   */
   async retrieveIdentity() {
     let account = new Account(-1, "bad", "bad", "bad", Access.BADACCOUNT, new Date(0));
     if(!this.isLoggedIn) {

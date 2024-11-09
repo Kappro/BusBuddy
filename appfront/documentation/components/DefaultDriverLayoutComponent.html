@@ -1,0 +1,944 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>BusBuddy Frontend Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">BusBuddy Frontend Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  DefaultDriverLayoutComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/layout/default-layout/default-layout.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Driver&#39;s sidebar loading.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>AfterViewInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-dashboard-driver</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>SidebarComponent</code>
+                            <code>SidebarHeaderComponent</code>
+                            <code>SidebarBrandComponent</code>
+                            <code>RouterLink</code>
+                            <code>IconDirective</code>
+                            <code>NgScrollbar</code>
+                            <code>SidebarNavComponent</code>
+                            <code>SidebarFooterComponent</code>
+                            <code>SidebarToggleDirective</code>
+                            <code>SidebarTogglerDirective</code>
+                                <code><a href="../components/DefaultHeaderComponent.html" target="_self" >DefaultHeaderComponent</a></code>
+                            <code>ShadowOnScrollDirective</code>
+                            <code>ContainerComponent</code>
+                            <code>RouterOutlet</code>
+                                <code><a href="../components/DefaultFooterComponent.html" target="_self" >DefaultFooterComponent</a></code>
+                                <code><a href="../components/NewDeploymentModalComponent.html" target="_self" >NewDeploymentModalComponent</a></code>
+                                <code><a href="../components/CancelledDeploymentModalComponent.html" target="_self" >CancelledDeploymentModalComponent</a></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./default-layout.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./default-layout.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#cancelledDeploymentNotif" >cancelledDeploymentNotif</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#newDeploymentNotif" >newDeploymentNotif</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#startInterval" >startInterval</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(http: HttpClient, api: <a href="../injectables/ApiService.html" target="_self">ApiService</a>, cdr: ChangeDetectorRef, router: Router)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="180" class="link-to-prism">src/app/layout/default-layout/default-layout.component.ts:180</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Component uses HttpClient, ApiService, ChangeDetectorRef and Router injectables.</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>http</td>
+                                                  
+                                                        <td>
+                                                                    <code>HttpClient</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>api</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ApiService.html" target="_self" >ApiService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>cdr</td>
+                                                  
+                                                        <td>
+                                                                    <code>ChangeDetectorRef</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="startInterval"></a>
+                    <span class="name">
+                        <span ><b>startInterval</b></span>
+                        <a href="#startInterval"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>startInterval()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="198"
+                                    class="link-to-prism">src/app/layout/default-layout/default-layout.component.ts:198</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Starts a clock to constantly query the backend to check if there are any new deployments for the driver every 500ms.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cancelledDeploymentNotif"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>cancelledDeploymentNotif</b></span>
+                        <a href="#cancelledDeploymentNotif"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/CancelledDeploymentModalComponent.html" target="_self" >CancelledDeploymentModalComponent</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(CancelledDeploymentModalComponent)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="175" class="link-to-prism">src/app/layout/default-layout/default-layout.component.ts:175</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>For support of pop-up notification regardless of which page driver is at.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="newDeploymentNotif"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>newDeploymentNotif</b></span>
+                        <a href="#newDeploymentNotif"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/NewDeploymentModalComponent.html" target="_self" >NewDeploymentModalComponent</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(NewDeploymentModalComponent)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="171" class="link-to-prism">src/app/layout/default-layout/default-layout.component.ts:171</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>For support of pop-up notification regardless of which page driver is at.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from &#x27;@angular/core&#x27;;
+import {Route, Router, RouterLink, RouterOutlet} from &#x27;@angular/router&#x27;;
+import { NgScrollbar } from &#x27;ngx-scrollbar&#x27;;
+
+import { IconDirective } from &#x27;@coreui/icons-angular&#x27;;
+import {
+  ContainerComponent,
+  ShadowOnScrollDirective,
+  SidebarBrandComponent,
+  SidebarComponent,
+  SidebarFooterComponent,
+  SidebarHeaderComponent,
+  SidebarNavComponent,
+  SidebarToggleDirective,
+  SidebarTogglerDirective
+} from &#x27;@coreui/angular&#x27;;
+
+import { DefaultFooterComponent, DefaultHeaderComponent } from &#x27;./&#x27;;
+import {navItemsDriver, navItemsManager} from &#x27;./_nav&#x27;;
+import {JwtHelperService} from &quot;@auth0/angular-jwt&quot;;
+import {timer} from &quot;rxjs&quot;;
+import {HttpClient} from &quot;@angular/common/http&quot;;
+import {ApiService} from &quot;../../services/api.service&quot;;
+import {
+  NewDeploymentModalComponent
+} from &quot;../../views/driver/_modals/newdeployment/newdeployment.component&quot;;
+import {
+  CancelledDeploymentModalComponent
+} from &quot;../../views/driver/_modals/cancelleddeployment/cancelleddeployment.component&quot;;
+
+/**
+ * @ignore
+ */
+function isOverflown(element: HTMLElement) {
+  return (
+    element.scrollHeight &gt; element.clientHeight ||
+    element.scrollWidth &gt; element.clientWidth
+  );
+}
+
+/**
+ * Manager&#x27;s sidebar loading.
+ */
+@Component({
+  selector: &#x27;app-manager-dashboard&#x27;,
+  templateUrl: &#x27;./default-layout.component.html&#x27;,
+  styleUrls: [&#x27;./default-layout.component.scss&#x27;],
+  standalone: true,
+  imports: [
+    SidebarComponent,
+    SidebarHeaderComponent,
+    SidebarBrandComponent,
+    RouterLink,
+    IconDirective,
+    NgScrollbar,
+    SidebarNavComponent,
+    SidebarFooterComponent,
+    SidebarToggleDirective,
+    SidebarTogglerDirective,
+    DefaultHeaderComponent,
+    ShadowOnScrollDirective,
+    ContainerComponent,
+    RouterOutlet,
+    DefaultFooterComponent,
+    NewDeploymentModalComponent,
+    CancelledDeploymentModalComponent
+  ]
+})
+export class DefaultManagerLayoutComponent implements OnInit {
+  /**
+   * @ignore
+   */
+  public navItems &#x3D; navItemsManager;
+  /**
+   * @ignore
+   */
+  public new &#x3D; false;
+
+  /**
+   * Component uses HttpClient, ApiService, ChangeDetectorRef and Router injectables.
+   */
+  constructor(private http: HttpClient,
+              private api: ApiService,
+              private cdr: ChangeDetectorRef,
+              private router: Router) {
+  }
+
+  /**
+   * Component starts a clock to constantly query the backend if there are new deployments every 500ms.
+   */
+  ngOnInit() {
+    const mgrInt &#x3D; setInterval(() &#x3D;&gt; {
+      if (this.router.url&#x3D;&#x3D;&#x3D;&#x27;/login&#x27;) {
+        clearInterval(mgrInt);
+      }
+      this.http.get&lt;any&gt;(this.api.API_URL + &quot;/deployments/check_new&quot;).subscribe({
+        next: (message) &#x3D;&gt; {
+          let indexToUpdate &#x3D; this.navItems.findIndex(item &#x3D;&gt; item.name &#x3D;&#x3D;&#x3D; &#x27;Requests&#x27;);
+          if (message.message &amp;&amp; !this.new) {
+            this.navItems[indexToUpdate] &#x3D; {
+              ...this.navItems[indexToUpdate],
+              badge: {
+                color: &#x27;primary&#x27;,
+                text: &#x27;NEW REQUEST&#x27;
+              }
+            };
+            this.new &#x3D; true;
+          } else if (!message.message &amp;&amp; this.new) {
+            this.navItems[indexToUpdate] &#x3D; {
+              ...this.navItems[indexToUpdate]
+            };
+            delete this.navItems[indexToUpdate].badge;
+            this.new &#x3D; false;
+          }
+          this.navItems &#x3D; [...this.navItems];
+          this.cdr.detectChanges();
+        }
+      })
+    }, 1000);
+  }
+  /**
+   * @ignore
+   */
+  startInterval() {
+
+  }
+
+  /**
+   * @ignore
+   */
+  onScrollbarUpdate($event: any) {
+    // if ($event.verticalUsed) {
+    // console.log(&#x27;verticalUsed&#x27;, $event.verticalUsed);
+    // }
+  }
+}
+
+/**
+ * Driver&#x27;s sidebar loading.
+ */
+@Component({
+  selector: &#x27;app-dashboard-driver&#x27;,
+  templateUrl: &#x27;./default-layout.component.html&#x27;,
+  styleUrls: [&#x27;./default-layout.component.scss&#x27;],
+  standalone: true,
+  imports: [
+    SidebarComponent,
+    SidebarHeaderComponent,
+    SidebarBrandComponent,
+    RouterLink,
+    IconDirective,
+    NgScrollbar,
+    SidebarNavComponent,
+    SidebarFooterComponent,
+    SidebarToggleDirective,
+    SidebarTogglerDirective,
+    DefaultHeaderComponent,
+    ShadowOnScrollDirective,
+    ContainerComponent,
+    RouterOutlet,
+    DefaultFooterComponent,
+    NewDeploymentModalComponent,
+    CancelledDeploymentModalComponent
+  ]
+})
+export class DefaultDriverLayoutComponent implements AfterViewInit {
+
+  /**
+   * For support of pop-up notification regardless of which page driver is at.
+   */
+  @ViewChild(NewDeploymentModalComponent) newDeploymentNotif!: NewDeploymentModalComponent;
+  /**
+   * For support of pop-up notification regardless of which page driver is at.
+   */
+  @ViewChild(CancelledDeploymentModalComponent) cancelledDeploymentNotif!: CancelledDeploymentModalComponent;
+
+  /**
+   * @ignore
+   */
+  public navItems &#x3D; navItemsDriver;
+
+  /**
+   * Component uses HttpClient, ApiService, ChangeDetectorRef and Router injectables.
+   */
+  constructor(private http: HttpClient,
+              private api: ApiService,
+              private cdr: ChangeDetectorRef,
+              private router: Router) {
+    if(localStorage.getItem(&quot;lastStatus&quot;)!&#x3D;&#x3D;&quot;outofscope&quot; ||
+    localStorage.getItem(&quot;lastStatus&quot;)!&#x3D;&quot;Buffer Time&quot;) {
+      localStorage.setItem(&quot;lastStatus&quot;, &#x27;outofscope&#x27;);
+    }
+  }
+
+  /**
+   * Starts a clock to constantly query the backend to check if there are any new deployments for the driver every 500ms.
+   */
+  startInterval() {
+    const dvrInt &#x3D; setInterval(() &#x3D;&gt; {
+      if (this.router.url&#x3D;&#x3D;&#x3D;&#x27;/login&#x27;) {
+        clearInterval(dvrInt);
+      }
+      this.http.get&lt;any&gt;(this.api.API_URL + &quot;/drivers/get_current_deployment&quot;).subscribe({
+        next: (message) &#x3D;&gt; {
+          console.log(localStorage.getItem(&quot;lastStatus&quot;));
+          if(message.deployment.uid!&#x3D;&#x3D;-1) { // exists
+            if(localStorage.getItem(&quot;lastStatus&quot;)&#x3D;&#x3D;&#x3D;&quot;outofscope&quot;) { // if previously not exist, means must now be buffer time
+              localStorage.setItem(&quot;lastStatus&quot;, &#x27;Buffer Time&#x27;);
+              if(this.router.url!&#x3D;&#x3D;&#x27;/driver/overview&#x27;) {
+                this.newDeploymentNotif.toggleVisibility();
+                clearInterval(dvrInt);
+              }
+            }
+            else if(message.deployment.current_status&#x3D;&#x3D;&#x3D;&#x27;Buffer Time&#x27;) { // if previously buffer time
+              localStorage.setItem(&quot;lastStatus&quot;, &#x27;Buffer Time&#x27;);
+            }
+          }
+          else {
+            if(localStorage.getItem(&quot;lastStatus&quot;)&#x3D;&#x3D;&#x3D;&#x27;Buffer Time&#x27;) {
+              this.cancelledDeploymentNotif.toggleVisibility();
+              clearInterval(dvrInt);
+            }
+            localStorage.setItem(&quot;lastStatus&quot;, &quot;outofscope&quot;);
+          }
+        },
+        error: (e) &#x3D;&gt; {
+          console.log(e);
+        }
+      })
+    }, 1000);
+  }
+
+  /**
+   * @ignore
+   */
+  ngAfterViewInit() {
+    this.startInterval();
+  }
+
+  /**
+   * @ignore
+   */
+  onScrollbarUpdate($event: any) {
+    // if ($event.verticalUsed) {
+    // console.log(&#x27;verticalUsed&#x27;, $event.verticalUsed);
+    // }
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;!--sidebar--&gt;
+&lt;c-sidebar
+  #sidebar1&#x3D;&quot;cSidebar&quot;
+  class&#x3D;&quot;d-print-none sidebar sidebar-fixed border-end&quot;
+  colorScheme&#x3D;&quot;dark&quot;
+  id&#x3D;&quot;sidebar1&quot;
+  visible
+&gt;
+  &lt;c-sidebar-header class&#x3D;&quot;border-bottom&quot;&gt;
+    &lt;c-sidebar-brand [routerLink]&#x3D;&quot;[]&quot;&gt;
+      &lt;svg [class]&#x3D;&quot;{icon: false}&quot; cIcon class&#x3D;&quot;sidebar-brand-full&quot; height&#x3D;&quot;32&quot; name&#x3D;&quot;logo&quot; title&#x3D;&quot;CoreUI Logo&quot;&gt;&lt;/svg&gt;
+      &lt;svg cIcon class&#x3D;&quot;sidebar-brand-narrow&quot; height&#x3D;&quot;32&quot; name&#x3D;&quot;signet&quot; title&#x3D;&quot;CoreUI Logo&quot;&gt;&lt;/svg&gt;
+    &lt;/c-sidebar-brand&gt;
+  &lt;/c-sidebar-header&gt;
+
+  &lt;ng-scrollbar #scrollbar&#x3D;&quot;ngScrollbar&quot; (updated)&#x3D;&quot;onScrollbarUpdate(scrollbar.state)&quot; class&#x3D;&quot;overflow&quot; pointerEventsMethod&#x3D;&quot;scrollbar&quot; visibility&#x3D;&quot;hover&quot;&gt;
+    &lt;c-sidebar-nav #overflow [navItems]&#x3D;&quot;navItems&quot; dropdownMode&#x3D;&quot;close&quot; compact /&gt;
+  &lt;/ng-scrollbar&gt;
+  @if (!sidebar1.narrow) {
+    &lt;c-sidebar-footer cSidebarToggle&#x3D;&quot;sidebar1&quot; class&#x3D;&quot;border-top d-none d-lg-flex&quot; toggle&#x3D;&quot;unfoldable&quot; style&#x3D;&quot;cursor: pointer;&quot;&gt;
+      &lt;button cSidebarToggler aria-label&#x3D;&quot;Toggle sidebar fold&quot;&gt;&lt;/button&gt;
+    &lt;/c-sidebar-footer&gt;
+  }
+&lt;/c-sidebar&gt;
+
+&lt;!--main--&gt;
+&lt;div class&#x3D;&quot;wrapper d-flex flex-column min-vh-100&quot;&gt;
+  &lt;!--app-header--&gt;
+  &lt;app-default-header
+    [cShadowOnScroll]&#x3D;&quot;&#x27;sm&#x27;&quot;
+    class&#x3D;&quot;mb-4 d-print-none header header-sticky p-0 shadow-sm&quot;
+    position&#x3D;&quot;sticky&quot;
+    sidebarId&#x3D;&quot;sidebar1&quot;
+  /&gt;
+  &lt;!--app-body--&gt;
+  &lt;div class&#x3D;&quot;body flex-grow-1&quot;&gt;
+    &lt;c-container breakpoint&#x3D;&quot;lg&quot; class&#x3D;&quot;h-auto px-4&quot;&gt;
+      &lt;router-outlet /&gt;
+    &lt;/c-container&gt;
+  &lt;/div&gt;
+  &lt;!--app footer--&gt;
+  &lt;app-default-footer /&gt;
+&lt;/div&gt;
+
+&lt;app-newdeploymentmodal (closedModal)&#x3D;&quot;startInterval()&quot;&gt;&lt;/app-newdeploymentmodal&gt;
+&lt;app-cancelleddeploymentmodal (closedModal)&#x3D;&quot;startInterval()&quot;&gt;&lt;/app-cancelleddeploymentmodal&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./default-layout.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">:host {
+  .ng-scrollbar {
+    --scrollbar-padding: 1px;
+    --scrollbar-size: 5px;
+    --scrollbar-thumb-color: var(--cui-gray-500, #999);
+    --scrollbar-thumb-hover-color: var(--cui-gray-400, #999);
+    --scrollbar-hover-size: calc(var(--scrollbar-size) * 1.5);
+  }
+}
+
+// ng-scrollbar css variables
+//.cui-scrollbar {
+//  --scrollbar-border-radius: 7px;
+//  --scrollbar-padding: 1px;
+//  --scrollbar-viewport-margin: 0;
+//  --scrollbar-track-color: transparent;
+//  --scrollbar-wrapper-color: transparent;
+//  --scrollbar-thumb-color: rgba(0, 0, 0, 0.2);
+//  --scrollbar-thumb-hover-color: var(--scrollbar-thumb-color);
+//  --scrollbar-size: 5px;
+//  --scrollbar-hover-size: var(--scrollbar-size);
+//  --scrollbar-thumb-transition: height ease-out 150ms, width ease-out 150ms;
+//  --scrollbar-track-transition: height ease-out 150ms, width ease-out 150ms;
+//}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><!--sidebar--><c-sidebar  #sidebar1="cSidebar"  class="d-print-none sidebar sidebar-fixed border-end"  colorScheme="dark"  id="sidebar1"  visible>  <c-sidebar-header class="border-bottom">    <c-sidebar-brand [routerLink]="[]">      <svg [class]="{icon: false}" cIcon class="sidebar-brand-full" height="32" name="logo" title="CoreUI Logo"></svg>      <svg cIcon class="sidebar-brand-narrow" height="32" name="signet" title="CoreUI Logo"></svg>    </c-sidebar-brand>  </c-sidebar-header>  <ng-scrollbar #scrollbar="ngScrollbar" (updated)="onScrollbarUpdate(scrollbar.state)" class="overflow" pointerEventsMethod="scrollbar" visibility="hover">    <c-sidebar-nav #overflow [navItems]="navItems" dropdownMode="close" compact />  </ng-scrollbar>  @if (!sidebar1.narrow) {    <c-sidebar-footer cSidebarToggle="sidebar1" class="border-top d-none d-lg-flex" toggle="unfoldable" style="cursor: pointer;">      <button cSidebarToggler aria-label="Toggle sidebar fold"></button>    </c-sidebar-footer>  }</c-sidebar><!--main--><div class="wrapper d-flex flex-column min-vh-100">  <!--app-header-->  <app-default-header    [cShadowOnScroll]="\'sm\'"    class="mb-4 d-print-none header header-sticky p-0 shadow-sm"    position="sticky"    sidebarId="sidebar1"  />  <!--app-body-->  <div class="body flex-grow-1">    <c-container breakpoint="lg" class="h-auto px-4">      <router-outlet />    </c-container>  </div>  <!--app footer-->  <app-default-footer /></div><app-newdeploymentmodal (closedModal)="startInterval()"></app-newdeploymentmodal><app-cancelleddeploymentmodal (closedModal)="startInterval()"></app-cancelleddeploymentmodal></div>'
+    var COMPONENTS = [{'name': 'AddRouteModalComponent', 'selector': 'app-addroutemodal'},{'name': 'AddStopModalComponent', 'selector': 'app-addstopmodal'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'BusdriversComponent', 'selector': 'app-busdrivers'},{'name': 'BusRoutesComponent', 'selector': 'app-busroutes'},{'name': 'CancelledDeploymentModalComponent', 'selector': 'app-cancelleddeploymentmodal'},{'name': 'ChangeDriverModalComponent', 'selector': 'app-changedrivermodal'},{'name': 'ConfirmCancelDeploymentModalComponent', 'selector': 'app-confirmcanceldeploymentmodal'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DefaultDriverLayoutComponent', 'selector': 'app-dashboard-driver'},{'name': 'DefaultFooterComponent', 'selector': 'app-default-footer'},{'name': 'DefaultHeaderComponent', 'selector': 'app-default-header'},{'name': 'DefaultManagerLayoutComponent', 'selector': 'app-manager-dashboard'},{'name': 'DeleteRouteModalComponent', 'selector': 'app-deleteroutemodal'},{'name': 'DeleteStopModalComponent', 'selector': 'app-deletestopmodal'},{'name': 'DeploymentComponent', 'selector': 'app-deployment'},{'name': 'DriverHistoryModalComponent', 'selector': 'app-driverhistorymodal'},{'name': 'DrivingHistoryComponent', 'selector': 'app-drivinghistory'},{'name': 'EditRouteModalComponent', 'selector': 'app-editroutemodal'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LogoutComponent', 'selector': 'app-logout'},{'name': 'NewDeploymentModalComponent', 'selector': 'app-newdeploymentmodal'},{'name': 'OverviewComponent', 'selector': 'app-overview'},{'name': 'Page404Component', 'selector': 'app-page404'},{'name': 'Page500Component', 'selector': 'app-page500'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RequestComponent', 'selector': 'app-request'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'DefaultDriverLayoutComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'DefaultDriverLayoutComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

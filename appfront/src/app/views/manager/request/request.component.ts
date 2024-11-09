@@ -35,7 +35,9 @@ import {NgIf} from "@angular/common";
 import {Router} from "@angular/router";
 import {FormBuilder, ReactiveFormsModule} from "@angular/forms";
 import {ChangeDriverModalComponent} from "../_modals/changedrivermodal/changedrivermodal.component";
-
+/**
+ * @ignore
+ */
 interface IRequest {
   deployment_uid: number,
   service_number: string,
@@ -46,6 +48,9 @@ interface IRequest {
   current_status: string
 }
 
+/**
+ * View component for manager to manage new deployments.
+ */
 @Component({
     selector: 'app-request',
     templateUrl: './request.component.html',
@@ -58,12 +63,27 @@ interface IRequest {
     CardTitleDirective, CardTextDirective, AlignDirective, NgIf, ModalComponent, ModalDialogComponent, ModalContentComponent, ModalHeaderComponent, ModalBodyComponent, ReactiveFormsModule, ChangeDriverModalComponent]
 })
 export class RequestComponent implements OnInit {
+  /**
+   * @ignore
+   */
   // @ts-ignore
   public requests: any[];
+  /**
+   * View can employ change driver modal.
+   */
   @ViewChild(ChangeDriverModalComponent) changeDriverModal!: ChangeDriverModalComponent;
+  /**
+   * @ignore
+   */
   public isChangingDriver: boolean = false;
+  /**
+   * @ignore
+   */
   public new = false;
 
+  /**
+   * View loads in new deployments on construct.
+   */
   constructor(private http: HttpClient,
               private api: ApiService,
               private router: Router,
@@ -79,6 +99,9 @@ export class RequestComponent implements OnInit {
     });
   }
 
+  /**
+   * Start clock that constantly checks if new deployments come through.
+   */
   onClock() {
     const reqTimer = setInterval(() => {
       if (this.router.url==='/login') {
@@ -106,8 +129,14 @@ export class RequestComponent implements OnInit {
     }, 1000);
   }
 
+  /**
+   * @ignore
+   */
   activeItem = signal(0);
 
+  /**
+   * Turns on clock on init.
+   */
   ngOnInit() {
     if(this.changeDriverModal) {
       console.log('Modal component is available.')
@@ -115,10 +144,17 @@ export class RequestComponent implements OnInit {
     this.onClock();
   }
 
+  /**
+   * @ignore
+   */
   handleActiveItemChange(value: string | number | undefined) {
     this.activeItem.set(<number>value);
   }
 
+  /**
+   * Provides functionality to send request to backend API to approve the deployment UID.
+   * @param {number} deployment_uid UID of deployment to be approved.
+   */
   earlyApproveDeployment(deployment_uid: number) {
     this.http.post<any>(this.api.API_URL+"/deployments/early_approve", {'deployment_uid': String(deployment_uid)}).subscribe({
       next: (message) => {
@@ -139,6 +175,10 @@ export class RequestComponent implements OnInit {
     })
   }
 
+  /**
+   * Provides functionality to send request to backend API to reject the deployment UID.
+   * @param {number} deployment_uid UID of deployment to be rejected.
+   */
   cancelDeployment(deployment_uid: number) {
     this.http.post<any>(this.api.API_URL+"/deployments/cancel", {'deployment_uid': String(deployment_uid)}).subscribe({
       next: (message) => {
@@ -159,6 +199,10 @@ export class RequestComponent implements OnInit {
     })
   }
 
+  /**
+   * Opens change driver modal, loading in UID of deployment to change driver for.
+   * @param deployment_uid UID of deployment to change driver for.
+   */
   openChangeDriver(deployment_uid: number) {
     if(this.changeDriverModal) {
       this.http.post<any>(this.api.API_URL + "/deployments/get_by_uid", {'deployment_uid': String(deployment_uid)}).subscribe({
@@ -178,6 +222,9 @@ export class RequestComponent implements OnInit {
     }
   }
 
+  /**
+   * Refreshes component without needing to reload. Temporarily pause clock if it is on, then restarts the clock after reloading.
+   */
   refresh() {
     setTimeout(() => {this.router.navigateByUrl('/',{skipLocationChange:true}).then(()=>{
       this.router.navigate([this.router.url]).then(()=>{

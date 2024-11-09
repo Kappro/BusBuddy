@@ -27,6 +27,9 @@ import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {EventEmitter} from "@angular/core";
 import {NgIf} from "@angular/common";
 
+/**
+ * Pop-up component that shows given driver's driving history.
+ */
 @Component({
   selector: 'app-driverhistorymodal',
   standalone: true,
@@ -59,20 +62,44 @@ import {NgIf} from "@angular/common";
   styleUrl: './driverhistorymodal.component.scss'
 })
 export class DriverHistoryModalComponent implements OnInit {
+  /**
+   * @ignore
+   */
   public visible: boolean = false;
+  /**
+   * @ignore
+   */
   public driver_uid: number | string = -2;
-  public driver_name: string = "BadD"
+  /**
+   * @ignore
+   */
+  public driver_name: string = "BadD";
+  /**
+   * @ignore
+   */
   public history: any[] = [];
 
+  /**
+   * @ignore
+   */
   @Output() visibilityChange = new EventEmitter<boolean>();
 
+  /**
+   * @ignore
+   */
   constructor(private http: HttpClient,
               private api: ApiService) {
   }
 
+  /**
+   * @ignore
+   */
   ngOnInit() {
   }
 
+  /**
+   * Toggles visibility of modal. Requests backend API for driver's history based on clicked driver's UID, only when opening the modal.
+   */
   toggleVisibility() {
     this.visible = !this.visible;
     if (!this.visible) {
@@ -90,6 +117,9 @@ export class DriverHistoryModalComponent implements OnInit {
     }
   }
 
+  /**
+   * @ignore
+   */
   handleVisibilityChange(event: any) {
     this.visible = event;
   }

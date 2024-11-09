@@ -1,0 +1,1228 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>BusBuddy Frontend Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">BusBuddy Frontend Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  OverviewComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/views/driver/overview/overview.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Display&#39;s driver&#39;s current employment and provides functions to update driver&#39;s current progress on the drive.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+                <code>AfterViewInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-overview</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>RouterLink</code>
+                            <code>ReactiveFormsModule</code>
+                            <code>ChartjsComponent</code>
+                            <code>IconDirective</code>
+                            <code>AvatarComponent</code>
+                            <code>NgStyle</code>
+                            <code>ButtonDirective</code>
+                            <code>ButtonGroupComponent</code>
+                            <code>ContainerComponent</code>
+                            <code>CardBodyComponent</code>
+                            <code>CardComponent</code>
+                            <code>CardFooterComponent</code>
+                            <code>CardHeaderComponent</code>
+                            <code>ColComponent</code>
+                            <code>FormCheckLabelDirective</code>
+                            <code>GutterDirective</code>
+                            <code>ProgressBarDirective</code>
+                            <code>ProgressComponent</code>
+                            <code>RowComponent</code>
+                            <code>TableDirective</code>
+                            <code>TextColorDirective</code>
+                            <code>FormDirective</code>
+                            <code>InputGroupComponent</code>
+                            <code>InputGroupTextDirective</code>
+                            <code>FormControlDirective</code>
+                            <code>FormLabelDirective</code>
+                            <code>FormSelectDirective</code>
+                            <code>FormCheckComponent</code>
+                            <code>FormCheckInputDirective</code>
+                            <code>ColDirective</code>
+                            <code>WidgetStatBComponent</code>
+                            <code>ProgressBarComponent</code>
+                            <code>NgTemplateOutlet</code>
+                            <code>SpinnerComponent</code>
+                            <code>NgIf</code>
+                            <code>CardSubtitleDirective</code>
+                            <code>CardTitleDirective</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./overview.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./overview.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#endDrive" >endDrive</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#initMap" >initMap</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#inputStopsMap" >inputStopsMap</a>
+                            </li>
+                            <li>
+                                <a href="#nextStop" >nextStop</a>
+                            </li>
+                            <li>
+                                <a href="#refresh" >refresh</a>
+                            </li>
+                            <li>
+                                <a href="#startDrive" >startDrive</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="endDrive"></a>
+                    <span class="name">
+                        <span ><b>endDrive</b></span>
+                        <a href="#endDrive"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>endDrive()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="354"
+                                    class="link-to-prism">src/app/views/driver/overview/overview.component.ts:354</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Provides functionality for driver to indicate completion of deployment, having returned the bus to the depot after reaching last stop.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="initMap"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>initMap</b></span>
+                        <a href="#initMap"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>initMap()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="190"
+                                    class="link-to-prism">src/app/views/driver/overview/overview.component.ts:190</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Initialises the map using Open Street Map tiles.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="inputStopsMap"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>inputStopsMap</b></span>
+                        <a href="#inputStopsMap"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>inputStopsMap()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="218"
+                                    class="link-to-prism">src/app/views/driver/overview/overview.component.ts:218</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Uses a comma-separated list of stop codes to display those stops on the map as markers.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="nextStop"></a>
+                    <span class="name">
+                        <span ><b>nextStop</b></span>
+                        <a href="#nextStop"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>nextStop()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="335"
+                                    class="link-to-prism">src/app/views/driver/overview/overview.component.ts:335</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Provides functionality for driver to indicate progress when on the deployment.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="refresh"></a>
+                    <span class="name">
+                        <span ><b>refresh</b></span>
+                        <a href="#refresh"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>refresh()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="241"
+                                    class="link-to-prism">src/app/views/driver/overview/overview.component.ts:241</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Refreshes the component without needing to reload the page. Starts a clock to constantly check if deployment has been cancelled, or if new deployments come in when there are no current deployments.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="startDrive"></a>
+                    <span class="name">
+                        <span ><b>startDrive</b></span>
+                        <a href="#startDrive"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>startDrive()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="320"
+                                    class="link-to-prism">src/app/views/driver/overview/overview.component.ts:320</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Provides functionality to start a deployment that is currently still on Buffer Time.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {DOCUMENT, NgIf, NgStyle, NgTemplateOutlet} from &#x27;@angular/common&#x27;;
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  effect,
+  inject,
+  OnInit,
+  Renderer2,
+  signal,
+  WritableSignal
+} from &#x27;@angular/core&#x27;;
+import { FormControl, FormsModule, ReactiveFormsModule } from &#x27;@angular/forms&#x27;;
+import { ChartOptions } from &#x27;chart.js&#x27;;
+import {ActivatedRoute, Router, RouterLink} from &#x27;@angular/router&#x27;;
+import {
+  AvatarComponent,
+  ContainerComponent,
+  ButtonDirective,
+  ButtonGroupComponent,
+  CardBodyComponent,
+  CardComponent,
+  CardFooterComponent,
+  CardHeaderComponent,
+  ColComponent,
+  FormCheckLabelDirective,
+  GutterDirective,
+  ProgressBarDirective,
+  ProgressComponent,
+  RowComponent,
+  TableDirective,
+  TextColorDirective,
+  FormDirective,
+  InputGroupComponent,
+  InputGroupTextDirective,
+  FormControlDirective,
+  FormLabelDirective,
+  FormSelectDirective,
+  FormCheckComponent,
+  FormCheckInputDirective,
+  ColDirective,
+  WidgetStatBComponent,
+  ProgressBarComponent, SpinnerComponent, CardSubtitleDirective, CardTitleDirective,
+} from &#x27;@coreui/angular&#x27;;
+import { ChartjsComponent } from &#x27;@coreui/angular-chartjs&#x27;;
+import { IconDirective } from &#x27;@coreui/icons-angular&#x27;;
+import * as L from &#x27;leaflet&#x27;;
+import {HttpClient} from &quot;@angular/common/http&quot;;
+import {ApiService} from &quot;../../../services/api.service&quot;;
+import {AuthService} from &quot;../../../services/auth.service&quot;;
+
+const iconRetinaUrl &#x3D; &#x27;assets/marker-icon-2x.png&#x27;;
+const iconUrl &#x3D; &#x27;assets/marker-icon.png&#x27;;
+const shadowUrl &#x3D; &#x27;assets/marker-shadow.png&#x27;;
+const redIconRetinaUrl &#x3D; &#x27;assets/marker-icon-red-2x.png&#x27;;
+const redIconUrl &#x3D; &#x27;assets/marker-icon-red.png&#x27;;
+const iconDefault &#x3D; L.icon({
+  iconRetinaUrl,
+  iconUrl,
+  shadowUrl,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  tooltipAnchor: [16, -28],
+  shadowSize: [41, 41]
+});
+const largeIcon &#x3D; L.icon({
+  iconRetinaUrl: redIconRetinaUrl,
+  iconUrl: redIconUrl,
+  shadowUrl,
+  iconSize: [38, 61],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  tooltipAnchor: [16, -28],
+  shadowSize: [41, 41]
+});
+L.Marker.prototype.options.icon &#x3D; iconDefault;
+
+/**
+ * @ignore
+ */
+interface IDeployment {
+  driver_id: Number,
+  bus_license_plate: String,
+  datetime_start: /*Date*/ String,
+  datetime_end: /*Date*/ String,
+  current_status: String,
+  status_log: String,
+  uid: Number
+}
+
+/**
+ * @ignore
+ */
+interface IBus {
+  service_number: string,
+  capacity: Number,
+  current_load: string,
+  current_status: string,
+  license_plate: string,
+  status_log: string
+}
+/**
+ * @ignore
+ */
+interface IBusStop {
+  long: number;
+  lat: number;
+}
+
+/**
+ * Display&#x27;s driver&#x27;s current employment and provides functions to update driver&#x27;s current progress on the drive.
+ */
+@Component({
+  selector: &#x27;app-overview&#x27;,
+  templateUrl: &#x27;./overview.component.html&#x27;,
+  styleUrls: [&#x27;./overview.component.scss&#x27;],
+  standalone: true,
+  imports: [RouterLink, ReactiveFormsModule, ChartjsComponent, IconDirective, AvatarComponent, NgStyle,
+    ButtonDirective,
+    ButtonGroupComponent,
+    ContainerComponent,
+    CardBodyComponent,
+    CardComponent,
+    CardFooterComponent,
+    CardHeaderComponent,
+    ColComponent,
+    FormCheckLabelDirective,
+    GutterDirective,
+    ProgressBarDirective,
+    ProgressComponent,
+    RowComponent,
+    TableDirective,
+    TextColorDirective,
+    FormDirective,
+    InputGroupComponent,
+    InputGroupTextDirective,
+    FormControlDirective,
+    FormLabelDirective,
+    FormSelectDirective,
+    FormCheckComponent,
+    FormCheckInputDirective,
+    ColDirective,
+    WidgetStatBComponent,
+    ProgressBarComponent, NgTemplateOutlet, SpinnerComponent, NgIf, CardSubtitleDirective, CardTitleDirective
+  ]
+})
+export class OverviewComponent implements OnInit, AfterViewInit {
+
+  /**
+   * @ignore
+   */
+  public deployment: any;
+  /**
+   * @ignore
+   */
+  public route: any[] &#x3D; [];
+  /**
+   * @ignore
+   */
+  public exists &#x3D; &quot;loading&quot;;
+  /**
+   * @ignore
+   */
+  public mapInitialised &#x3D; false;
+  /**
+   * @ignore
+   */
+  public inited &#x3D; false;
+  /**
+   * @ignore
+   */
+  public loadingMap &#x3D; false;
+  /**
+   * @ignore
+   */
+  public map!: L.Map;
+  /**
+   * @ignore
+   */
+  public markersLayer &#x3D; new L.LayerGroup();
+  /**
+   * @ignore
+   */
+  public nextStopName: string &#x3D; &quot;&quot;;
+
+  /**
+   * Initialises the map using Open Street Map tiles.
+   */
+  public async initMap(): Promise&lt;void&gt; {
+    this.map &#x3D; L.map(&#x27;map&#x27;, {
+      center: [ 1.344365, 103.694433 ],
+      zoom: 15
+    });
+
+    const tiles &#x3D; L.tileLayer(&#x27;https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png&#x27;, {
+      maxZoom: 18,
+      minZoom: 15,
+      attribution: &#x27;&amp;copy; &lt;a href&#x3D;&quot;http://www.openstreetmap.org/copyright&quot;&gt;OpenStreetMap&lt;/a&gt;&#x27;
+    });
+
+    tiles.addTo(this.map);
+    console.log(&quot;Loaded map&quot;)
+  }
+
+  /**
+   * @ignore
+   */
+  constructor(private http: HttpClient,
+              private api: ApiService,
+              private auth: AuthService,
+              private router: Router) {
+  }
+
+  /**
+   * Uses a comma-separated list of stop codes to display those stops on the map as markers.
+   */
+  public inputStopsMap():void {
+    if(!this.loadingMap) {
+      this.loadingMap &#x3D; true;
+    }
+    this.markersLayer.clearLayers();
+
+    for(let i&#x3D;0; i &lt; this.route.length; i++) {
+      let marker &#x3D; L.marker([this.route[i].latitude,this.route[i].longitude]);
+      let num: number &#x3D; i+1;
+      if(i&#x3D;&#x3D;&#x3D;this.deployment.current_stop) {
+        marker &#x3D; L.marker([this.route[i].latitude,this.route[i].longitude], { icon: largeIcon });
+      }
+      marker.bindPopup(&quot;Bus Stop &quot; + num + &quot;&lt;br&gt;Bus Stop Code: &quot; + this.route[i].stop_code +
+        &quot;&lt;br&gt;Bus Stop Name: &quot; + this.route[i].stop_name);
+      this.markersLayer.addLayer(marker);
+    }
+    this.markersLayer.addTo(this.map);
+    this.loadingMap &#x3D; false;
+  }
+
+  /**
+   * Refreshes the component without needing to reload the page. Starts a clock to constantly check if deployment has been cancelled, or if new deployments come in when there are no current deployments.
+   */
+  refresh(): void {
+    if(this.router.url!&#x3D;&#x3D;&#x27;/driver/overview&#x27;) {
+      return;
+    }
+    this.auth.retrieveIdentity().then(account &#x3D;&gt; {
+      this.http.get&lt;any&gt;(this.api.API_URL + &quot;/drivers/get_current_deployment&quot;).subscribe({
+        next: (message) &#x3D;&gt; {
+          if(message.deployment.uid &#x3D;&#x3D;&#x3D; -1) {
+            if(this.mapInitialised) {
+              this.map.off();
+              this.map.remove();
+              this.mapInitialised &#x3D; false;
+            }
+            this.deployment &#x3D; null;
+            this.exists &#x3D; &quot;no&quot;;
+            setTimeout(() &#x3D;&gt; {this.refresh();}, 500)
+          }
+          else {
+            if(this.inited &amp;&amp; !this.mapInitialised) {
+              this.initMap().then(() &#x3D;&gt; {
+                this.inputStopsMap();
+                this.mapInitialised &#x3D; true;
+              });
+            }
+            this.deployment &#x3D; message.deployment;
+            this.route &#x3D; message.route;
+            this.exists &#x3D; &quot;exists&quot;;
+            const stop_number &#x3D; (this.deployment.current_stop &#x3D;&#x3D;&#x3D; -1) ? 0 : this.deployment.current_stop;
+            if(this.deployment.current_status!&#x3D;&#x3D;&#x27;Returning&#x27; &amp;&amp; stop_number&gt;&#x3D;this.route.length) {
+              const params2 &#x3D; {deployment_uid: message.deployment.uid};
+              this.http.post&lt;any&gt;(this.api.API_URL + &quot;/deployments/complete_deployment&quot;, params2).subscribe({
+                next: (message) &#x3D;&gt; {
+                  console.log(message);
+                  window.location.reload();
+                },
+                error: (e) &#x3D;&gt; {
+                  console.log(e);
+                }
+              })
+            }
+            const stop_number_imp &#x3D; this.deployment.current_stop &#x3D;&#x3D;&#x3D; this.route.length ? this.route.length-1 : stop_number;
+            this.nextStopName &#x3D; message.route[stop_number_imp].stop_name;
+            if(message.deployment.current_status &#x3D;&#x3D;&#x3D; &#x27;Buffer Time&#x27;) {
+              setTimeout(() &#x3D;&gt; {this.refresh();}, 500);
+            }
+          }
+        },
+        error: (e) &#x3D;&gt; {
+          console.log(e);
+        }
+      });
+    });
+  }
+
+  /**
+   * @ignore
+   */
+  ngOnInit(): void {
+    this.refresh();
+  }
+
+  /**
+   * @ignore
+   */
+  ngAfterViewInit() {
+    setTimeout(() &#x3D;&gt; {
+      if(this.exists&#x3D;&#x3D;&#x3D;&#x27;exists&#x27;) {
+        this.initMap().then(() &#x3D;&gt; {
+          this.inputStopsMap();
+          this.mapInitialised &#x3D; true;
+        });
+      }
+      this.inited &#x3D; true;
+    }, 1500);
+  }
+
+  /**
+   * Provides functionality to start a deployment that is currently still on Buffer Time.
+   */
+  startDrive() {
+    this.http.post&lt;any&gt;(this.api.API_URL + &quot;/deployments/start_drive&quot;, {deployment_uid: this.deployment.uid}).subscribe({
+      next: (message) &#x3D;&gt; {
+        console.log(message);
+        window.location.reload();
+      },
+      error: (e) &#x3D;&gt; {
+        console.log(e);
+      }
+    })
+  }
+
+  /**
+   * Provides functionality for driver to indicate progress when on the deployment.
+   */
+  nextStop() {
+    this.http.post&lt;any&gt;(this.api.API_URL + &quot;/deployments/reach_next_stop&quot;, {deployment_uid: this.deployment.uid}).subscribe({
+      next: (message) &#x3D;&gt; {
+        console.log(message);
+        this.refresh();
+        setTimeout(() &#x3D;&gt; {
+          this.loadingMap &#x3D; true;
+          this.inputStopsMap();
+        }, 1000);
+      },
+      error: (e) &#x3D;&gt; {
+        console.log(e);
+      }
+    })
+  }
+
+  /**
+   * Provides functionality for driver to indicate completion of deployment, having returned the bus to the depot after reaching last stop.
+   */
+  endDrive() {
+    this.http.post&lt;any&gt;(this.api.API_URL + &quot;/deployments/return_bus&quot;, {deployment_uid: this.deployment.uid}).subscribe({
+      next: (message) &#x3D;&gt; {
+        console.log(message);
+        this.loadingMap &#x3D; true;
+        this.refresh();
+        setTimeout(() &#x3D;&gt; {this.inputStopsMap();}, 1000);
+      },
+      error: (e) &#x3D;&gt; {
+        console.log(e);
+      }
+    })
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;d-flex fkex-row align-items-center mb-3&quot;&gt;
+  &lt;c-container&gt;
+    &lt;c-row class&#x3D;&quot;justify-content-center&quot;&gt;
+      &lt;c-col&gt;
+        &lt;h4&gt;Your Deployment: &lt;/h4&gt;
+        &lt;br/&gt;
+        @if(exists&#x3D;&#x3D;&#x3D;&quot;loading&quot;) {
+          &lt;c-spinner size&#x3D;&quot;sm&quot;/&gt;
+          &lt;strong&gt;Loading...&lt;/strong&gt;
+        }@else if(exists&#x3D;&#x3D;&#x3D;&quot;no&quot;)
+        {
+          &lt;!-- No deployments --&gt;
+          &lt;c-col class&#x3D;&quot;mx-4&quot;&gt;
+            &lt;c-widget-stat-b
+              title&#x3D;&quot;No deployment currently&quot;
+              class&#x3D;&quot;mb-4&quot;
+              text&#x3D;&quot;There are no deployments assigned to you currently.&quot;
+            &gt;
+              &lt;br&gt;&lt;br&gt;
+              &lt;c-progress class&#x3D;&quot;my-2&quot; thin [value]&#x3D;&quot;0&quot; color&#x3D;&quot;primary&quot; /&gt;
+            &lt;/c-widget-stat-b&gt;
+          &lt;/c-col&gt;
+        } @else {
+          &lt;!-- Have deployments --&gt;
+          &lt;ng-container [ngTemplateOutlet]&#x3D;&quot;BufferTimeCard&quot;
+                        *ngIf&#x3D;&quot;deployment.current_status&#x3D;&#x3D;&#x3D;&#x27;Buffer Time&#x27;&quot;&gt;&lt;/ng-container&gt;
+          &lt;ng-container [ngTemplateOutlet]&#x3D;&quot;OngoingCard&quot;
+                        *ngIf&#x3D;&quot;deployment.current_status&#x3D;&#x3D;&#x3D;&#x27;Ongoing&#x27;&quot;&gt;&lt;/ng-container&gt;
+          &lt;ng-container [ngTemplateOutlet]&#x3D;&quot;ReturningCard&quot;
+                        *ngIf&#x3D;&quot;deployment.current_status&#x3D;&#x3D;&#x3D;&#x27;Returning&#x27;&quot;&gt;&lt;/ng-container&gt;
+        }
+      &lt;/c-col&gt;
+    &lt;/c-row&gt;
+  &lt;/c-container&gt;
+&lt;/div&gt;
+
+&lt;ng-template #mapTemplate&gt;
+  &lt;div class&#x3D;&quot;map-container&quot;&gt;
+    &lt;div class&#x3D;&quot;map-frame&quot;&gt;
+      &lt;div id&#x3D;&quot;map&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/ng-template&gt;
+
+&lt;ng-template #deploymentDetailsTemplate&gt;
+  &lt;form cForm name&#x3D;&quot;deploymentDetails&quot;&gt;
+    &lt;c-row&gt;
+      &lt;c-col [xs]&gt;
+        &lt;label cLabel for&#x3D;&quot;busService&quot;&gt;Bus Service&lt;/label&gt;
+        &lt;input cFormControl
+               id&#x3D;&quot;busService&quot;
+               disabled
+               style&#x3D;&quot;background-color:transparent;&quot;
+               [value] &#x3D; &quot;deployment.service_number&quot;
+        /&gt;
+      &lt;/c-col&gt;
+      &lt;c-col [xs]&gt;
+        &lt;label cLabel for&#x3D;&quot;licPlate&quot;&gt;Bus License Plate&lt;/label&gt;
+        &lt;input cFormControl
+               id&#x3D;&quot;licPlate&quot;
+               disabled
+               style&#x3D;&quot;background-color:transparent;&quot;
+               [value] &#x3D; &quot;deployment.bus_license_plate&quot;
+        /&gt;
+      &lt;/c-col&gt;
+      &lt;c-col [xs]&gt;
+        &lt;label cLabel for&#x3D;&quot;nextStopName&quot;&gt;Next Stop&lt;/label&gt;
+        &lt;input cFormControl
+               id&#x3D;&quot;nextStopName&quot;
+               disabled
+               style&#x3D;&quot;background-color:transparent;&quot;
+               [value] &#x3D; &quot;nextStopName&quot;
+        /&gt;
+      &lt;/c-col&gt;
+    &lt;/c-row&gt;
+  &lt;/form&gt;
+&lt;/ng-template&gt;
+
+&lt;ng-template #BufferTimeCard&gt;
+  &lt;c-card class&#x3D;&quot;mx-4&quot;&gt;
+    &lt;c-card-body class&#x3D;&quot;p-4&quot;&gt;
+      &lt;h2 cCardTitle&gt;Current Deployment&lt;/h2&gt;
+      &lt;h6 cCardSubtitle class&#x3D;&quot;mb-2 text-medium-emphasis&quot;&gt;
+        You are activated for a deployment. Please go to the terminal stated in &quot;Next Stop&quot; to pick up the designated bus.
+      &lt;/h6&gt;
+      &lt;hr/&gt;
+      &lt;h5&gt;Deployment Details:&lt;/h5&gt;
+      &lt;br/&gt;
+        &lt;ng-container [ngTemplateOutlet]&#x3D;&quot;deploymentDetailsTemplate&quot;&gt;&lt;/ng-container&gt;
+      &lt;br/&gt;
+      &lt;c-row&gt;
+        &lt;label cLabel&gt;Route&lt;/label&gt;
+        &lt;ng-container [ngTemplateOutlet]&#x3D;&quot;mapTemplate&quot;&gt;&lt;/ng-container&gt;
+      &lt;/c-row&gt;
+      &lt;hr/&gt;
+      &lt;c-row&gt;
+        &lt;div style&#x3D;&quot;text-align: center&quot;&gt;
+          &lt;p&gt;
+            Click &#x27;Start Drive&#x27; once you are ready to start the drive.
+          &lt;/p&gt;
+        &lt;/div&gt;
+        &lt;c-col class&#x3D;&quot;d-grid mb-3 justify-content-md-center&quot; [xs]&gt;
+          &lt;button cButton id&#x3D;&quot;startDriveBtn&quot; (click)&#x3D;&quot;startDrive()&quot; *ngIf&#x3D;&quot;!loadingMap&quot;&gt;Start Drive&lt;/button&gt;
+          &lt;button cButton id&#x3D;&quot;startDriveBtnDisabled&quot; disabled *ngIf&#x3D;&quot;loadingMap&quot;&gt;Returned&lt;/button&gt;
+          &lt;c-spinner size&#x3D;&quot;sm&quot; *ngIf&#x3D;&quot;loadingMap&quot;/&gt;
+        &lt;/c-col&gt;
+      &lt;/c-row&gt;
+    &lt;/c-card-body&gt;
+  &lt;/c-card&gt;
+&lt;/ng-template&gt;
+
+&lt;ng-template #OngoingCard&gt;
+  &lt;c-card class&#x3D;&quot;mx-4&quot;&gt;
+    &lt;c-card-body class&#x3D;&quot;p-4&quot;&gt;
+      &lt;h2 cCardTitle&gt;Current Deployment&lt;/h2&gt;
+      &lt;h6 cCardSubtitle class&#x3D;&quot;mb-2 text-medium-emphasis&quot;&gt;
+        You are currently on the road.
+      &lt;/h6&gt;
+      &lt;hr/&gt;
+      &lt;h5&gt;Deployment Details:&lt;/h5&gt;
+      &lt;br/&gt;
+        &lt;ng-container [ngTemplateOutlet]&#x3D;&quot;deploymentDetailsTemplate&quot;&gt;&lt;/ng-container&gt;
+      &lt;br/&gt;
+      &lt;c-row&gt;
+        &lt;h5&gt;&lt;/h5&gt;
+      &lt;/c-row&gt;
+      &lt;c-row&gt;
+        &lt;label cLabel&gt;Route&lt;/label&gt;
+        &lt;ng-container [ngTemplateOutlet]&#x3D;&quot;mapTemplate&quot;&gt;&lt;/ng-container&gt;
+      &lt;/c-row&gt;
+      &lt;hr/&gt;
+      &lt;c-row&gt;
+        &lt;div style&#x3D;&quot;text-align: center&quot;&gt;
+          &lt;p id&#x3D;&quot;startDriveInfo&quot;&gt;
+            Click &#x27;Next Stop&#x27; once you arrive at the next stop.
+          &lt;/p&gt;
+        &lt;/div&gt;
+        &lt;c-col class&#x3D;&quot;d-grid mb-3 justify-content-md-center&quot; [xs]&gt;
+          &lt;button cButton id&#x3D;&quot;nextStopBtn&quot; (click)&#x3D;&quot;nextStop()&quot; *ngIf&#x3D;&quot;!loadingMap&quot;&gt;Next Stop&lt;/button&gt;
+          &lt;button cButton id&#x3D;&quot;nextStopBtnDisabled&quot; disabled *ngIf&#x3D;&quot;loadingMap&quot;&gt;Next Stop&lt;/button&gt;
+          &lt;c-spinner size&#x3D;&quot;sm&quot; *ngIf&#x3D;&quot;loadingMap&quot;/&gt;
+        &lt;/c-col&gt;
+      &lt;/c-row&gt;
+    &lt;/c-card-body&gt;
+  &lt;/c-card&gt;
+&lt;/ng-template&gt;
+
+&lt;ng-template #ReturningCard&gt;
+  &lt;c-card class&#x3D;&quot;mx-4&quot;&gt;
+    &lt;c-card-body class&#x3D;&quot;p-4&quot;&gt;
+      &lt;h2 cCardTitle&gt;Current Deployment&lt;/h2&gt;
+      &lt;h6 cCardSubtitle class&#x3D;&quot;mb-2 text-medium-emphasis&quot;&gt;
+        Please return the bus to the original position.
+      &lt;/h6&gt;
+      &lt;hr/&gt;
+      &lt;h5&gt;Deployment Details:&lt;/h5&gt;
+      &lt;br/&gt;
+        &lt;ng-container [ngTemplateOutlet]&#x3D;&quot;deploymentDetailsTemplate&quot;&gt;&lt;/ng-container&gt;
+      &lt;br/&gt;
+      &lt;c-row&gt;
+        &lt;h5&gt;&lt;/h5&gt;
+      &lt;/c-row&gt;
+      &lt;c-row&gt;
+        &lt;label cLabel&gt;Route&lt;/label&gt;
+        &lt;ng-container [ngTemplateOutlet]&#x3D;&quot;mapTemplate&quot;&gt;&lt;/ng-container&gt;
+      &lt;/c-row&gt;
+      &lt;hr/&gt;
+      &lt;c-row&gt;
+        &lt;div style&#x3D;&quot;text-align: center&quot;&gt;
+          &lt;p id&#x3D;&quot;endDriveInfo&quot;&gt;
+            Click &#x27;Returned&#x27; once you have parked the bus.
+          &lt;/p&gt;
+        &lt;/div&gt;
+        &lt;c-col class&#x3D;&quot;d-grid mb-3 justify-content-md-center&quot; [xs]&gt;
+          &lt;button cButton id&#x3D;&quot;endDriveBtn&quot; (click)&#x3D;&quot;endDrive()&quot; *ngIf&#x3D;&quot;!loadingMap&quot;&gt;Returned&lt;/button&gt;
+          &lt;button cButton id&#x3D;&quot;endDriveBtnDisabled&quot; disabled *ngIf&#x3D;&quot;loadingMap&quot;&gt;Returned&lt;/button&gt;
+          &lt;c-spinner size&#x3D;&quot;sm&quot; *ngIf&#x3D;&quot;loadingMap&quot;/&gt;
+        &lt;/c-col&gt;
+      &lt;/c-row&gt;
+    &lt;/c-card-body&gt;
+  &lt;/c-card&gt;
+&lt;/ng-template&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./overview.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">#map {
+  border: 2px solid lightgrey  ;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 60vh;
+  margin: 30px;
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="d-flex fkex-row align-items-center mb-3">  <c-container>    <c-row class="justify-content-center">      <c-col>        <h4>Your Deployment: </h4>        <br/>        @if(exists==="loading") {          <c-spinner size="sm"/>          <strong>Loading...</strong>        }@else if(exists==="no")        {          <!-- No deployments -->          <c-col class="mx-4">            <c-widget-stat-b              title="No deployment currently"              class="mb-4"              text="There are no deployments assigned to you currently."            >              <br><br>              <c-progress class="my-2" thin [value]="0" color="primary" />            </c-widget-stat-b>          </c-col>        } @else {          <!-- Have deployments -->          <ng-container [ngTemplateOutlet]="BufferTimeCard"                        *ngIf="deployment.current_status===\'Buffer Time\'"></ng-container>          <ng-container [ngTemplateOutlet]="OngoingCard"                        *ngIf="deployment.current_status===\'Ongoing\'"></ng-container>          <ng-container [ngTemplateOutlet]="ReturningCard"                        *ngIf="deployment.current_status===\'Returning\'"></ng-container>        }      </c-col>    </c-row>  </c-container></div><ng-template #mapTemplate>  <div class="map-container">    <div class="map-frame">      <div id="map"></div>    </div>  </div></ng-template><ng-template #deploymentDetailsTemplate>  <form cForm name="deploymentDetails">    <c-row>      <c-col [xs]>        <label cLabel for="busService">Bus Service</label>        <input cFormControl               id="busService"               disabled               style="background-color:transparent;"               [value] = "deployment.service_number"        />      </c-col>      <c-col [xs]>        <label cLabel for="licPlate">Bus License Plate</label>        <input cFormControl               id="licPlate"               disabled               style="background-color:transparent;"               [value] = "deployment.bus_license_plate"        />      </c-col>      <c-col [xs]>        <label cLabel for="nextStopName">Next Stop</label>        <input cFormControl               id="nextStopName"               disabled               style="background-color:transparent;"               [value] = "nextStopName"        />      </c-col>    </c-row>  </form></ng-template><ng-template #BufferTimeCard>  <c-card class="mx-4">    <c-card-body class="p-4">      <h2 cCardTitle>Current Deployment</h2>      <h6 cCardSubtitle class="mb-2 text-medium-emphasis">        You are activated for a deployment. Please go to the terminal stated in "Next Stop" to pick up the designated bus.      </h6>      <hr/>      <h5>Deployment Details:</h5>      <br/>        <ng-container [ngTemplateOutlet]="deploymentDetailsTemplate"></ng-container>      <br/>      <c-row>        <label cLabel>Route</label>        <ng-container [ngTemplateOutlet]="mapTemplate"></ng-container>      </c-row>      <hr/>      <c-row>        <div style="text-align: center">          <p>            Click \'Start Drive\' once you are ready to start the drive.          </p>        </div>        <c-col class="d-grid mb-3 justify-content-md-center" [xs]>          <button cButton id="startDriveBtn" (click)="startDrive()" *ngIf="!loadingMap">Start Drive</button>          <button cButton id="startDriveBtnDisabled" disabled *ngIf="loadingMap">Returned</button>          <c-spinner size="sm" *ngIf="loadingMap"/>        </c-col>      </c-row>    </c-card-body>  </c-card></ng-template><ng-template #OngoingCard>  <c-card class="mx-4">    <c-card-body class="p-4">      <h2 cCardTitle>Current Deployment</h2>      <h6 cCardSubtitle class="mb-2 text-medium-emphasis">        You are currently on the road.      </h6>      <hr/>      <h5>Deployment Details:</h5>      <br/>        <ng-container [ngTemplateOutlet]="deploymentDetailsTemplate"></ng-container>      <br/>      <c-row>        <h5></h5>      </c-row>      <c-row>        <label cLabel>Route</label>        <ng-container [ngTemplateOutlet]="mapTemplate"></ng-container>      </c-row>      <hr/>      <c-row>        <div style="text-align: center">          <p id="startDriveInfo">            Click \'Next Stop\' once you arrive at the next stop.          </p>        </div>        <c-col class="d-grid mb-3 justify-content-md-center" [xs]>          <button cButton id="nextStopBtn" (click)="nextStop()" *ngIf="!loadingMap">Next Stop</button>          <button cButton id="nextStopBtnDisabled" disabled *ngIf="loadingMap">Next Stop</button>          <c-spinner size="sm" *ngIf="loadingMap"/>        </c-col>      </c-row>    </c-card-body>  </c-card></ng-template><ng-template #ReturningCard>  <c-card class="mx-4">    <c-card-body class="p-4">      <h2 cCardTitle>Current Deployment</h2>      <h6 cCardSubtitle class="mb-2 text-medium-emphasis">        Please return the bus to the original position.      </h6>      <hr/>      <h5>Deployment Details:</h5>      <br/>        <ng-container [ngTemplateOutlet]="deploymentDetailsTemplate"></ng-container>      <br/>      <c-row>        <h5></h5>      </c-row>      <c-row>        <label cLabel>Route</label>        <ng-container [ngTemplateOutlet]="mapTemplate"></ng-container>      </c-row>      <hr/>      <c-row>        <div style="text-align: center">          <p id="endDriveInfo">            Click \'Returned\' once you have parked the bus.          </p>        </div>        <c-col class="d-grid mb-3 justify-content-md-center" [xs]>          <button cButton id="endDriveBtn" (click)="endDrive()" *ngIf="!loadingMap">Returned</button>          <button cButton id="endDriveBtnDisabled" disabled *ngIf="loadingMap">Returned</button>          <c-spinner size="sm" *ngIf="loadingMap"/>        </c-col>      </c-row>    </c-card-body>  </c-card></ng-template></div>'
+    var COMPONENTS = [{'name': 'AddRouteModalComponent', 'selector': 'app-addroutemodal'},{'name': 'AddStopModalComponent', 'selector': 'app-addstopmodal'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'BusdriversComponent', 'selector': 'app-busdrivers'},{'name': 'BusRoutesComponent', 'selector': 'app-busroutes'},{'name': 'CancelledDeploymentModalComponent', 'selector': 'app-cancelleddeploymentmodal'},{'name': 'ChangeDriverModalComponent', 'selector': 'app-changedrivermodal'},{'name': 'ConfirmCancelDeploymentModalComponent', 'selector': 'app-confirmcanceldeploymentmodal'},{'name': 'DashboardComponent', 'selector': 'app-dashboard'},{'name': 'DefaultDriverLayoutComponent', 'selector': 'app-dashboard-driver'},{'name': 'DefaultFooterComponent', 'selector': 'app-default-footer'},{'name': 'DefaultHeaderComponent', 'selector': 'app-default-header'},{'name': 'DefaultManagerLayoutComponent', 'selector': 'app-manager-dashboard'},{'name': 'DeleteRouteModalComponent', 'selector': 'app-deleteroutemodal'},{'name': 'DeleteStopModalComponent', 'selector': 'app-deletestopmodal'},{'name': 'DeploymentComponent', 'selector': 'app-deployment'},{'name': 'DriverHistoryModalComponent', 'selector': 'app-driverhistorymodal'},{'name': 'DrivingHistoryComponent', 'selector': 'app-drivinghistory'},{'name': 'EditRouteModalComponent', 'selector': 'app-editroutemodal'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LogoutComponent', 'selector': 'app-logout'},{'name': 'NewDeploymentModalComponent', 'selector': 'app-newdeploymentmodal'},{'name': 'OverviewComponent', 'selector': 'app-overview'},{'name': 'Page404Component', 'selector': 'app-page404'},{'name': 'Page500Component', 'selector': 'app-page500'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'RequestComponent', 'selector': 'app-request'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'OverviewComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'OverviewComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

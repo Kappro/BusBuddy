@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 
-export default [
+export const DriverRoutes: Routes = [
   {
     path: '',
     data: {
@@ -35,4 +35,4 @@ export default [
       }
     ]
   }
-] satisfies Routes;
+];

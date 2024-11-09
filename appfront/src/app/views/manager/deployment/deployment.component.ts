@@ -31,6 +31,9 @@ import {
   ConfirmCancelDeploymentModalComponent
 } from "../_modals/confirmcanceldeployment/confirmcanceldeployment.component";
 
+/**
+ * @ignore
+ */
 interface IRequest {
   requestId: number,
   serviceNo: string,
@@ -42,6 +45,9 @@ interface IRequest {
   dateTimeEnd: string
 }
 
+/**
+ * View component for manager to manage unstarted deployments, and view past deployments.
+ */
 @Component({
     selector: 'app-deployment',
     templateUrl: './deployment.component.html',
@@ -54,9 +60,18 @@ interface IRequest {
 })
 export class DeploymentComponent {
 
+  /**
+   * @ignore
+   */
   public deployments: any[] = [];
 
+  /**
+   * View can use change driver modal.
+   */
   @ViewChild(ChangeDriverModalComponent) changeDriverModal!: ChangeDriverModalComponent;
+  /**
+   * View can use cancel deployment confirmation modal.
+   */
   @ViewChild(ConfirmCancelDeploymentModalComponent) cancelDeploymentModal!: ConfirmCancelDeploymentModalComponent;
 
   // 'driver_id': self._driver_id,
@@ -67,6 +82,9 @@ export class DeploymentComponent {
   // 'uid': self._uid,
   // 'service_number'
 
+  /**
+   * View sends backend API request to retrieve all deployments on construct.
+   */
   constructor(private http: HttpClient,
               private api: ApiService,
               private router: Router) {
@@ -81,12 +99,21 @@ export class DeploymentComponent {
     })
   }
 
+  /**
+   * @ignore
+   */
   activeItem = signal(0);
 
+  /**
+   * For redirecting between tabs.
+   */
   handleActiveItemChange(value: string | number | undefined) {
     this.activeItem.set(<number>value);
   }
 
+  /**
+   * Refreshes this component without needing to reload.
+   */
   refresh() {
     this.router.navigateByUrl('/',{skipLocationChange:true}).then(()=>{
       this.router.navigate([this.router.url]).then(()=>{
@@ -95,6 +122,10 @@ export class DeploymentComponent {
     })
   }
 
+  /**
+   * Opens change driver modal, loading in UID of deployment to change driver.
+   * @param deployment_uid UID of deployment to change driver for.
+   */
   openChangeDriver(deployment_uid: number) {
     if(this.changeDriverModal) {
       this.http.post<any>(this.api.API_URL + "/deployments/get_by_uid", {'deployment_uid': String(deployment_uid)}).subscribe({
@@ -113,6 +144,10 @@ export class DeploymentComponent {
     }
   }
 
+  /**
+   * Opens deployment cancellation confirmation modal, loading in UID of deployment to be cancelled.
+   * @param deployment_uid UID of deployment to be cancelled.
+   */
   openCancelConfirmation(deployment_uid: number) {
     if(this.cancelDeploymentModal) {
       this.cancelDeploymentModal.deployment_uid = deployment_uid;
