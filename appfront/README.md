@@ -15,6 +15,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - Other README Directories
   - [Main](../README.md)
   - [Frontend](../appfront/README.md)
+  - [Automated Deployment System](../ads/README.md)
 
 # Tech Stuff
 

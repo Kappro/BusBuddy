@@ -2,9 +2,9 @@ import requests
 import json
 
 from flask import jsonify, Flask
+from flasgger import Swagger
 
 app = Flask(__name__)
-
 api_link = 'http://localhost:8080/forads'
 
 def get_services() -> list:
