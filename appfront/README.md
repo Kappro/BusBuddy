@@ -159,7 +159,7 @@ $ sudo systemctl status nginx
 ```
 - After the above, the terminal should that the service is running. It should be running on port 80.
 
-![img.png](readmeimages/nginx.png)
+![img.png](../readmeimages/nginx.png)
 
 ## Pre-configured Users
 | Email          | Password | Access  | Name      |
